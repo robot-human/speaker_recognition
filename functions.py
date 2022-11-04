@@ -1,6 +1,7 @@
 import os
 import math
 import matplotlib.pyplot as plt
+import librosa
 
 log_files_path = os.getcwd() + "/log_files" 
 
@@ -19,7 +20,10 @@ def trim_signal(signal, sample_rate, secs):
 
 def get_samples(speaker_files,speaker_id):
     path_list = speaker_files[speaker_id]
+    samples_num = 0
     for path in path_list:
+        samples, sample_rate = librosa.load(path, mono=True, sr=8000)
+        samples_num += len(samples)
         print(path)
-    samples = []
-    return samples
+    print(samples_num)
+    return None

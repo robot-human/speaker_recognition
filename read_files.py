@@ -35,6 +35,7 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
         signal_data = {}
         signal_samples = functions.get_samples(speaker_files,id,N_SAMPLES)
         vad_samples = feats.vad(signal_samples, 0.1)
+        print(vad_samples)
         n_samp = math.floor(len(vad_samples)/3)
         signal_data['train'] = vad_samples[:n_samp]
         signal_data['valid'] = vad_samples[n_samp:2*n_samp]

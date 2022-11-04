@@ -11,7 +11,8 @@ for speaker in database_dir:
         audio_files_path = speaker_path + "/" + session
         audio_files_dir = os.listdir(audio_files_path)
         for audio_file in audio_files_dir:
-            print(audio_file)
+            if(audio_file.find(".txt")):
+                print(audio_file)
 
 
     #speaker_sessions[speaker] = files_dir

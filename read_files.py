@@ -24,7 +24,7 @@ for speaker in database_dir:
     speaker_files[speaker] = speaker_files_list
 
 
-samps = functions.get_samples(speaker_files,speaker_ids[0],10000)
+samps = functions.get_samples(speaker_files,speaker_ids[0],50000)
 functions.samples_to_seconds(len(samps),8000)
 new_samples = feats.vad(samps, 0.01)
 functions.samples_to_seconds(len(new_samples),8000)

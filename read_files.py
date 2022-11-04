@@ -1,5 +1,7 @@
 import os
 import librosa
+import functions
+import feature_extraction as feats
 
 database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 database_dir = os.listdir(database_path)
@@ -20,14 +22,8 @@ for speaker in database_dir:
     speaker_files[speaker] = speaker_files_list
 
 samples, sample_rate = librosa.load(speaker_files[speaker_ids[0]][0], mono=True, sr=8000)
-print(samples)
-print(sample_rate)
-    #speaker_sessions[speaker] = files_dir
-    #print(files_dir)
-    #print("*****************************")
-    #print(" ")
 
-#new_path = database_path+"/911/"+speaker_sessions['911'][0]
-#new_path_dir = os.listdir(new_path)
-#for files in new_path_dir:
-#    print(files)
+
+functions.samples_to_seconds(samples,sample_rate)
+new_samples = feats.vad(samples, 0.01)
+functions.samples_to_seconds(new_samples,sample_rate)

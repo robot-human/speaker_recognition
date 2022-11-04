@@ -1,5 +1,7 @@
+import os
 import matplotlib.pyplot as plt
-log_files_path = "/media/Data/pedro_tesis/log_files" 
+
+log_files_path = os.getcwd() + "/log_files" 
 
 def samples_to_seconds(samples, sample_rate):
     out = samples/sample_rate

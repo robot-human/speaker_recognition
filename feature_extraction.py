@@ -2,9 +2,7 @@ import numpy as np
 import math
 from scipy.fftpack import dct
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set()
+
 
 ######################################################################################################
 # Signal Information and Summary
@@ -15,37 +13,7 @@ def print_properties(s, sr):
     print("Seconds      ",s.shape[0]/sr)
     return None
 
-def plot_signal(sig,sr):
-    t = [i/sr for i in range(len(sig))]
-    s_w = 256
-    fig = plt.figure(figsize=(16,9))
-    plt.subplots_adjust(left=None, bottom=0.01, right=None, top=None, wspace=None, hspace=None)
-    ax1 = fig.add_subplot(211)
-    ax1 = sns.lineplot(x=t,y=sig)
-    ax1.set_title('Time domain')
-    ax1.set_ylabel('Amplitude')
-    ax1.set_xlabel('Seconds')
-    ax1.set_xlim([t[0],t[-1]])
-    ax2 = fig.add_subplot(212)
-    if(len(sig) < s_w):
-        z = np.zeros(int(s_w - len(sig)))
-        sig = np.append(sig, z)
-    powerSpectrum, freqenciesFound, time, imageAxis = plt.specgram(sig, Fs=sr, NFFT=s_w)
-    ax2.set_title('Frequency domain')
-    ax2.set_ylabel('Frequency')
-    ax2.set_xlabel('Seconds')
-    return None
 
-def plot_power_spectrum(sig,sample_rate):
-    f = [(i*sample_rate)/(2*len(sig)) for i in range(len(sig))]
-    fig = plt.figure(figsize=(16,5))
-    #plt.subplots_adjust(left=None, bottom=0.01, right=None, top=None, wspace=None, hspace=None)
-    #ax1 = fig.add_subplot(211)
-    ax1 = sns.lineplot(x=f,y=sig)
-    ax1.set_title('Pow spectrum')
-    ax1.set_ylabel('Amplitude')
-    ax1.set_xlabel('Frequency')
-    ax1.set_xlim([f[0],f[-1]])
 ######################################################################################################
 # Signal Processing
 def vad(mono_signal, threshold, buff_size=1000):

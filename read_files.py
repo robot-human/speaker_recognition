@@ -11,7 +11,7 @@ for speaker in database_dir:
         audio_files_path = speaker_path + "/" + session
         audio_files_dir = os.listdir(audio_files_path)
         for audio_file in audio_files_dir:
-            if(audio_file.find(".txt") > 0):
+            if(audio_file.find(".flac") > 0):
                 print(audio_file)
 
 

@@ -1,10 +1,12 @@
 import os
 
-print(os.getcwd())
 database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
-#path = "/Users/humanrobot/Documents/data/simpsons"
+database_dir = os.listdir(database_path)
 
-dir = os.listdir(database_path)
+speaker_paths = []
+for file in database_dir:
+    path = database_path + "/" + file
+    speaker_paths.append(path)
 
-for file in dir:
-    print(file)
+for paths in speaker_paths:
+    print(paths)

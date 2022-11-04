@@ -21,9 +21,9 @@ def trim_signal(signal, sample_rate, secs):
 def get_samples(speaker_files,speaker_id):
     path_list = speaker_files[speaker_id]
     samples_num = 0
-    for path in path_list:
-        samples, sample_rate = librosa.load(path, mono=True, sr=8000)
-        samples_num += len(samples)
-        print(path)
+    while(samples_num < 7041):
+        for path in path_list:
+            samples, sample_rate = librosa.load(path, mono=True, sr=8000)
+            samples_num += len(samples)
     print(samples_num)
     return None

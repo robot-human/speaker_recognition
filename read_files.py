@@ -21,6 +21,7 @@ for speaker in database_dir:
 
 samples, sample_rate = librosa.load(speaker_files[speaker_ids[0]][0], mono=True, sr=8000)
 print(samples)
+print(sample_rate)
     #speaker_sessions[speaker] = files_dir
     #print(files_dir)
     #print("*****************************")

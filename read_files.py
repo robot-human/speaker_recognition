@@ -1,6 +1,6 @@
 import os
 
-database_path = "~/"
+database_path = "/Data"
 path = "/Users/humanrobot/Documents/data/simpsons"
 
 dir = os.listdir(database_path)

@@ -5,11 +5,12 @@ database_dir = os.listdir(database_path)
 
 speaker_files = {}
 for speaker in database_dir:
-    path = database_path + "/" + speaker
-    sessions_dir = os.listdir(path)
-    print(sessions_dir)
+    speaker_path = database_path + "/" + speaker
+    sessions_dir = os.listdir(speaker_path)
     for session in sessions_dir:
-        print(session)
+        audio_files_path = speaker_path + "/" + session
+        audio_files_dir = os.listdir(audio_files_path)
+        print(audio_files_dir)
     #speaker_sessions[speaker] = files_dir
     #print(files_dir)
     #print("*****************************")

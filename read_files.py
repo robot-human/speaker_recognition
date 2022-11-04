@@ -1,14 +1,12 @@
 import os
 import random
-import librosa
 import functions
 import feature_extraction as feats
-import matplotlib.pyplot as plt
 
 log_files_path = "/media/Data/pedro_tesis/log_files" 
 database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 
-N_SPEAKERS = 2
+N_SPEAKERS = 1
 
 
 def get_speaker_files(database_path):
@@ -32,7 +30,14 @@ def get_speaker_files(database_path):
 ids, speaker_files = get_speaker_files(database_path)
 
 random.seed(10)
-choices = random.sample(ids, k=3)
-print(choices)
+speaker_ids = random.sample(ids, k=N_SPEAKERS)
+print(speaker_ids)
 
 
+signal_samples = functions.get_samples(speaker_files,speaker_ids[0],1000000)
+vad_samples = feats.vad(signal_samples, 0.1)
+
+speaker_samples = {}
+speaker_samples[speaker_ids[0]] = vad_samples
+
+print(speaker_samples)

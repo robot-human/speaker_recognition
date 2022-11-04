@@ -26,7 +26,11 @@ for speaker in database_dir:
 
 speakers_signal = {}
 for id in speaker_ids:
-    print(id)
+    samps = functions.get_samples(speaker_files,speaker_ids[0],4000000)
+    vad_samples = feats.vad(samps, 0.01)
+    speakers_signal[id] = vad_samples
+
+
 #samps = functions.get_samples(speaker_files,speaker_ids[0],4000000)
 #print(len(samps))
 #functions.samples_to_seconds(len(samps),8000)

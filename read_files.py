@@ -10,7 +10,8 @@ for speaker in database_dir:
     for session in sessions_dir:
         audio_files_path = speaker_path + "/" + session
         audio_files_dir = os.listdir(audio_files_path)
-        print(audio_files_dir)
+        for audio_file in audio_files_dir:
+            print(audio_files_dir)
     #speaker_sessions[speaker] = files_dir
     #print(files_dir)
     #print("*****************************")

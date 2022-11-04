@@ -38,6 +38,7 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
         print(N_SAMPLES)
         print(len(vad_samples))
         n_samp = math.floor(len(vad_samples)/3)
+        print(n_samp)
         signal_data['train'] = vad_samples[:n_samp]
         signal_data['valid'] = vad_samples[n_samp:2*n_samp]
         signal_data['test'] = vad_samples[2*n_samp:]

@@ -25,7 +25,9 @@ for speaker in database_dir:
 
 
 samps = functions.get_samples(speaker_files,speaker_ids[0],10000)
-print(samps)
+functions.samples_to_seconds(len(samps),8000)
+new_samples = feats.vad(samps, 0.01)
+functions.samples_to_seconds(len(new_samples),sample_rate)
 
 # samples, sample_rate = librosa.load(speaker_files[speaker_ids[0]][0], mono=True, sr=8000)
 # functions.samples_to_seconds(len(samples),sample_rate)

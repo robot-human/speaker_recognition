@@ -13,4 +13,4 @@ for speaker in database_dir:
     #print("*****************************")
     #print(" ")
 
-print(speaker_sessions['911'])
+print(speaker_sessions['911'][0])

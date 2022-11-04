@@ -24,8 +24,8 @@ for speaker in database_dir:
     speaker_files[speaker] = speaker_files_list
 
 
-functions.get_samples(speaker_files,speaker_ids[0])
-
+samps = functions.get_samples(speaker_files,speaker_ids[0])
+print(samps)
 
 # samples, sample_rate = librosa.load(speaker_files[speaker_ids[0]][0], mono=True, sr=8000)
 # functions.samples_to_seconds(len(samples),sample_rate)

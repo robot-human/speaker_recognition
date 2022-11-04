@@ -13,4 +13,7 @@ for speaker in database_dir:
     #print("*****************************")
     #print(" ")
 
-print(database_path+"/911/"+speaker_sessions['911'][0])
+new_path = database_path+"/911/"+speaker_sessions['911'][0]
+new_path_dir = os.listdir(new_path)
+for files in new_path_dir:
+    print(files)

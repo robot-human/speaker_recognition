@@ -7,6 +7,7 @@ log_files_path = "/media/Data/pedro_tesis/log_files"
 database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 
 N_SPEAKERS = 1
+N_SAMPLES = 8000*6
 
 
 def get_speaker_files(database_path):
@@ -27,17 +28,20 @@ def get_speaker_files(database_path):
         speaker_files[speaker] = speaker_files_list
     return speaker_ids, speaker_files
 
+
+
 ids, speaker_files = get_speaker_files(database_path)
 
 random.seed(10)
 speaker_ids = random.sample(ids, k=N_SPEAKERS)
-print(speaker_ids)
 
-
-signal_samples = functions.get_samples(speaker_files,speaker_ids[0],1000000)
+signal_samples = functions.get_samples(speaker_files,speaker_ids[0],N_SAMPLES)
 vad_samples = feats.vad(signal_samples, 0.1)
 
-speaker_samples = {}
-speaker_samples[speaker_ids[0]] = vad_samples
+print(len(signal_samples))
+print(functions.samples_to_seconds(len(signal_samples), 8000))
 
-print(speaker_samples)
+#speaker_samples = {}
+#speaker_samples[speaker_ids[0]] = vad_samples
+
+#print(speaker_samples)

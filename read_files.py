@@ -33,7 +33,7 @@ ids, speaker_files = get_speaker_files(database_path)
 
 random.seed(10)
 for i in range(5):
-    choices = random.choices(ids, k=3)
+    choices = random.sample(ids, k=3)
     print(choices)
 
 

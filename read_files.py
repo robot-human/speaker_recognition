@@ -28,8 +28,6 @@ samples, sample_rate = librosa.load(speaker_files[speaker_ids[0]][0], mono=True,
 
 
 functions.samples_to_seconds(len(samples),sample_rate)
-functions.plot_signal(samples,"fig1")
 new_samples = feats.vad(samples, 0.01)
 functions.samples_to_seconds(len(new_samples),sample_rate)
-functions.plot_signal(new_samples,"fig2")
 

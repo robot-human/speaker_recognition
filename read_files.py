@@ -9,6 +9,7 @@ database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-1
 database_dir = os.listdir(database_path)
 N_SPEAKERS = 2
 
+
 speaker_files = {}
 speaker_ids = []
 for speaker in database_dir:
@@ -24,10 +25,11 @@ for speaker in database_dir:
     speaker_ids.append(speaker)
     speaker_files[speaker] = speaker_files_list
 
+print(speaker_files)
 
-speakers_signal = {}
-for i in range(N_SPEAKERS):
-    samples = functions.get_samples(speaker_files,speaker_ids[i],4000000)
-    vad_samples = feats.vad(samples, 0.01)
-    speakers_signal[id] = vad_samples
+# speakers_signal = {}
+# for i in range(N_SPEAKERS):
+#     samples = functions.get_samples(speaker_files,speaker_ids[i],4000000)
+#     vad_samples = feats.vad(samples, 0.01)
+#     speakers_signal[id] = vad_samples
 

@@ -1,4 +1,5 @@
 import os
+import librosa
 
 database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 database_dir = os.listdir(database_path)
@@ -18,7 +19,8 @@ for speaker in database_dir:
     speaker_ids.append(speaker)
     speaker_files[speaker] = speaker_files_list
 
-print(speaker_files[speaker_ids[0]][0])
+samples, sample_rate = librosa.load(speaker_files[speaker_ids[0]][0], mono=True, sr=8000)
+print(samples)
     #speaker_sessions[speaker] = files_dir
     #print(files_dir)
     #print("*****************************")

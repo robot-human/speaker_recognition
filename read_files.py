@@ -31,9 +31,9 @@ def get_speaker_files(database_path):
 
 ids, speaker_files = get_speaker_files(database_path)
 
-
+random.seed(10)
 for i in range(5):
-    choices = random.choices(ids, k=3, seed=0)
+    choices = random.choices(ids, k=3)
     print(choices)
 
 

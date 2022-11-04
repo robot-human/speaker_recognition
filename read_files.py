@@ -36,6 +36,7 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
         signal_samples = functions.get_samples(speaker_files,id,N_SAMPLES)
         vad_samples = feats.vad(signal_samples, 0.01)
         print(N_SAMPLES)
+        print(len(signal_samples))
         print(len(vad_samples))
         n_samp = math.floor(len(vad_samples)/3)
         print(n_samp)

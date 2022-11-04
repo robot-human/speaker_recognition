@@ -5,8 +5,10 @@ database_dir = os.listdir(database_path)
 
 speaker_paths = []
 for file in database_dir:
-    path = database_path + "/" + file
-    speaker_paths.append(path)
+    print(file)
+    #path = database_path + "/" + file
+    #speaker_paths.append(path)
 
-for paths in speaker_paths:
-    print(paths)
+
+#for paths in speaker_paths:
+#    print(paths)

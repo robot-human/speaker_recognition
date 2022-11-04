@@ -7,7 +7,7 @@ import librosa
 log_files_path = os.getcwd() + "/log_files" 
 
 def samples_to_seconds(samples, sample_rate):
-    out = samples/sample_rate
+    out = len(samples)/sample_rate
     print(out)
 
 def plot_signal(signal,name):

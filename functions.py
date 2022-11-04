@@ -22,7 +22,7 @@ def get_samples(speaker_files,speaker_id):
     path_list = speaker_files[speaker_id]
     samples_num = 0
     idx = 0
-    while((samples_num < 7041) and (idx < len(path_list))):
+    while((samples_num < 11437041) and (idx < len(path_list))):
         samples, sample_rate = librosa.load(path_list[idx], mono=True, sr=8000)
         samples_num += len(samples)
         idx += 1

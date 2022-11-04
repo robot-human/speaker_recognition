@@ -28,6 +28,13 @@ def get_speaker_files(database_path):
         speaker_files[speaker] = speaker_files_list
     return speaker_ids, speaker_files
 
+def get_speaker_signals_dict(speaker_files, speaker_ids):
+    signal_dict = {}
+    for id in speaker_ids:
+        signal_samples = functions.get_samples(speaker_files,id,N_SAMPLES)
+        vad_samples = feats.vad(signal_samples, 0.1)
+        signal_dict[id] = vad_samples
+    return signal_dict
 
 
 ids, speaker_files = get_speaker_files(database_path)
@@ -35,13 +42,7 @@ ids, speaker_files = get_speaker_files(database_path)
 random.seed(10)
 speaker_ids = random.sample(ids, k=N_SPEAKERS)
 
-signal_samples = functions.get_samples(speaker_files,speaker_ids[0],N_SAMPLES)
-vad_samples = feats.vad(signal_samples, 0.1)
+signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
 
-print(len(signal_samples))
-print(functions.samples_to_seconds(len(signal_samples), 8000))
 
-#speaker_samples = {}
-#speaker_samples[speaker_ids[0]] = vad_samples
-
-#print(speaker_samples)
+print(signal_dict)

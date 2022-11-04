@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 log_files_path = "/media/Data/pedro_tesis/log_files" 
 database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 database_dir = os.listdir(database_path)
-N_SPEAKERS = 5
+N_SPEAKERS = 2
 
 speaker_files = {}
 speaker_ids = []
@@ -28,12 +28,6 @@ for speaker in database_dir:
 speakers_signal = {}
 for i in range(N_SPEAKERS):
     samples = functions.get_samples(speaker_files,speaker_ids[i],4000000)
-    vad_samples = feats.vad(sampless, 0.01)
+    vad_samples = feats.vad(samples, 0.01)
     speakers_signal[id] = vad_samples
 
-
-#samps = functions.get_samples(speaker_files,speaker_ids[0],4000000)
-#print(len(samps))
-#functions.samples_to_seconds(len(samps),8000)
-#new_samples = feats.vad(samps, 0.01)
-#functions.samples_to_seconds(len(new_samples),8000)

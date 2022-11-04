@@ -1,6 +1,6 @@
 import os
 
-database_path = "/home/ar/Data/data_bases/Librispeech/train-clean-100/train-clean-100/"
+database_path = "/media/Data/data_bases/Librispeech/train-clean-100/train-clean-100/"
 path = "/Users/humanrobot/Documents/data/simpsons"
 
 dir = os.listdir(database_path)

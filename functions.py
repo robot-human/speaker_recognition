@@ -1,5 +1,6 @@
 import os
 import math
+import numpy as np
 import matplotlib.pyplot as plt
 import librosa
 
@@ -28,4 +29,4 @@ def get_samples(speaker_files,speaker_id,samples_limit):
         samples_num += len(samples)
         idx += 1
         output_samples.extend(samples)
-    return output_samples
+    return np.array(output_samples)

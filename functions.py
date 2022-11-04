@@ -16,3 +16,10 @@ def trim_signal(signal, sample_rate, secs):
     n_samples = math.floor(secs*sample_rate)
     signal = signal[:n_samples]
     return signal
+
+def get_samples(speaker_files,speaker_id):
+    path_list = speaker_files[speaker_id]
+    for path in path_list:
+        print(path)
+    samples = []
+    return samples

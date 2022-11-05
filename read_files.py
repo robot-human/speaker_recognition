@@ -38,9 +38,9 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
     for id in speaker_ids:
         signal_data = {}
         train_samples,valid_samples,test_samples = functions.get_samples(speaker_files,id)
-        train_vad_samples = feats.vad(train_samples, 0.01)
-        valid_vad_samples = feats.vad(valid_samples, 0.01)
-        test_vad_samples = feats.vad(test_samples, 0.01)
+        train_vad_samples = functions.trim_signal(feats.vad(train_samples, 0.01),SAMPLE_RATE,1.0)
+        valid_vad_samples = functions.trim_signal(feats.vad(valid_samples, 0.01),SAMPLE_RATE,1.0)
+        test_vad_samples = functions.trim_signal(feats.vad(test_samples, 0.01),SAMPLE_RATE,1.0)
 
         signal_data['train'] = train_vad_samples
         signal_data['valid'] = valid_vad_samples

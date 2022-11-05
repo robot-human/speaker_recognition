@@ -55,5 +55,5 @@ random.seed(10)
 speaker_ids = random.sample(ids, k=N_SPEAKERS)
 
 signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
-print(signal_dict)
+print(signal_dict[ids[4]])
 

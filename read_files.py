@@ -52,7 +52,7 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
 ids, speaker_files = get_speaker_files(database_path)
 
 for id in ids:
-    print(speaker_files[id])
+    print(speaker_files[id].keys())
 # random.seed(10)
 # speaker_ids = random.sample(ids, k=N_SPEAKERS)
 

@@ -44,8 +44,8 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
 
         signal_data['train'] = train_vad_samples
         signal_data['valid'] = valid_vad_samples
-        signal_data['test'] = vad_samples[2*n_samp:]
-        signal_dict[id] = test_vad_samples
+        signal_data['test'] = test_vad_samples
+        signal_dict[id] = signal_data
     return signal_dict
 
 

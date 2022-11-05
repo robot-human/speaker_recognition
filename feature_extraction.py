@@ -243,10 +243,10 @@ def amplitud_compression(eq_loudness):
         amp_compression.append(eq**(1/3))
     return amp_compression
 
-def PLP(pow_frames, sample_rate, p):
+def PLP_slow(pow_frames,  p, sample_rate):
     freq_label = np.linspace(0, sample_rate/2, len(pow_frames[0]))
     afreq_label = [freq_to_angular_freq(i) for i in freq_label]
-    sample_label = [i for i in range(len(freq_label))]
+    #sample_label = [i for i in range(len(freq_label))]
     warped_label = [freq_to_bark(i) for i in freq_label]
     
     perceptual_coeffs = []
@@ -257,5 +257,31 @@ def PLP(pow_frames, sample_rate, p):
         inverse_fourier = np.fft.irfft(amp_compression)
         perceptual_coeffs.append(inverse_fourier)
     
+    plp = LPC(np.array(perceptual_coeffs), p)
+    return plp
+
+def PLP_filters(sample_rate, NFFT=512):
+    n_samples = int(np.floor(NFFT / 2 + 1))
+    x_samples = [i for i in range(n_samples)]
+    x_freq = [sample_num_to_freq(i,sample_rate,n_samples) for i in x_samples]
+    x_bark = [freq_to_bark(i) for i in x_freq]
+    
+    n_filters = int(freq_to_bark(sample_rate/2))+1
+    filters = []
+    for i in range(1,n_filters):
+        array = np.array([psi(i-x) for x in x_bark])
+        array = array*equal_loudness_value(freq_to_angular_freq(bark_to_freq(i)))/equal_loudness_value(freq_to_angular_freq(bark_to_freq(16)))
+        filters.append(array)
+    return filters
+
+def PLP(pow_frames,  p, filters):
+    perceptual_coeffs = []
+    for frame in pow_frames:
+        new_frame = []
+        for filt in filters:
+            new_frame.append((frame*filt).sum())
+        amp_compression = amplitud_compression(new_frame)
+        inverse_fourier = np.fft.irfft(amp_compression)
+        perceptual_coeffs.append(inverse_fourier)
     plp = LPC(np.array(perceptual_coeffs), p)
     return plp

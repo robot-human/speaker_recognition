@@ -9,7 +9,7 @@ import numpy as np
 log_files_path = "/media/Data/pedro_tesis/log_files" 
 database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 
-N_SPEAKERS = 1
+N_SPEAKERS = 4
 SAMPLE_RATE = 10000
 N_SAMPLES = SAMPLE_RATE*2
 

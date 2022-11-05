@@ -55,7 +55,5 @@ random.seed(10)
 speaker_ids = random.sample(ids, k=N_SPEAKERS)
 
 signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
-functions.samples_to_seconds(signal_dict[speaker_ids[0]]['train'],SAMPLE_RATE)
-functions.samples_to_seconds(signal_dict[speaker_ids[0]]['valid'],SAMPLE_RATE)
-functions.samples_to_seconds(signal_dict[speaker_ids[0]]['test'],SAMPLE_RATE)
+print(signal_dict)
 

@@ -3,14 +3,16 @@ import math
 import random
 import functions
 import feature_extraction as feats
-
+import librosa
+import numpy as np
 
 log_files_path = "/media/Data/pedro_tesis/log_files" 
 database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 
 N_SPEAKERS = 1
-N_SAMPLES = 8000*2
 SAMPLE_RATE = 10000
+N_SAMPLES = SAMPLE_RATE*2
+
 
 
 def get_speaker_files(database_path):
@@ -35,34 +37,25 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
     signal_dict = {}
     for id in speaker_ids:
         signal_data = {}
-        signal_samples = functions.get_samples(speaker_files,id,N_SAMPLES)
-        vad_samples = feats.vad(signal_samples, 0.01)
-        print(N_SAMPLES)
-        print(len(signal_samples))
-        print(len(vad_samples))
-        n_samp = math.floor(len(vad_samples)/3)
-        print(n_samp)
-        signal_data['train'] = vad_samples[:n_samp]
-        signal_data['valid'] = vad_samples[n_samp:2*n_samp]
+        train_samples,valid_samples,test_samples = functions.get_samples(speaker_files,id,N_SAMPLES)
+        train_vad_samples = feats.vad(train_samples, 0.01)
+        valid_vad_samples = feats.vad(valid_samples, 0.01)
+        test_vad_samples = feats.vad(test_samples, 0.01)
+
+        signal_data['train'] = train_vad_samples
+        signal_data['valid'] = valid_vad_samples
         signal_data['test'] = vad_samples[2*n_samp:]
-        signal_dict[id] = signal_data
+        signal_dict[id] = test_vad_samples
     return signal_dict
 
 
 ids, speaker_files = get_speaker_files(database_path)
 
-minimo=100
-for id in ids:
-    if(len(speaker_files[id]) < minimo):
-        minimo = len(speaker_files[id])
-print(minimo)
-# random.seed(10)
-# speaker_ids = random.sample(ids, k=N_SPEAKERS)
+random.seed(10)
+speaker_ids = random.sample(ids, k=N_SPEAKERS)
 
-# signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
-
-
-# functions.samples_to_seconds(signal_dict[speaker_ids[0]]['train'],SAMPLE_RATE)
-# functions.samples_to_seconds(signal_dict[speaker_ids[0]]['valid'],SAMPLE_RATE)
-# functions.samples_to_seconds(signal_dict[speaker_ids[0]]['test'],SAMPLE_RATE)
+signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
+functions.samples_to_seconds(signal_dict[speaker_ids[0]]['train'],SAMPLE_RATE)
+functions.samples_to_seconds(signal_dict[speaker_ids[0]]['valid'],SAMPLE_RATE)
+functions.samples_to_seconds(signal_dict[speaker_ids[0]]['test'],SAMPLE_RATE)
 

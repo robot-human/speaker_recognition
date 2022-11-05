@@ -4,14 +4,8 @@ import random
 import functions
 import feature_extraction as feats
 
-log_files_path = "/media/Data/pedro_tesis/log_files" 
-database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
-
-N_SPEAKERS = 4
 SAMPLE_RATE = 10000
 N_SAMPLES = SAMPLE_RATE*2
-
-
 
 def get_speaker_files(database_path):
     database_dir = os.listdir(database_path)
@@ -45,12 +39,4 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
         signal_data['test'] = test_vad_samples
         signal_dict[id] = signal_data
     return signal_dict
-
-
-ids, speaker_files = get_speaker_files(database_path)
-
-random.seed(10)
-speaker_ids = random.sample(ids, k=N_SPEAKERS)
-
-signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
 

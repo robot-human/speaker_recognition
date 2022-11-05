@@ -11,4 +11,4 @@ speaker_ids = random.sample(ids, k=N_SPEAKERS)
 signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
 
 for id in speaker_ids:
-    print(signal_dict[id])
+    print(signal_dict[id]['test'])

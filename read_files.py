@@ -51,8 +51,11 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
 
 ids, speaker_files = get_speaker_files(database_path)
 
+minimo=100
 for id in ids:
-    print(len(speaker_files[id]))
+    if(len(speaker_files[id]) < minimo):
+        minimo = len(speaker_files[id])
+print(minimo)
 # random.seed(10)
 # speaker_ids = random.sample(ids, k=N_SPEAKERS)
 

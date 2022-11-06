@@ -41,17 +41,19 @@ mfcc = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
 classes = []
 train_set = []
 for enum, id in enumerate(speaker_ids):
+    print(mfcc[id]['train'])
     train_set.extend(mfcc[id]['train'])
     classes.append(enum)
-scaler = StandardScaler()
-scaler.fit(train_set)
-scaled_train = scaler.transform(train_set)
-model = svm.SVC(kernel='rbf')
-model.fit(scaled_train,classes)
+    print(len(train_set),len(classes))
+# scaler = StandardScaler()
+# scaler.fit(train_set)
+# scaled_train = scaler.transform(train_set)
+# model = svm.SVC(kernel='rbf')
+# model.fit(scaled_train,classes)
 
-for enum, id in enumerate(speaker_ids):
-    test_data = scaler.transform(mfcc[id]['test'])
-    test_classes = model.predict(test_data)
-    counts = np.bincount(test_classes)
-    speaker = np.argmax(counts)
-    print(speaker)
+# for enum, id in enumerate(speaker_ids):
+#     test_data = scaler.transform(mfcc[id]['test'])
+#     test_classes = model.predict(test_data)
+#     counts = np.bincount(test_classes)
+#     speaker = np.argmax(counts)
+#     print(speaker)

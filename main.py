@@ -42,7 +42,8 @@ classes = []
 train_set = []
 for enum, id in enumerate(speaker_ids):
     for val in mfcc[id]['train']:
-        print(mfcc[id]['train'])
+        print(len(mfcc[id]['train']))
+        print("")
         print("")
         #train_set.append(mfcc[id]['train'])
         #classes.append(enum)

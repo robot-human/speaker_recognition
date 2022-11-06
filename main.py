@@ -46,11 +46,11 @@ for enum, id in enumerate(speaker_ids):
         classes.append(enum)
 
 print(len(train_set),len(classes))
-# scaler = StandardScaler()
-# scaler.fit(train_set)
-# scaled_train = scaler.transform(train_set)
-# model = svm.SVC(kernel='rbf')
-# model.fit(scaled_train,classes)
+scaler = StandardScaler()
+scaler.fit(train_set)
+scaled_train = scaler.transform(train_set)
+model = svm.SVC(kernel='rbf')
+model.fit(scaled_train,classes)
 
 # for enum, id in enumerate(speaker_ids):
 #     test_data = scaler.transform(mfcc[id]['test'])

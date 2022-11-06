@@ -61,13 +61,32 @@ def frame_matrix(signal,sample_rate, pre_emphasis_coef, frame_in_secs, overlap_i
     window_frames = window(frames, int(frame_in_secs*sample_rate), window_type)
     return window_frames
 
-def voice_signal_processing(samples, sample_rate, attr):
+def voice_signal_processing(samples, attr):
     vad_signal = vad(samples,attr["VAD_TRESHOLD"])
     emph_signal = pre_emphasis(vad_signal, attr["PRE_EMPHASIS_COEF"])
-    frames = framing(emph_signal, sample_rate, attr["FRAME_IN_SECS"], attr["OVERLAP_IN_SECS"])
-    window_frames = window(frames, int(attr["FRAME_IN_SECS"]*sample_rate), attr["WINDOW"])
+    frames = framing(emph_signal, attr["sample_rate"], attr["FRAME_IN_SECS"], attr["OVERLAP_IN_SECS"])
+    window_frames = window(frames, int(attr["FRAME_IN_SECS"]*attr["sample_rate"]), attr["WINDOW"])
     return window_frames
 
+def get_window_frames_dict(speaker_ids, signal_dict, attr):
+    window_frames_dict = {}
+    for id in speaker_ids:
+        speaker_dict = {}
+        speaker_dict['train'] = voice_signal_processing(signal_dict[id]['train'], attr)
+        speaker_dict['valid'] = voice_signal_processing(signal_dict[id]['valid'], attr)
+        speaker_dict['test'] = voice_signal_processing(signal_dict[id]['test'], attr)
+        window_frames_dict[id] = speaker_dict
+    return window_frames_dict
+
+def get_pow_frames_dict(speaker_ids, window_frames_dict, NFFT):
+    pow_frames_dict = {}
+    for id in speaker_ids:
+        speaker_dict = {}
+        speaker_dict['train'] = (np.absolute(np.fft.rfft(window_frames_dict[id]['train'], NFFT))** 2)/NFFT
+        speaker_dict['valid'] = (np.absolute(np.fft.rfft(window_frames_dict[id]['valid'], NFFT))** 2)/NFFT
+        speaker_dict['test'] = (np.absolute(np.fft.rfft(window_frames_dict[id]['test'], NFFT))** 2)/NFFT
+        pow_frames_dict[id] = speaker_dict
+    return pow_frames_dict
 ######################################################################################################
 # MFCC
 def freq_to_mel(freq):
@@ -97,10 +116,10 @@ def filter_banks(bin_freqs, nfft):
         fbank[i - 1] = triangular_filter(bin_freqs, i, length)
     return fbank
 
-def MFCC(pow_frames, sample_rate, attr):
-    mels = np.linspace(freq_to_mel(0), freq_to_mel(sample_rate/2), attr["n_filt"] + 2)
+def MFCC(pow_frames, attr):
+    mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["sample_rate"]/2), attr["n_filt"] + 2)
     freqs = [mel_to_freq(mel) for mel in mels]
-    bin_freqs = [freq_to_bin(f, attr["NFFT"], sample_rate) for f in freqs]
+    bin_freqs = [freq_to_bin(f, attr["NFFT"], attr["sample_rate"]) for f in freqs]
     fbank = filter_banks(bin_freqs,  attr["NFFT"])
     
     f_banks = np.dot(pow_frames, fbank.T)
@@ -115,7 +134,15 @@ def MFCC(pow_frames, sample_rate, attr):
     mfcc -= (np.mean(mfcc, axis=0) + 1e-8)
     return mfcc
 
-
+def get_mfcc_feats(speaker_ids, pow_frames_dict, attr):
+    mfcc_dict = {}
+    for id in speaker_ids:
+        speaker_dict = {}
+        speaker_dict['train'] = MFCC(pow_frames_dict[id]['train'], attr)
+        speaker_dict['valid'] = MFCC(pow_frames_dict[id]['valid'], attr)
+        speaker_dict['test'] = MFCC(pow_frames_dict[id]['test'], attr)
+        mfcc_dict[id] = speaker_dict
+    return mfcc_dict
 ######################################################################################################
 # LPC
 def correlations(frames, p, N):
@@ -155,6 +182,15 @@ def LPC(window_frames, p):
         lpc.append(Levinson_Durbin(R, p))
     return np.array(lpc)
 
+def get_lpc_feats(speaker_ids, window_frames_dict, p):
+    lpc_dict = {}
+    for id in speaker_ids:
+        speaker_dict = {}
+        speaker_dict['train'] = LPC(window_frames_dict[id]['train'], p)
+        speaker_dict['valid'] = LPC(window_frames_dict[id]['valid'], p)
+        speaker_dict['test'] = LPC(window_frames_dict[id]['test'], p)
+        lpc_dict[id] = speaker_dict
+    return lpc_dict
 ######################################################################################################
 # PLP
 def sample_num_to_freq(x, sample_rate, n_points):
@@ -260,7 +296,7 @@ def PLP_slow(pow_frames,  p, sample_rate):
     plp = LPC(np.array(perceptual_coeffs), p)
     return plp
 
-def PLP_filters(sample_rate, NFFT=512):
+def get_PLP_filters(sample_rate, NFFT=512):
     n_samples = int(np.floor(NFFT / 2 + 1))
     x_samples = [i for i in range(n_samples)]
     x_freq = [sample_num_to_freq(i,sample_rate,n_samples) for i in x_samples]
@@ -285,3 +321,13 @@ def PLP(pow_frames,  p, filters):
         perceptual_coeffs.append(inverse_fourier)
     plp = LPC(np.array(perceptual_coeffs), p)
     return plp
+
+def get_plp_feats(speaker_ids, pow_frames_dict, p, filters):
+    plp_dict = {}
+    for id in speaker_ids:
+        speaker_dict = {}
+        speaker_dict['train'] = PLP(pow_frames_dict[id]['train'], p, filters)
+        speaker_dict['valid'] = PLP(pow_frames_dict[id]['valid'], p, filters)
+        speaker_dict['test'] = PLP(pow_frames_dict[id]['test'], p, filters)
+        plp_dict[id] = speaker_dict
+    return plp_dict

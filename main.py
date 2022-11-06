@@ -44,7 +44,7 @@ for enum, id in enumerate(speaker_ids):
     for val in mfcc[id]['train']:
         train_set.append(mfcc[id]['train'])
         classes.append(enum)
-print(train_set)
+print(train_set[0])
 print(len(train_set),len(classes))
 # scaler = StandardScaler()
 # scaler.fit(train_set)

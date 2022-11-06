@@ -41,7 +41,7 @@ mfcc = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
 classes = []
 train_set = []
 for enum, id in enumerate(speaker_ids):
-    train_set.append(mfcc[id]['train'])
+    train_set.extend(mfcc[id]['train'])
     classes.append(enum)
 scaler = StandardScaler()
 scaler.fit(train_set)

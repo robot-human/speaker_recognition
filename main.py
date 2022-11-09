@@ -36,10 +36,10 @@ signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
 
 
 window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , frames_attr)
-# pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, 512)
+pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, 512)
 # mfcc = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
 
-print(window_frames[speaker_ids[0]]['train'][0])
+print(pow_frames[speaker_ids[0]]['train'][0])
 
 # classes = []
 # train_set = []

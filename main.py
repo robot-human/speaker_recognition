@@ -62,7 +62,7 @@ model_svm.fit(scaled_train,classes)
 
 
 print("MFFC with VQ")
-n_codewords = 20
+n_codewords = 50
 epochs = 50
 
 speaker_models = []

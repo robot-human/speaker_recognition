@@ -23,7 +23,7 @@ def ratio_distortion(a,b,R):
     dist = (num/den) -1
     return abs(dist)
 
-def get_best_matching_unit(feat, codebook, R):
+def get_best_matching_unit(feat, codebook):
     min_distortion = 1000
     for enum, codeword in enumerate(codebook):
         #distortion = ratio_distortion(np.array(feat), np.array(codeword), R)
@@ -33,10 +33,10 @@ def get_best_matching_unit(feat, codebook, R):
             class_num = enum
     return class_num, min_distortion
 
-def assign_classes(features, codebook, R=[0]):
+def assign_classes(features, codebook):
     classes = []
     for feat in features:
-        class_num, dist = get_best_matching_unit(feat, codebook, R)
+        class_num, dist = get_best_matching_unit(feat, codebook)
         classes.append(class_num)
     return classes
 
@@ -55,7 +55,7 @@ def featureset_distortion(features, classes, codebook):
         distortion = distortion + euclidean_distance(np.array(feat), np.array(codebook[classes[enum]]))
     return distortion
 
-def train_codebook(features, classes, codebook, epochs,  R=[0]):
+def train_codebook(features, classes, codebook, epochs):
     for e in range(epochs):
         for i in range(len(codebook)):
             codebook[i] = update_codeword(features, classes, codebook[i], i)
@@ -68,12 +68,12 @@ def vector_quantization_trainning(features, n_codewords, epochs):
     #R = np.corrcoef(features.T)
     codebook = [random_codebook(features) for i in range(n_codewords)]
     classes = assign_classes(features, codebook)
-    codebook, classes = train_codebook(features, classes, codebook, R, epochs)
+    codebook, classes = train_codebook(features, classes, codebook, epochs)
     return codebook, classes
 
 def codebook_distortion(features, codebook):
-    R = np.corrcoef(features.T)
-    classes = assign_classes(features, codebook, R)
+    #R = np.corrcoef(features.T)
+    classes = assign_classes(features, codebook)
     distortion = featureset_distortion(features, classes, codebook)
     return distortion
 

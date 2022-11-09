@@ -66,8 +66,8 @@ n_codewords = 10
 epochs = 50
 
 speaker_models = []
-for speaker in features:
-    codebook, classes = models.vector_quantization_trainning(speaker, n_codewords, epochs)
+for enum, id in enumerate(speaker_ids):
+    codebook, classes = models.vector_quantization_trainning(features[id]['train'], n_codewords, epochs)
     speaker_models.append(codebook)
     
 dist = 1/0.000000001

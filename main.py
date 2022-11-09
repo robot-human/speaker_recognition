@@ -11,7 +11,6 @@ from env_variables import DATABASE_PATH, N_SPEAKERS, SAMPLE_RATE, NFFT, FRAMES_A
 random.seed(10)
 
 
-
 MODELS_LIST = ['SVM']
 FEATURES_LIST = ['MFCC']
 

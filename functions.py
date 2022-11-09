@@ -3,9 +3,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import librosa
-
-log_files_path = os.getcwd() + "/log_files" 
-SAMPLE_RATE = 8000
+from env_variables import LOG_FILES_PATH, SAMPLE_RATE
 
 def samples_to_seconds(samples, sample_rate):
     out = len(samples)/sample_rate
@@ -13,7 +11,7 @@ def samples_to_seconds(samples, sample_rate):
 
 def plot_signal(signal,name):
     plt.plot(signal)
-    plt.savefig(log_files_path+f"/{name}.png")
+    plt.savefig(LOG_FILES_PATH+f"/{name}.png")
 
 def trim_signal(signal, sample_rate, secs):
     n_samples = math.floor(secs*sample_rate)

@@ -3,9 +3,8 @@ import math
 import random
 import functions
 import feature_extraction as feats
+from env_variables import SAMPLE_RATE
 
-SAMPLE_RATE = 10000
-N_SAMPLES = SAMPLE_RATE*2
 
 def get_speaker_files(database_path):
     database_dir = os.listdir(database_path)

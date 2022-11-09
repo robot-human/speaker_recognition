@@ -2,6 +2,8 @@ import numpy as np
 from math import sqrt
 from random import randrange
 from sklearn import svm
+from sklearn.mixture import GaussianMixture
+from env_variables import DATABASE_PATH, N_SPEAKERS, SAMPLE_RATE, NFFT, FRAMES_ATTR, MFCC_ATTR, P, N_CODEWORDS, EPOCHS, N_MIXTURES
 
 ######################################################################################################
 # Vector Quantization
@@ -86,11 +88,47 @@ def select_speaker(features, speaker_codebooks):
             min_distortion = dist
             speaker_num = enum
     return speaker_num, min_distortion
+
+def run_VQ_model(speaker_ids, features):
+    speaker_models = []
+    for enum, id in enumerate(speaker_ids):
+        codebook, classes = vector_quantization_trainning(features[id]['train'], N_CODEWORDS, EPOCHS)
+        speaker_models.append(codebook)
     
+    for id in speaker_ids:
+        speaker = -1
+        dist = 1/0.00000001
+        for enum, speaker_model in enumerate(speaker_models):
+            classes = assign_classes(features[id]['test'], speaker_model)
+            speaker_dist = featureset_distortion(features[id]['test'], classes, speaker_model)
+            if(speaker_dist < dist):
+                dist = speaker_dist
+                speaker = enum
+        print(speaker)
 ######################################################################################################
 # Gaussian Mixture Model
 
+def run_GMM_model(speaker_ids, features, scaler):
+    scaled_separate_set = []
+    for id in speaker_ids:
+        scaled_separate_set.append(scaler.transform(features[id]['train']))
 
+    speaker_gm_models = []
+    for sp in scaled_separate_set:
+        gm = GaussianMixture(n_components=N_MIXTURES, random_state=0).fit(sp)
+        speaker_gm_models.append(gm)
+
+    for id in speaker_ids:
+        dist = -1/0.000000001
+        speaker = -1
+        test_data = scaler.transform(features[id]['test'])
+        for enum, model in enumerate(speaker_gm_models):
+            speaker_dist = model.score(test_data)
+            if(speaker_dist > dist):
+                dist = speaker_dist
+                speaker = enum
+        print(speaker)
+    print("")
 
 
 ######################################################################################################
@@ -104,3 +142,14 @@ coef0  = 0
 svm_param_list   = [C, gamma, tol, degree, coef0]
 model = svm.SVC(kernel=kern, C=svm_param_list[0], gamma='auto', tol=svm_param_list[2], degree=svm_param_list[3], coef0=svm_param_list[4], max_iter=50000)
 #model.fit(train_set,train_y)
+
+def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
+    model_svm = svm.SVC(kernel='rbf')
+    model_svm.fit(scaled_train,classes)
+    for enum, id in enumerate(speaker_ids):
+        test_data = scaler.transform(features[id]['test'])
+        test_classes = model_svm.predict(test_data)
+        counts = np.bincount(test_classes)
+        speaker = np.argmax(counts)
+        print(speaker)
+    print("")

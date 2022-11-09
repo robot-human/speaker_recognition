@@ -6,7 +6,7 @@ from read_files import get_speaker_files, get_speaker_signals_dict
 from sklearn import svm
 from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import StandardScaler
-from env_variables import DATABASE_PATH, N_SPEAKERS, SAMPLE_RATE, FRAMES_ATTR, MFCC_ATTR, P
+from env_variables import DATABASE_PATH, N_SPEAKERS, SAMPLE_RATE, NFFT, FRAMES_ATTR, MFCC_ATTR, P, N_CODEWORDS, EPOCHS, N_MIXTURES
 
 random.seed(10)
 
@@ -14,10 +14,10 @@ random.seed(10)
 ids, speaker_files = get_speaker_files(DATABASE_PATH)
 speaker_ids = random.sample(ids, k=N_SPEAKERS)
 signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
-plp_filters = feats.get_PLP_filters(SAMPLE_RATE, 512)
+plp_filters = feats.get_PLP_filters(SAMPLE_RATE, NFFT)
               
 window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , FRAMES_ATTR)
-pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, 512)
+pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, NFFT)
 
 
 ########################################################################################################
@@ -42,24 +42,7 @@ model_svm.fit(scaled_train,classes)
 
 
 print("MFFC with VQ")
-n_codewords = 50
-epochs = 50
-speaker_models = []
-for enum, id in enumerate(speaker_ids):
-    codebook, classes = models.vector_quantization_trainning(features[id]['train'], n_codewords, epochs)
-    speaker_models.append(codebook)
-    
-for id in speaker_ids:
-    speaker = -1
-    dist = 1/0.00000001
-    for enum, speaker_model in enumerate(speaker_models):
-        classes = models.assign_classes(features[id]['test'], speaker_model)
-        speaker_dist = models.featureset_distortion(features[id]['test'], classes, speaker_model)
-        if(speaker_dist < dist):
-            dist = speaker_dist
-            speaker = enum
-    print(speaker)
-print("")
+models.run_VQ_model(speaker_ids, features)
 
 print("MFFC with SVM")
 for enum, id in enumerate(speaker_ids):
@@ -72,14 +55,13 @@ print("")
 
 
 print("MFFC with GMM")
-N_COMPONENTS = 50
 scaled_separate_set = []
 for id in speaker_ids:
     scaled_separate_set.append(scaler.transform(features[id]['train']))
 
 speaker_gm_models = []
 for sp in scaled_separate_set:
-    gm = GaussianMixture(n_components=N_COMPONENTS, random_state=0).fit(sp)
+    gm = GaussianMixture(n_components=N_MIXTURES, random_state=0).fit(sp)
     speaker_gm_models.append(gm)
 
 for id in speaker_ids:
@@ -115,11 +97,9 @@ model_svm = svm.SVC(kernel='rbf')
 model_svm.fit(scaled_train,classes)
 
 print("LPC with VQ")
-n_codewords = 50
-epochs = 50
 speaker_models = []
 for enum, id in enumerate(speaker_ids):
-    codebook, classes = models.vector_quantization_trainning(features[id]['train'], n_codewords, epochs)
+    codebook, classes = models.vector_quantization_trainning(features[id]['train'], N_CODEWORDS, EPOCHS)
     speaker_models.append(codebook)
     
 for id in speaker_ids:
@@ -145,14 +125,13 @@ print("")
 
 
 print("LPC with GMM")
-N_COMPONENTS = 50
 scaled_separate_set = []
 for id in speaker_ids:
     scaled_separate_set.append(scaler.transform(features[id]['train']))
 
 speaker_gm_models = []
 for sp in scaled_separate_set:
-    gm = GaussianMixture(n_components=N_COMPONENTS, random_state=0).fit(sp)
+    gm = GaussianMixture(n_components=N_MIXTURES, random_state=0).fit(sp)
     speaker_gm_models.append(gm)
 
 for id in speaker_ids:
@@ -187,11 +166,9 @@ model_svm = svm.SVC(kernel='rbf')
 model_svm.fit(scaled_train,classes)
 
 print("PLP with VQ")
-n_codewords = 50
-epochs = 50
 speaker_models = []
 for enum, id in enumerate(speaker_ids):
-    codebook, classes = models.vector_quantization_trainning(features[id]['train'], n_codewords, epochs)
+    codebook, classes = models.vector_quantization_trainning(features[id]['train'], N_CODEWORDS, EPOCHS)
     speaker_models.append(codebook)
     
 for id in speaker_ids:
@@ -217,14 +194,13 @@ print("")
 
 
 print("PLP with GMM")
-N_COMPONENTS = 50
 scaled_separate_set = []
 for id in speaker_ids:
     scaled_separate_set.append(scaler.transform(features[id]['train']))
 
 speaker_gm_models = []
 for sp in scaled_separate_set:
-    gm = GaussianMixture(n_components=N_COMPONENTS, random_state=0).fit(sp)
+    gm = GaussianMixture(n_components=N_MIXTURES, random_state=0).fit(sp)
     speaker_gm_models.append(gm)
 
 for id in speaker_ids:

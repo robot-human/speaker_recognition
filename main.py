@@ -9,7 +9,7 @@ from sklearn.preprocessing import StandardScaler
 
 log_files_path = "/media/Data/pedro_tesis/log_files" 
 database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
-N_SPEAKERS = 6
+N_SPEAKERS = 10
 SAMPLE_RATE = 10000
 random.seed(10)
 

@@ -77,7 +77,7 @@ for enum1, id in enumerate(speaker_ids):
         classes = models.assign_classes(features[id]['test'], speaker_model)
         speaker_dist = models.featureset_distortion(features[id]['test'], classes, speaker_model)
         if(speaker_dist < dist):
-            dist = enum
+            dist = speaker_dist
     print(enum)
 
 print("MFFC with SVM")

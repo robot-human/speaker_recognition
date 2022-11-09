@@ -55,19 +55,19 @@ def featureset_distortion(features, classes, codebook):
         distortion = distortion + euclidean_distance(np.array(feat), np.array(codebook[classes[enum]]))
     return distortion
 
-def train_codebook(features, classes, codebook, R, epochs):
+def train_codebook(features, classes, codebook, epochs,  R=[0]):
     for e in range(epochs):
         for i in range(len(codebook)):
             codebook[i] = update_codeword(features, classes, codebook[i], i)
-        classes = assign_classes(features, codebook, R)
+        classes = assign_classes(features, codebook)
         distortion = featureset_distortion(features, classes, codebook)
         #print(f'epoch: {e}, distortion: {distortion}')
     return codebook, classes
 
 def vector_quantization_trainning(features, n_codewords, epochs):
-    R = np.corrcoef(features.T)
+    #R = np.corrcoef(features.T)
     codebook = [random_codebook(features) for i in range(n_codewords)]
-    classes = assign_classes(features, codebook, R)
+    classes = assign_classes(features, codebook)
     codebook, classes = train_codebook(features, classes, codebook, R, epochs)
     return codebook, classes
 

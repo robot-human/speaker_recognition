@@ -97,53 +97,16 @@ model_svm = svm.SVC(kernel='rbf')
 model_svm.fit(scaled_train,classes)
 
 print("LPC with VQ")
-speaker_models = []
-for enum, id in enumerate(speaker_ids):
-    codebook, classes = models.vector_quantization_trainning(features[id]['train'], N_CODEWORDS, EPOCHS)
-    speaker_models.append(codebook)
-    
-for id in speaker_ids:
-    speaker = -1
-    dist = 1/0.00000001
-    for enum, speaker_model in enumerate(speaker_models):
-        classes = models.assign_classes(features[id]['test'], speaker_model)
-        speaker_dist = models.featureset_distortion(features[id]['test'], classes, speaker_model)
-        if(speaker_dist < dist):
-            dist = speaker_dist
-            speaker = enum
-    print(speaker)
+models.run_VQ_model(speaker_ids, features)
 print("")
 
 print("LPC with SVM")
-for enum, id in enumerate(speaker_ids):
-    test_data = scaler.transform(features[id]['test'])
-    test_classes = model_svm.predict(test_data)
-    counts = np.bincount(test_classes)
-    speaker = np.argmax(counts)
-    print(speaker)
+models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
 print("")
 
 
 print("LPC with GMM")
-scaled_separate_set = []
-for id in speaker_ids:
-    scaled_separate_set.append(scaler.transform(features[id]['train']))
-
-speaker_gm_models = []
-for sp in scaled_separate_set:
-    gm = GaussianMixture(n_components=N_MIXTURES, random_state=0).fit(sp)
-    speaker_gm_models.append(gm)
-
-for id in speaker_ids:
-    dist = -1/0.000000001
-    speaker = -1
-    test_data = scaler.transform(features[id]['test'])
-    for enum, model in enumerate(speaker_gm_models):
-        speaker_dist = model.score(test_data)
-        if(speaker_dist > dist):
-            dist = speaker_dist
-            speaker = enum
-    print(speaker)
+models.run_GMM_model(speaker_ids, features, scaler)
 print("")
 # ########################################################################################################
 # ## PLP
@@ -166,21 +129,7 @@ model_svm = svm.SVC(kernel='rbf')
 model_svm.fit(scaled_train,classes)
 
 print("PLP with VQ")
-speaker_models = []
-for enum, id in enumerate(speaker_ids):
-    codebook, classes = models.vector_quantization_trainning(features[id]['train'], N_CODEWORDS, EPOCHS)
-    speaker_models.append(codebook)
-    
-for id in speaker_ids:
-    speaker = -1
-    dist = 1/0.00000001
-    for enum, speaker_model in enumerate(speaker_models):
-        classes = models.assign_classes(features[id]['test'], speaker_model)
-        speaker_dist = models.featureset_distortion(features[id]['test'], classes, speaker_model)
-        if(speaker_dist < dist):
-            dist = speaker_dist
-            speaker = enum
-    print(speaker)
+models.run_VQ_model(speaker_ids, features)
 print("")
 
 print("PLP with SVM")

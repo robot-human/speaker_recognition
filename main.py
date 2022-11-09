@@ -96,7 +96,7 @@ print("")
 ########################################################################################################
 ## PLP
 print("PLP with SVM")
-features = feats.get_plp_feats(speaker_ids, window_frames, 12,plp_filters)
+features = feats.get_plp_feats(speaker_ids, pow_frames, 12, plp_filters)
 classes = []
 train_set = []
 for enum, id in enumerate(speaker_ids):

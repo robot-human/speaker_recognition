@@ -112,7 +112,7 @@ def run_VQ_model(speaker_ids, features):
             good_classifications += 1
         else:
             bad_classifications += 1
-    print(good_classifications,bad_classifications)
+    print(f'Casos bien clasificados: {good_classifications}',f'Casos mal clasificados: {bad_classifications}')
     print("")
     return classifications
 ######################################################################################################
@@ -145,7 +145,7 @@ def run_GMM_model(speaker_ids, features, scaler):
             good_classifications += 1
         else:
             bad_classifications += 1
-    print(good_classifications,bad_classifications)
+    print(f'Casos bien clasificados: {good_classifications}',f'Casos mal clasificados: {bad_classifications}')
     print("")
     return classifications
 
@@ -178,6 +178,6 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
             good_classifications += 1
         else:
             bad_classifications += 1
-    print(good_classifications,bad_classifications)
+    print(f'Casos bien clasificados: {good_classifications}',f'Casos mal clasificados: {bad_classifications}')
     print("")
     return classifications

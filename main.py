@@ -40,59 +40,59 @@ pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, 512)
 
 
 ########################################################################################################
-## MFCC
-print("MFFC with SVM")
-features = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
-classes = []
-train_set = []
-for enum, id in enumerate(speaker_ids):
-    for val in features[id]['train']:
-        train_set.extend(features[id]['train'])
-        for i in range(len(features[id]['train'])):
-            classes.append(enum)
+# ## MFCC
+# print("MFFC with SVM")
+# features = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
+# classes = []
+# train_set = []
+# for enum, id in enumerate(speaker_ids):
+#     for val in features[id]['train']:
+#         train_set.extend(features[id]['train'])
+#         for i in range(len(features[id]['train'])):
+#             classes.append(enum)
 
 
 
-scaler = StandardScaler()
-scaler.fit(train_set)
-scaled_train = scaler.transform(train_set)
-model = svm.SVC(kernel='rbf')
-model.fit(scaled_train,classes)
+# scaler = StandardScaler()
+# scaler.fit(train_set)
+# scaled_train = scaler.transform(train_set)
+# model = svm.SVC(kernel='rbf')
+# model.fit(scaled_train,classes)
 
-for enum, id in enumerate(speaker_ids):
-    test_data = scaler.transform(features[id]['test'])
-    test_classes = model.predict(test_data)
-    counts = np.bincount(test_classes)
-    speaker = np.argmax(counts)
-    print(speaker)
-print("")
-########################################################################################################
-## LPC
-print("LPC with SVM")
-features = feats.get_lpc_feats(speaker_ids, window_frames, 12)
-classes = []
-train_set = []
-for enum, id in enumerate(speaker_ids):
-    for val in features[id]['train']:
-        train_set.extend(features[id]['train'])
-        for i in range(len(features[id]['train'])):
-            classes.append(enum)
+# for enum, id in enumerate(speaker_ids):
+#     test_data = scaler.transform(features[id]['test'])
+#     test_classes = model.predict(test_data)
+#     counts = np.bincount(test_classes)
+#     speaker = np.argmax(counts)
+#     print(speaker)
+# print("")
+# ########################################################################################################
+# ## LPC
+# print("LPC with SVM")
+# features = feats.get_lpc_feats(speaker_ids, window_frames, 12)
+# classes = []
+# train_set = []
+# for enum, id in enumerate(speaker_ids):
+#     for val in features[id]['train']:
+#         train_set.extend(features[id]['train'])
+#         for i in range(len(features[id]['train'])):
+#             classes.append(enum)
 
 
 
-scaler = StandardScaler()
-scaler.fit(train_set)
-scaled_train = scaler.transform(train_set)
-model = svm.SVC(kernel='rbf')
-model.fit(scaled_train,classes)
+# scaler = StandardScaler()
+# scaler.fit(train_set)
+# scaled_train = scaler.transform(train_set)
+# model = svm.SVC(kernel='rbf')
+# model.fit(scaled_train,classes)
 
-for enum, id in enumerate(speaker_ids):
-    test_data = scaler.transform(features[id]['test'])
-    test_classes = model.predict(test_data)
-    counts = np.bincount(test_classes)
-    speaker = np.argmax(counts)
-    print(speaker)
-print("")
+# for enum, id in enumerate(speaker_ids):
+#     test_data = scaler.transform(features[id]['test'])
+#     test_classes = model.predict(test_data)
+#     counts = np.bincount(test_classes)
+#     speaker = np.argmax(counts)
+#     print(speaker)
+# print("")
 ########################################################################################################
 ## PLP
 print("PLP with SVM")

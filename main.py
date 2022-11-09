@@ -62,7 +62,7 @@ model.fit(scaled_train,classes)
 
 
 print("MFFC with VQ")
-n_codewords = 10
+n_codewords = 50
 epochs = 50
 
 speaker_models = []
@@ -73,9 +73,9 @@ for enum, id in enumerate(speaker_ids):
 dist = 1/0.000000001
 speaker = ""
 for enum1, id in enumerate(speaker_ids):
-    for enum, model in enumerate(speaker_models):
-        classes = models.assign_classes(features[id]['test'], model)
-        speaker_dist = models.featureset_distortion(features[id]['test'], classes, model)
+    for enum, speaker_model in enumerate(speaker_models):
+        classes = models.assign_classes(features[id]['test'], speaker_model)
+        speaker_dist = models.featureset_distortion(features[id]['test'], classes, speaker_model)
         if(speaker_dist < dist):
             dist = enum
     print(enum)

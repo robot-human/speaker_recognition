@@ -99,8 +99,8 @@ for id in speaker_ids:
     scaled_separate_set.append(scaler.transform(features[id]['train']))
 
 speaker_gm_models = []
-for id in speaker_ids:
-    gm = GaussianMixture(n_components=N_COMPONENTS, random_state=0).fit(speaker)
+for sp in scaled_separate_set:
+    gm = GaussianMixture(n_components=N_COMPONENTS, random_state=0).fit(sp)
     speaker_gm_models.append(gm)
 
 for id in speaker_ids:

@@ -70,9 +70,9 @@ for enum, id in enumerate(speaker_ids):
     codebook, classes = models.vector_quantization_trainning(features[id]['train'], n_codewords, epochs)
     speaker_models.append(codebook)
     
-dist = 1/0.00000000001
 for enum1, id in enumerate(speaker_ids):
     speaker = -1
+    dist = 1/0.00000001
     for enum, speaker_model in enumerate(speaker_models):
         classes = models.assign_classes(features[id]['test'], speaker_model)
         speaker_dist = models.featureset_distortion(features[id]['test'], classes, speaker_model)

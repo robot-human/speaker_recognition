@@ -4,6 +4,7 @@ import feature_extraction as feats
 import classification_models as models
 from read_files import get_speaker_files, get_speaker_signals_dict
 from sklearn import svm
+from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import StandardScaler
 
 log_files_path = "/media/Data/pedro_tesis/log_files" 
@@ -61,25 +62,25 @@ model_svm = svm.SVC(kernel='rbf')
 model_svm.fit(scaled_train,classes)
 
 
-print("MFFC with VQ")
-n_codewords = 50
-epochs = 50
-
-speaker_models = []
-for enum, id in enumerate(speaker_ids):
-    codebook, classes = models.vector_quantization_trainning(features[id]['train'], n_codewords, epochs)
-    speaker_models.append(codebook)
+# print("MFFC with VQ")
+# n_codewords = 50
+# epochs = 50
+# speaker_models = []
+# for enum, id in enumerate(speaker_ids):
+#     codebook, classes = models.vector_quantization_trainning(features[id]['train'], n_codewords, epochs)
+#     speaker_models.append(codebook)
     
-for enum1, id in enumerate(speaker_ids):
-    speaker = -1
-    dist = 1/0.00000001
-    for enum, speaker_model in enumerate(speaker_models):
-        classes = models.assign_classes(features[id]['test'], speaker_model)
-        speaker_dist = models.featureset_distortion(features[id]['test'], classes, speaker_model)
-        if(speaker_dist < dist):
-            dist = speaker_dist
-            speaker = enum
-    print(speaker)
+# for id in speaker_ids:
+#     speaker = -1
+#     dist = 1/0.00000001
+#     for enum, speaker_model in enumerate(speaker_models):
+#         classes = models.assign_classes(features[id]['test'], speaker_model)
+#         speaker_dist = models.featureset_distortion(features[id]['test'], classes, speaker_model)
+#         if(speaker_dist < dist):
+#             dist = speaker_dist
+#             speaker = enum
+#     print(speaker)
+# print("")
 
 # print("MFFC with SVM")
 # for enum, id in enumerate(speaker_ids):
@@ -89,6 +90,30 @@ for enum1, id in enumerate(speaker_ids):
 #     speaker = np.argmax(counts)
 #     print(speaker)
 # print("")
+
+
+print("MFFC with GMM")
+N_COMPONENTS = 200
+scaled_separate_set = []
+for id in speaker_ids:
+    scaled_separate_set.append(scaler.transform(features[id]['train']))
+
+speaker_gm_models = []
+for id in speaker_ids:
+    gm = GaussianMixture(n_components=N_COMPONENTS, random_state=0).fit(speaker)
+    speaker_gm_models.append(gm)
+
+for id in speaker_ids:
+    dist = -1/0.000000001
+    speaker = -1
+    test_data = scaler.transform(features[id]['test'])
+    for enum, model in enumerate(speaker_gm_models):
+        speaker_dist = model.score(test_data)
+        if(speaker_dist > dist):
+            dist = speaker_dist
+            speaker = enum
+    print(speaker)
+print("")
 
 # ########################################################################################################
 # ## LPC

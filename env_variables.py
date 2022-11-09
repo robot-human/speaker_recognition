@@ -7,7 +7,7 @@ NFFT = 512
 
 FRAMES_ATTR = {
     "NFFT": NFFT,
-    "sample_rate": 10000,
+    "sample_rate": SAMPLE_RATE,
     "VAD_TRESHOLD": 0.012,
     "PRE_EMPHASIS_COEF": 0.95,
     "FRAME_IN_SECS": 0.025,
@@ -16,7 +16,7 @@ FRAMES_ATTR = {
 }
 MFCC_ATTR = {
     "NFFT": NFFT,
-    "sample_rate": 10000,
+    "sample_rate": SAMPLE_RATE,
     "n_filt": 22,
     "num_ceps": 22,
     "cep_lifter": 22

@@ -105,6 +105,7 @@ def run_VQ_model(speaker_ids, features):
                 dist = speaker_dist
                 speaker = enum
         print(speaker)
+    print("")
 ######################################################################################################
 # Gaussian Mixture Model
 

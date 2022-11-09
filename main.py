@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 
 log_files_path = "/media/Data/pedro_tesis/log_files" 
 database_path = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
-N_SPEAKERS =10
+N_SPEAKERS = 4
 SAMPLE_RATE = 10000
 random.seed(10)
 
@@ -80,65 +80,65 @@ for enum1, id in enumerate(speaker_ids):
             speaker = enum
     print(speaker)
 
-print("MFFC with SVM")
-for enum, id in enumerate(speaker_ids):
-    test_data = scaler.transform(features[id]['test'])
-    test_classes = model_svm.predict(test_data)
-    counts = np.bincount(test_classes)
-    speaker = np.argmax(counts)
-    print(speaker)
-print("")
+# print("MFFC with SVM")
+# for enum, id in enumerate(speaker_ids):
+#     test_data = scaler.transform(features[id]['test'])
+#     test_classes = model_svm.predict(test_data)
+#     counts = np.bincount(test_classes)
+#     speaker = np.argmax(counts)
+#     print(speaker)
+# print("")
 
-########################################################################################################
-## LPC
-print("LPC with SVM")
-features = feats.get_lpc_feats(speaker_ids, window_frames, 12)
-classes = []
-train_set = []
-for enum, id in enumerate(speaker_ids):
-    for val in features[id]['train']:
-        train_set.extend(features[id]['train'])
-        for i in range(len(features[id]['train'])):
-            classes.append(enum)
-
-
-
-scaler = StandardScaler()
-scaler.fit(train_set)
-scaled_train = scaler.transform(train_set)
-model = svm.SVC(kernel='rbf')
-model.fit(scaled_train,classes)
-
-for enum, id in enumerate(speaker_ids):
-    test_data = scaler.transform(features[id]['test'])
-    test_classes = model.predict(test_data)
-    counts = np.bincount(test_classes)
-    speaker = np.argmax(counts)
-    print(speaker)
-print("")
-########################################################################################################
-## PLP
-print("PLP with SVM")
-features = feats.get_plp_feats(speaker_ids, pow_frames, 12, plp_filters)
-classes = []
-train_set = []
-for enum, id in enumerate(speaker_ids):
-    for val in features[id]['train']:
-        train_set.extend(features[id]['train'])
-        for i in range(len(features[id]['train'])):
-            classes.append(enum)
+# ########################################################################################################
+# ## LPC
+# print("LPC with SVM")
+# features = feats.get_lpc_feats(speaker_ids, window_frames, 12)
+# classes = []
+# train_set = []
+# for enum, id in enumerate(speaker_ids):
+#     for val in features[id]['train']:
+#         train_set.extend(features[id]['train'])
+#         for i in range(len(features[id]['train'])):
+#             classes.append(enum)
 
 
 
-scaler = StandardScaler()
-scaler.fit(train_set)
-scaled_train = scaler.transform(train_set)
-model = svm.SVC(kernel='rbf')
-model.fit(scaled_train,classes)
+# scaler = StandardScaler()
+# scaler.fit(train_set)
+# scaled_train = scaler.transform(train_set)
+# model = svm.SVC(kernel='rbf')
+# model.fit(scaled_train,classes)
 
-for enum, id in enumerate(speaker_ids):
-    test_data = scaler.transform(features[id]['test'])
-    test_classes = model.predict(test_data)
-    counts = np.bincount(test_classes)
-    speaker = np.argmax(counts)
-    print(speaker)
+# for enum, id in enumerate(speaker_ids):
+#     test_data = scaler.transform(features[id]['test'])
+#     test_classes = model.predict(test_data)
+#     counts = np.bincount(test_classes)
+#     speaker = np.argmax(counts)
+#     print(speaker)
+# print("")
+# ########################################################################################################
+# ## PLP
+# print("PLP with SVM")
+# features = feats.get_plp_feats(speaker_ids, pow_frames, 12, plp_filters)
+# classes = []
+# train_set = []
+# for enum, id in enumerate(speaker_ids):
+#     for val in features[id]['train']:
+#         train_set.extend(features[id]['train'])
+#         for i in range(len(features[id]['train'])):
+#             classes.append(enum)
+
+
+
+# scaler = StandardScaler()
+# scaler.fit(train_set)
+# scaled_train = scaler.transform(train_set)
+# model = svm.SVC(kernel='rbf')
+# model.fit(scaled_train,classes)
+
+# for enum, id in enumerate(speaker_ids):
+#     test_data = scaler.transform(features[id]['test'])
+#     test_classes = model.predict(test_data)
+#     counts = np.bincount(test_classes)
+#     speaker = np.argmax(counts)
+#     print(speaker)

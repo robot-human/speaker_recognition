@@ -57,20 +57,20 @@ for enum, id in enumerate(speaker_ids):
 scaler = StandardScaler()
 scaler.fit(train_set)
 scaled_train = scaler.transform(train_set)
-model = svm.SVC(kernel='rbf')
-model.fit(scaled_train,classes)
+model_svm = svm.SVC(kernel='rbf')
+model_svm.fit(scaled_train,classes)
 
 
 print("MFFC with VQ")
-n_codewords = 50
-epochs = 50
+n_codewords = 500
+epochs = 500
 
 speaker_models = []
 for enum, id in enumerate(speaker_ids):
     codebook, classes = models.vector_quantization_trainning(features[id]['train'], n_codewords, epochs)
     speaker_models.append(codebook)
     
-dist = 1/0.000000001
+dist = 1/0.00000000001
 speaker = ""
 for enum1, id in enumerate(speaker_ids):
     for enum, speaker_model in enumerate(speaker_models):
@@ -83,7 +83,7 @@ for enum1, id in enumerate(speaker_ids):
 print("MFFC with SVM")
 for enum, id in enumerate(speaker_ids):
     test_data = scaler.transform(features[id]['test'])
-    test_classes = model.predict(test_data)
+    test_classes = model_svm.predict(test_data)
     counts = np.bincount(test_classes)
     speaker = np.argmax(counts)
     print(speaker)

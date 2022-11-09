@@ -93,10 +93,9 @@ model_svm.fit(scaled_train,classes)
 
 
 print("MFFC with GMM")
-N_COMPONENTS = 200
+N_COMPONENTS = 50
 scaled_separate_set = []
 for id in speaker_ids:
-    print(len(features[id]['train'][0]))
     scaled_separate_set.append(scaler.transform(features[id]['train']))
 
 speaker_gm_models = []

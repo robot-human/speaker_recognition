@@ -96,6 +96,7 @@ print("MFFC with GMM")
 N_COMPONENTS = 200
 scaled_separate_set = []
 for id in speaker_ids:
+    print(features[id]['train'])
     scaled_separate_set.append(scaler.transform(features[id]['train']))
 
 speaker_gm_models = []

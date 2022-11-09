@@ -45,35 +45,12 @@ print("MFFC with VQ")
 models.run_VQ_model(speaker_ids, features)
 
 print("MFFC with SVM")
-for enum, id in enumerate(speaker_ids):
-    test_data = scaler.transform(features[id]['test'])
-    test_classes = model_svm.predict(test_data)
-    counts = np.bincount(test_classes)
-    speaker = np.argmax(counts)
-    print(speaker)
+models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
 print("")
 
 
 print("MFFC with GMM")
-scaled_separate_set = []
-for id in speaker_ids:
-    scaled_separate_set.append(scaler.transform(features[id]['train']))
-
-speaker_gm_models = []
-for sp in scaled_separate_set:
-    gm = GaussianMixture(n_components=N_MIXTURES, random_state=0).fit(sp)
-    speaker_gm_models.append(gm)
-
-for id in speaker_ids:
-    dist = -1/0.000000001
-    speaker = -1
-    test_data = scaler.transform(features[id]['test'])
-    for enum, model in enumerate(speaker_gm_models):
-        speaker_dist = model.score(test_data)
-        if(speaker_dist > dist):
-            dist = speaker_dist
-            speaker = enum
-    print(speaker)
+models.run_GMM_model(speaker_ids, features, scaler)
 print("")
 
 # ########################################################################################################
@@ -133,33 +110,10 @@ models.run_VQ_model(speaker_ids, features)
 print("")
 
 print("PLP with SVM")
-for enum, id in enumerate(speaker_ids):
-    test_data = scaler.transform(features[id]['test'])
-    test_classes = model_svm.predict(test_data)
-    counts = np.bincount(test_classes)
-    speaker = np.argmax(counts)
-    print(speaker)
+models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
 print("")
 
 
 print("PLP with GMM")
-scaled_separate_set = []
-for id in speaker_ids:
-    scaled_separate_set.append(scaler.transform(features[id]['train']))
-
-speaker_gm_models = []
-for sp in scaled_separate_set:
-    gm = GaussianMixture(n_components=N_MIXTURES, random_state=0).fit(sp)
-    speaker_gm_models.append(gm)
-
-for id in speaker_ids:
-    dist = -1/0.000000001
-    speaker = -1
-    test_data = scaler.transform(features[id]['test'])
-    for enum, model in enumerate(speaker_gm_models):
-        speaker_dist = model.score(test_data)
-        if(speaker_dist > dist):
-            dist = speaker_dist
-            speaker = enum
-    print(speaker)
+models.run_GMM_model(speaker_ids, features, scaler)
 print("")

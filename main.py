@@ -34,17 +34,18 @@ ids, speaker_files = get_speaker_files(database_path)
 speaker_ids = random.sample(ids, k=N_SPEAKERS)
 signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
 
-window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , frames_attr)
-pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, 512)
-mfcc = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
+print(signal_dict)
+# window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , frames_attr)
+# pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, 512)
+# mfcc = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
 
-classes = []
-train_set = []
-for enum, id in enumerate(speaker_ids):
-    for val in mfcc[id]['train']:
-        print(len(mfcc[id]['train']))
-        print("")
-        print("")
+# classes = []
+# train_set = []
+# for enum, id in enumerate(speaker_ids):
+#     for val in mfcc[id]['train']:
+#         print(len(mfcc[id]['train']))
+#         print("")
+#         print("")
         #train_set.append(mfcc[id]['train'])
         #classes.append(enum)
 #print(train_set[0])

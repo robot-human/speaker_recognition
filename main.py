@@ -34,33 +34,34 @@ ids, speaker_files = get_speaker_files(database_path)
 speaker_ids = random.sample(ids, k=N_SPEAKERS)
 signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
 
-
+              
 window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , frames_attr)
 pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, 512)
 mfcc = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
 
-print(len(pow_frames[speaker_ids[0]]['train']),len(mfcc[speaker_ids[0]]['train']))
 
-# classes = []
-# train_set = []
-# for enum, id in enumerate(speaker_ids):
-#     for val in mfcc[id]['train']:
-#         print(len(mfcc[id]['train']))
-#         print("")
-#         print("")
-        #train_set.append(mfcc[id]['train'])
-        #classes.append(enum)
+
+classes = []
+train_set = []
+for enum, id in enumerate(speaker_ids):
+    for val in mfcc[id]['train']:
+        print(len(mfcc[id]['train']))
+        print("")
+        print("")
+        train_set.extend(mfcc[id]['train'])
+        classes.append(enum)
+
 #print(train_set[0])
 #print(len(train_set),len(classes))
-# scaler = StandardScaler()
-# scaler.fit(train_set)
-# scaled_train = scaler.transform(train_set)
-# model = svm.SVC(kernel='rbf')
-# model.fit(scaled_train,classes)
+scaler = StandardScaler()
+scaler.fit(train_set)
+scaled_train = scaler.transform(train_set)
+model = svm.SVC(kernel='rbf')
+model.fit(scaled_train,classes)
 
-# for enum, id in enumerate(speaker_ids):
-#     test_data = scaler.transform(mfcc[id]['test'])
-#     test_classes = model.predict(test_data)
-#     counts = np.bincount(test_classes)
-#     speaker = np.argmax(counts)
-#     print(speaker)
+for enum, id in enumerate(speaker_ids):
+    test_data = scaler.transform(mfcc[id]['test'])
+    test_classes = model.predict(test_data)
+    counts = np.bincount(test_classes)
+    speaker = np.argmax(counts)
+    print(speaker)

@@ -37,16 +37,16 @@ signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
               
 window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , frames_attr)
 pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, 512)
-mfcc = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
+features = feats.get_lpc_feats(speaker_ids, window_frames, 12)
 
 
 
 classes = []
 train_set = []
 for enum, id in enumerate(speaker_ids):
-    for val in mfcc[id]['train']:
-        train_set.extend(mfcc[id]['train'])
-        for i in range(len(mfcc[id]['train'])):
+    for val in features[id]['train']:
+        train_set.extend(features[id]['train'])
+        for i in range(len(features[id]['train'])):
             classes.append(enum)
 
 
@@ -57,7 +57,7 @@ model = svm.SVC(kernel='rbf')
 model.fit(scaled_train,classes)
 
 for enum, id in enumerate(speaker_ids):
-    test_data = scaler.transform(mfcc[id]['test'])
+    test_data = scaler.transform(features[id]['test'])
     test_classes = model.predict(test_data)
     counts = np.bincount(test_classes)
     speaker = np.argmax(counts)

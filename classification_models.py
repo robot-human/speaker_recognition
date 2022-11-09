@@ -90,12 +90,15 @@ def select_speaker(features, speaker_codebooks):
     return speaker_num, min_distortion
 
 def run_VQ_model(speaker_ids, features):
+    good_classifications = 0
+    bad_classifications = 0
+    classifications = []
     speaker_models = []
     for enum, id in enumerate(speaker_ids):
         codebook, classes = vector_quantization_trainning(features[id]['train'], N_CODEWORDS, EPOCHS)
         speaker_models.append(codebook)
     
-    for id in speaker_ids:
+    for speaker_enum, id in enumerate(speaker_ids):
         speaker = -1
         dist = 1/0.00000001
         for enum, speaker_model in enumerate(speaker_models):
@@ -104,12 +107,21 @@ def run_VQ_model(speaker_ids, features):
             if(speaker_dist < dist):
                 dist = speaker_dist
                 speaker = enum
-        print(speaker)
+        classifications.append(speaker)
+        if(speaker_enum == speaker):
+            good_classifications += 1
+        else:
+            bad_classifications += 1
+    print(good_classifications,bad_classifications)
     print("")
+    return classifications
 ######################################################################################################
 # Gaussian Mixture Model
 
 def run_GMM_model(speaker_ids, features, scaler):
+    good_classifications = 0
+    bad_classifications = 0
+    classifications = []
     scaled_separate_set = []
     for id in speaker_ids:
         scaled_separate_set.append(scaler.transform(features[id]['train']))
@@ -119,7 +131,7 @@ def run_GMM_model(speaker_ids, features, scaler):
         gm = GaussianMixture(n_components=N_MIXTURES, random_state=0).fit(sp)
         speaker_gm_models.append(gm)
 
-    for id in speaker_ids:
+    for speaker_enum, id in enumerate(speaker_ids):
         dist = -1/0.000000001
         speaker = -1
         test_data = scaler.transform(features[id]['test'])
@@ -128,8 +140,14 @@ def run_GMM_model(speaker_ids, features, scaler):
             if(speaker_dist > dist):
                 dist = speaker_dist
                 speaker = enum
+        classifications.append(speaker)
+        if(speaker_enum == speaker):
+            good_classifications += 1
+        else:
+            bad_classifications += 1
         print(speaker)
     print("")
+    return classifications
 
 
 ######################################################################################################
@@ -145,12 +163,21 @@ model = svm.SVC(kernel=kern, C=svm_param_list[0], gamma='auto', tol=svm_param_li
 #model.fit(train_set,train_y)
 
 def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
+    good_classifications = 0
+    bad_classifications = 0
+    classifications = []
     model_svm = svm.SVC(kernel='rbf')
     model_svm.fit(scaled_train,classes)
-    for enum, id in enumerate(speaker_ids):
+    for speaker_enum, id in enumerate(speaker_ids):
         test_data = scaler.transform(features[id]['test'])
         test_classes = model_svm.predict(test_data)
         counts = np.bincount(test_classes)
         speaker = np.argmax(counts)
+        classifications.append(speaker)
+        if(speaker_enum == speaker):
+            good_classifications += 1
+        else:
+            bad_classifications += 1
         print(speaker)
     print("")
+    return classifications

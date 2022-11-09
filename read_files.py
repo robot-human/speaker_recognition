@@ -3,7 +3,7 @@ import math
 import random
 import functions
 import feature_extraction as feats
-from env_variables import SAMPLE_RATE
+from env_variables import SAMPLE_RATE, SIGNAL_DURATION_IN_SECONDS, VAD_TRESHOLD
 
 
 def get_speaker_files(database_path):
@@ -29,9 +29,9 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
     for id in speaker_ids:
         signal_data = {}
         train_samples,valid_samples,test_samples = functions.get_samples(speaker_files,id)
-        train_vad_samples = functions.trim_signal(feats.vad(train_samples, 0.01),SAMPLE_RATE,1.0)
-        valid_vad_samples = functions.trim_signal(feats.vad(valid_samples, 0.01),SAMPLE_RATE,1.0)
-        test_vad_samples = functions.trim_signal(feats.vad(test_samples, 0.01),SAMPLE_RATE,1.0)
+        train_vad_samples = functions.trim_signal(feats.vad(train_samples, VAD_TRESHOLD),SAMPLE_RATE,SIGNAL_DURATION_IN_SECONDS)
+        valid_vad_samples = functions.trim_signal(feats.vad(valid_samples, VAD_TRESHOLD),SAMPLE_RATE,SIGNAL_DURATION_IN_SECONDS)
+        test_vad_samples = functions.trim_signal(feats.vad(test_samples, VAD_TRESHOLD),SAMPLE_RATE,SIGNAL_DURATION_IN_SECONDS)
 
         signal_data['train'] = train_vad_samples
         signal_data['valid'] = valid_vad_samples

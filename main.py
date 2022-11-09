@@ -6,44 +6,24 @@ from read_files import get_speaker_files, get_speaker_signals_dict
 from sklearn import svm
 from sklearn.mixture import GaussianMixture
 from sklearn.preprocessing import StandardScaler
+from env_variables import DATABASE_PATH, N_SPEAKERS, SAMPLE_RATE, FRAMES_ATTR, MFCC_ATTR, P
 
-
-N_SPEAKERS = 10
-SAMPLE_RATE = 10000
 random.seed(10)
 
 
-frames_attr = {
-    "NFFT": 512,
-    "sample_rate": 10000,
-    "VAD_TRESHOLD": 0.012,
-    "PRE_EMPHASIS_COEF": 0.95,
-    "FRAME_IN_SECS": 0.025,
-    "OVERLAP_IN_SECS": 0.01,
-    "WINDOW": 'hanning'
-}
-mfcc_attr={
-    "NFFT": 512,
-    "sample_rate": 10000,
-    "n_filt": 22,
-    "num_ceps": 22,
-    "cep_lifter": 22
-}
-
-
-ids, speaker_files = get_speaker_files(database_path)
+ids, speaker_files = get_speaker_files(DATABASE_PATH)
 speaker_ids = random.sample(ids, k=N_SPEAKERS)
 signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
 plp_filters = feats.get_PLP_filters(SAMPLE_RATE, 512)
               
-window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , frames_attr)
+window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , FRAMES_ATTR)
 pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, 512)
 
 
 ########################################################################################################
 ## MFCC
 print("MFCC")
-features = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
+features = feats.get_mfcc_feats(speaker_ids, pow_frames, MFCC_ATTR)
 classes = []
 train_set = []
 for enum, id in enumerate(speaker_ids):
@@ -117,7 +97,7 @@ print("")
 # ########################################################################################################
 # ## LPC
 print("LPC")
-features = feats.get_lpc_feats(speaker_ids, window_frames, 12)
+features = feats.get_lpc_feats(speaker_ids, window_frames, P)
 classes = []
 train_set = []
 for enum, id in enumerate(speaker_ids):
@@ -189,7 +169,7 @@ print("")
 # ########################################################################################################
 # ## PLP
 print("PLP")
-features = feats.get_plp_feats(speaker_ids, pow_frames, 12, plp_filters)
+features = feats.get_plp_feats(speaker_ids, pow_frames, P, plp_filters)
 classes = []
 train_set = []
 for enum, id in enumerate(speaker_ids):

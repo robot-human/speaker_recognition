@@ -1,6 +1,7 @@
 import random
 import numpy as np
 import feature_extraction as feats
+import classification_models as models
 from read_files import get_speaker_files, get_speaker_signals_dict
 from sklearn import svm
 from sklearn.preprocessing import StandardScaler
@@ -41,7 +42,7 @@ pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, 512)
 
 ########################################################################################################
 ## MFCC
-print("MFFC with SVM")
+print("MFCC")
 features = feats.get_mfcc_feats(speaker_ids, pow_frames, mfcc_attr)
 classes = []
 train_set = []
@@ -59,6 +60,27 @@ scaled_train = scaler.transform(train_set)
 model = svm.SVC(kernel='rbf')
 model.fit(scaled_train,classes)
 
+
+print("MFFC with VQ")
+n_codewords = 10
+epochs = 50
+
+speaker_models = []
+for speaker in features:
+    codebook, classes = models.vector_quantization_trainning(speaker, n_codewords, epochs)
+    speaker_models.append(codebook)
+    
+dist = 1/0.000000001
+speaker = ""
+for enum1, id in enumerate(speaker_ids):
+    for enum, model in enumerate(speaker_models):
+        classes = models.assign_classes(features[id]['test'], model)
+        speaker_dist = models.featureset_distortion(features[id]['test'], classes, model)
+        if(speaker_dist < dist):
+            dist = enum
+    print(enum)
+
+print("MFFC with SVM")
 for enum, id in enumerate(speaker_ids):
     test_data = scaler.transform(features[id]['test'])
     test_classes = model.predict(test_data)
@@ -66,6 +88,7 @@ for enum, id in enumerate(speaker_ids):
     speaker = np.argmax(counts)
     print(speaker)
 print("")
+
 ########################################################################################################
 ## LPC
 print("LPC with SVM")

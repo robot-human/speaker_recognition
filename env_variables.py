@@ -1,11 +1,14 @@
 LOG_FILES_PATH = "/media/Data/pedro_tesis/log_files" 
 DATABASE_PATH = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
-SIGNAL_DURATION_IN_SECONDS = 1.0
-VAD_TRESHOLD = 0.012
+
 N_SPEAKERS = 4
+SIGNAL_DURATION_IN_MINUTES = 30.0
+
 SAMPLE_RATE = 10000
-N_SAMPLES = SAMPLE_RATE*2
 NFFT = 512
+VAD_TRESHOLD = 0.012
+N_SAMPLES = SAMPLE_RATE*2
+
 
 FRAMES_ATTR = {
     "NFFT": NFFT,

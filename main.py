@@ -76,17 +76,17 @@ if("LPC" in FEATURES_LIST):
 #model_svm = svm.SVC(kernel='rbf')
 #model_svm.fit(scaled_train,classes)
     if("VQ" in MODELS_LIST):
-        print("MFFC with VQ")
+        print("LPC with VQ")
         models.run_VQ_model(speaker_ids, features)
         print("")
 
     if("SVM" in MODELS_LIST):
-        print("MFFC with SVM")
+        print("LPC with SVM")
         models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
         print("")
 
     if("GMM" in MODELS_LIST):
-        print("MFFC with GMM")
+        print("LPC with GMM")
         models.run_GMM_model(speaker_ids, features, scaler)
         print("")
 # ########################################################################################################
@@ -108,16 +108,16 @@ if("PLP" in FEATURES_LIST):
 #model_svm = svm.SVC(kernel='rbf')
 #model_svm.fit(scaled_train,classes)
     if("VQ" in MODELS_LIST):
-        print("MFFC with VQ")
+        print("PLP with VQ")
         models.run_VQ_model(speaker_ids, features)
         print("")
 
     if("SVM" in MODELS_LIST):
-        print("MFFC with SVM")
+        print("PLP with SVM")
         models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
         print("")
 
     if("GMM" in MODELS_LIST):
-        print("MFFC with GMM")
+        print("PLP with GMM")
         models.run_GMM_model(speaker_ids, features, scaler)
         print("")

@@ -12,7 +12,7 @@ random.seed(10)
 
 
 MODELS_LIST = ['SVM']
-FEATURES_LIST = ['MFCC']
+FEATURES_LIST = ['LPC']
 
 ids, speaker_files = get_speaker_files(DATABASE_PATH)
 speaker_ids = random.sample(ids, k=N_SPEAKERS)

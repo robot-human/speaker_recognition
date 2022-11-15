@@ -174,10 +174,12 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
         counts = np.bincount(test_classes)
         speaker = np.argmax(counts)
         classifications.append(speaker)
+        print(id, speaker_ids[speaker])
         if(speaker_enum == speaker):
             good_classifications += 1
         else:
             bad_classifications += 1
-    print(f'Casos bien clasificados: {good_classifications}',f'Casos mal clasificados: {bad_classifications}')
+    print(f'Casos bien clasificados: {good_classifications}')
+    print(f'Casos mal clasificados: {bad_classifications}')
     print("")
     return classifications

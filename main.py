@@ -17,7 +17,7 @@ random.seed(10)
 MODELS_LIST = ['GMM','VQ']
 FEATURES_LIST = ['LPC']
 
-results_file = open(LOG_FILE_PATH, 'w')
+results_file = open(LOG_FILE_PATH, 'a')
 writer = csv.writer(results_file)
 
 start_time = time.time()
@@ -107,7 +107,7 @@ if("LPC" in FEATURES_LIST):
         end_time = time.time()
         execution_times['VQ LPC'] = round(end_time - start_time,2)
         print("")
-        str_data =f"1,{N_SPEAKERS},{SIGNAL_DURATION_IN_SECONDS},VQ,LPC"
+        str_data =[1,N_SPEAKERS,SIGNAL_DURATION_IN_SECONDS,"VQ","LPC"]
         writer.writerow(str_data)
     if("GMM" in MODELS_LIST):
         print("LPC with GMM")
@@ -116,6 +116,8 @@ if("LPC" in FEATURES_LIST):
         end_time = time.time()
         execution_times['GMM LPC'] = round(end_time - start_time,2)
         print("")
+        str_data =[1,N_SPEAKERS,SIGNAL_DURATION_IN_SECONDS,"GMM","LPC"]
+        writer.writerow(str_data)
 
     if("SVM" in MODELS_LIST):
         print("LPC with SVM")

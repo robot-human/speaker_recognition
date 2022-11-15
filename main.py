@@ -13,7 +13,7 @@ from env_variables import DATABASE_PATH, N_SPEAKERS, SAMPLE_RATE, NFFT, FRAMES_A
 random.seed(10)
 
 
-MODELS_LIST = ['GMM','VQ']
+MODELS_LIST = ['SVM','GMM','VQ']
 FEATURES_LIST = ['LPC']
 
 

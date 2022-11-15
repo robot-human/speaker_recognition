@@ -108,11 +108,13 @@ def run_VQ_model(speaker_ids, features):
                 dist = speaker_dist
                 speaker = enum
         classifications.append(speaker)
+        print(id, speaker_ids[speaker])
         if(speaker_enum == speaker):
             good_classifications += 1
         else:
             bad_classifications += 1
-    print(f'Casos bien clasificados: {good_classifications}',f'Casos mal clasificados: {bad_classifications}')
+    print(f'Casos bien clasificados: {good_classifications}')
+    print(f'Casos mal clasificados: {bad_classifications}')
     print("")
     return classifications
 ######################################################################################################
@@ -141,11 +143,13 @@ def run_GMM_model(speaker_ids, features, scaler):
                 dist = speaker_dist
                 speaker = enum
         classifications.append(speaker)
+        print(id, speaker_ids[speaker])
         if(speaker_enum == speaker):
             good_classifications += 1
         else:
             bad_classifications += 1
-    print(f'Casos bien clasificados: {good_classifications}',f'Casos mal clasificados: {bad_classifications}')
+    print(f'Casos bien clasificados: {good_classifications}')
+    print(f'Casos mal clasificados: {bad_classifications}')
     print("")
     return classifications
 

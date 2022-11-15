@@ -53,8 +53,6 @@ if("MFCC" in FEATURES_LIST):
     scaled_train = scaler.transform(train_set)
     end_time = time.time()
     execution_times['MFCC'] = round(end_time - start_time,2)
-#model_svm = svm.SVC(kernel='rbf')
-#model_svm.fit(scaled_train,classes)
 
     if("VQ" in MODELS_LIST):
         print("MFFC with VQ")
@@ -62,6 +60,14 @@ if("MFCC" in FEATURES_LIST):
         models.run_VQ_model(speaker_ids, features)
         end_time = time.time()
         execution_times['VQ MFCC'] = round(end_time - start_time,2)
+        print("")
+    
+    if("GMM" in MODELS_LIST):
+        print("MFFC with GMM")
+        start_time = time.time()
+        models.run_GMM_model(speaker_ids, features, scaler)
+        end_time = time.time()
+        execution_times['GMM MFCC'] = round(end_time - start_time,2)
         print("")
 
     if("SVM" in MODELS_LIST):
@@ -71,15 +77,6 @@ if("MFCC" in FEATURES_LIST):
         end_time = time.time()
         execution_times['SVM MFCC'] = round(end_time - start_time,2)
         print("")
-
-    if("GMM" in MODELS_LIST):
-        print("MFFC with GMM")
-        start_time = time.time()
-        models.run_GMM_model(speaker_ids, features, scaler)
-        end_time = time.time()
-        execution_times['GMM MFCC'] = round(end_time - start_time,2)
-        print("")
-
 # ########################################################################################################
 # ## LPC
 if("LPC" in FEATURES_LIST):
@@ -99,8 +96,7 @@ if("LPC" in FEATURES_LIST):
     scaled_train = scaler.transform(train_set)
     end_time = time.time()
     execution_times['LPC'] = round(end_time - start_time,2)
-#model_svm = svm.SVC(kernel='rbf')
-#model_svm.fit(scaled_train,classes)
+
     if("VQ" in MODELS_LIST):
         print("LPC with VQ")
         start_time = time.time()
@@ -109,20 +105,20 @@ if("LPC" in FEATURES_LIST):
         execution_times['VQ LPC'] = round(end_time - start_time,2)
         print("")
 
-    if("SVM" in MODELS_LIST):
-        print("LPC with SVM")
-        start_time = time.time()
-        models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
-        end_time = time.time()
-        execution_times['SVM LPC'] = round(end_time - start_time,2)
-        print("")
-
     if("GMM" in MODELS_LIST):
         print("LPC with GMM")
         start_time = time.time()
         models.run_GMM_model(speaker_ids, features, scaler)
         end_time = time.time()
         execution_times['GMM LPC'] = round(end_time - start_time,2)
+        print("")
+
+    if("SVM" in MODELS_LIST):
+        print("LPC with SVM")
+        start_time = time.time()
+        models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
+        end_time = time.time()
+        execution_times['SVM LPC'] = round(end_time - start_time,2)
         print("")
 # ########################################################################################################
 # ## PLP
@@ -143,8 +139,7 @@ if("PLP" in FEATURES_LIST):
     scaled_train = scaler.transform(train_set)
     end_time = time.time()
     execution_times['PLP'] = round(end_time - start_time,2)
-#model_svm = svm.SVC(kernel='rbf')
-#model_svm.fit(scaled_train,classes)
+
     if("VQ" in MODELS_LIST):
         print("PLP with VQ")
         start_time = time.time()
@@ -153,20 +148,20 @@ if("PLP" in FEATURES_LIST):
         execution_times['VQ PLP'] = round(end_time - start_time,2)
         print("")
 
-    if("SVM" in MODELS_LIST):
-        print("PLP with SVM")
-        start_time = time.time()
-        models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
-        end_time = time.time()
-        execution_times['SVM PLP'] = round(end_time - start_time,2)
-        print("")
-
     if("GMM" in MODELS_LIST):
         print("PLP with GMM")
         start_time = time.time()
         models.run_GMM_model(speaker_ids, features, scaler)
         end_time = time.time()
         execution_times['GMM PLP'] = round(end_time - start_time,2)
+        print("")
+
+    if("SVM" in MODELS_LIST):
+        print("PLP with SVM")
+        start_time = time.time()
+        models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
+        end_time = time.time()
+        execution_times['SVM PLP'] = round(end_time - start_time,2)
         print("")
 
 for k in  execution_times.keys():

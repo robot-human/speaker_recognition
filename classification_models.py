@@ -130,7 +130,7 @@ def run_GMM_model(speaker_ids, features, scaler):
 
     speaker_gm_models = []
     for sp in scaled_separate_set:
-        gm = GaussianMixture(n_components=N_MIXTURES, random_state=0, max_iter=1000, tol=1e-5).fit(sp)
+        gm = GaussianMixture(n_components=N_MIXTURES, random_state=0, max_iter=10000, tol=1e-5).fit(sp)
         speaker_gm_models.append(gm)
 
     for speaker_enum, id in enumerate(speaker_ids):

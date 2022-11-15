@@ -156,17 +156,6 @@ def run_GMM_model(speaker_ids, features, scaler):
 
 
 ######################################################################################################
-# Support Vector Machine
-# kern   = 'poly'
-# C      = 1
-# gamma  = 0.1
-# tol    = 0.001
-# degree = 3
-# coef0  = 0
-# svm_param_list   = [C, gamma, tol, degree, coef0]
-# model = svm.SVC(kernel=kern, C=svm_param_list[0], gamma='auto', tol=svm_param_list[2], degree=svm_param_list[3], coef0=svm_param_list[4], max_iter=50)
-#model.fit(train_set,train_y)
-
 def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
     good_classifications = 0
     bad_classifications = 0

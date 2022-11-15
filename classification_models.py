@@ -1,7 +1,7 @@
 import numpy as np
 from math import sqrt
 from random import randrange
-from sklearn import svm
+from sklearn.svm import SVC, LinearSVC
 from sklearn.mixture import GaussianMixture
 from env_variables import DATABASE_PATH, N_SPEAKERS, SAMPLE_RATE, NFFT, FRAMES_ATTR, MFCC_ATTR, P, N_CODEWORDS, EPOCHS, N_MIXTURES
 
@@ -170,7 +170,8 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
     good_classifications = 0
     bad_classifications = 0
     classifications = []
-    model_svm = svm.SVC(kernel='rbf')
+    model_svm = SVC(kernel='rbf', max_iter=50)
+    #model_svm = LinearSVC(random_state=0, tol=1e-5)
     model_svm.fit(scaled_train,classes)
     for speaker_enum, id in enumerate(speaker_ids):
         test_data = scaler.transform(features[id]['test'])

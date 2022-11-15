@@ -169,5 +169,5 @@ if("PLP" in FEATURES_LIST):
         execution_times['GMM PLP'] = round(end_time - start_time,2)
         print("")
 
-for k in  execution_times.keys:
-    print(k, execution_times[k])
+for k in  execution_times.keys():
+    print(f"{k} :  {execution_times[k]}")

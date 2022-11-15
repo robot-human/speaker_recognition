@@ -22,7 +22,7 @@ plp_filters = feats.get_PLP_filters(SAMPLE_RATE, NFFT)
 window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , FRAMES_ATTR)
 pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, NFFT)
 
-
+print(ids)
 ########################################################################################################
 ## MFCC
 if("MFCC" in FEATURES_LIST):

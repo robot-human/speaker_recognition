@@ -1,4 +1,4 @@
-LOG_FILES_PATH = "/media/Data/pedro_tesis/log_files" 
+LOG_FILE_PATH = "/media/Data/pedro_tesis/log_files/results.csv" 
 DATABASE_PATH = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 
 N_SPEAKERS = 5

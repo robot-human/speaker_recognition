@@ -1,13 +1,14 @@
 import random
 import numpy as np
 import time
+import csv
+#from sklearn import svm
+#from sklearn.mixture import GaussianMixture
+from sklearn.preprocessing import StandardScaler
 import feature_extraction as feats
 import classification_models as models
 from read_files import get_speaker_files, get_speaker_signals_dict
-from sklearn import svm
-from sklearn.mixture import GaussianMixture
-from sklearn.preprocessing import StandardScaler
-from env_variables import DATABASE_PATH, N_SPEAKERS, SAMPLE_RATE, NFFT, FRAMES_ATTR, MFCC_ATTR, P, N_CODEWORDS, EPOCHS, N_MIXTURES, execution_times
+from env_variables import DATABASE_PATH, LOG_FILE_PATH, N_SPEAKERS, SAMPLE_RATE, NFFT, FRAMES_ATTR, MFCC_ATTR, P, N_CODEWORDS, EPOCHS, N_MIXTURES, execution_times,SIGNAL_DURATION_IN_SECONDS
 
 
 random.seed(10)
@@ -16,6 +17,8 @@ random.seed(10)
 MODELS_LIST = ['GMM','VQ']
 FEATURES_LIST = ['LPC']
 
+results_file = open(LOG_FILE_PATH, 'w')
+writer = csv.writer(results_file)
 
 start_time = time.time()
 ids, speaker_files = get_speaker_files(DATABASE_PATH)
@@ -104,7 +107,8 @@ if("LPC" in FEATURES_LIST):
         end_time = time.time()
         execution_times['VQ LPC'] = round(end_time - start_time,2)
         print("")
-
+        str_data =f"1,{N_SPEAKERS},{SIGNAL_DURATION_IN_SECONDS},VQ,LPC"
+        writer.writerow(str_data)
     if("GMM" in MODELS_LIST):
         print("LPC with GMM")
         start_time = time.time()
@@ -164,5 +168,6 @@ if("PLP" in FEATURES_LIST):
         execution_times['SVM PLP'] = round(end_time - start_time,2)
         print("")
 
+results_file.close()
 for k in  execution_times.keys():
     print(f"{k} :  {execution_times[k]}")

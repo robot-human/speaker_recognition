@@ -130,7 +130,7 @@ def run_GMM_model(speaker_ids, features, scaler):
 
     speaker_gm_models = []
     for sp in scaled_separate_set:
-        gm = GaussianMixture(n_components=N_MIXTURES, random_state=0).fit(sp)
+        gm = GaussianMixture(n_components=N_MIXTURES, random_state=0, max_iter=5000, tol=1e-5).fit(sp)
         speaker_gm_models.append(gm)
 
     for speaker_enum, id in enumerate(speaker_ids):
@@ -170,7 +170,7 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
     good_classifications = 0
     bad_classifications = 0
     classifications = []
-    model_svm = SVC(kernel='rbf', max_iter=500, tol=1e-5)
+    model_svm = SVC(kernel='rbf', max_iter=5000, tol=1e-5)
     #model_svm = LinearSVC(random_state=0, tol=1e-5)
     model_svm.fit(scaled_train,classes)
     for speaker_enum, id in enumerate(speaker_ids):

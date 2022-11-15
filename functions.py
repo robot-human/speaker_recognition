@@ -3,7 +3,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import librosa
-from env_variables import LOG_FILES_PATH, SAMPLE_RATE
+from env_variables import LOG_FILE_PATH, SAMPLE_RATE
 
 def samples_to_seconds(samples, sample_rate):
     out = len(samples)/sample_rate

@@ -2,11 +2,10 @@ SAMPLE_RATE = 10000
 NFFT = 512
 N_SAMPLES = SAMPLE_RATE*2
 VAD_TRESHOLD = 0.012
+LOG_FILE_PATH = "/media/Data/pedro_tesis/speaker_recognition/log_files/"
+DATABASE_PATH = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 
 GENERAL = {
-    "LOG_FILE_PATH" : "/media/Data/pedro_tesis/speaker_recognition/log_files/results.csv",
-    "DATABASE_PATH" : "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100",
-    "FILE_HEADER" : ["fecha","n_speakers","signal_length","model","features","pre_processing_time","mfcc_time","lpc_time","plp_time","vq_time","gmm_time","svm_time"],
     "N_SPEAKERS" : 3,  
     "SIGNAL_DURATION_IN_SECONDS" : 2.0,
     "N_SAMPLES" : N_SAMPLES

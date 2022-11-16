@@ -4,8 +4,9 @@ from random import randrange
 from sklearn.svm import SVC, LinearSVC
 from sklearn.linear_model import SGDClassifier
 from sklearn.mixture import GaussianMixture
-from env_variables import DATABASE_PATH, N_SPEAKERS, SAMPLE_RATE, NFFT, FRAMES_ATTR, MFCC_ATTR, P, N_CODEWORDS, EPOCHS, N_MIXTURES
+from env_variables import MODEL_ATTR, N_CODEWORDS, EPOCHS, N_MIXTURES
 
+MODEL_ATTR["VQ"]["N_CODEWORDS"]
 ######################################################################################################
 # Vector Quantization
 def random_codebook(train):
@@ -96,7 +97,7 @@ def run_VQ_model(speaker_ids, features):
     classifications = []
     speaker_models = []
     for enum, id in enumerate(speaker_ids):
-        codebook, classes = vector_quantization_trainning(features[id]['train'], N_CODEWORDS, EPOCHS)
+        codebook, classes = vector_quantization_trainning(features[id]['train'], MODEL_ATTR["VQ"]["N_CODEWORDS"], MODEL_ATTR["VQ"]["EPOCHS"])
         speaker_models.append(codebook)
     
     for speaker_enum, id in enumerate(speaker_ids):
@@ -120,7 +121,6 @@ def run_VQ_model(speaker_ids, features):
     return classifications
 ######################################################################################################
 # Gaussian Mixture Model
-
 def run_GMM_model(speaker_ids, features, scaler):
     good_classifications = 0
     bad_classifications = 0
@@ -131,7 +131,7 @@ def run_GMM_model(speaker_ids, features, scaler):
 
     speaker_gm_models = []
     for sp in scaled_separate_set:
-        gm = GaussianMixture(n_components=N_MIXTURES, random_state=0, max_iter=50000, tol=1e-8).fit(sp)
+        gm = GaussianMixture(n_components=MODEL_ATTR["GMM"]["N_MIXTURES"], random_state=0, max_iter=MODEL_ATTR["GMM"]["EPOCHS"], tol=1e-8).fit(sp)
         speaker_gm_models.append(gm)
 
     for speaker_enum, id in enumerate(speaker_ids):
@@ -162,7 +162,7 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
     classifications = []
     #model_svm = SVC(kernel='rbf', max_iter=5000, tol=1e-5,class_weight='balanced')
     #model_svm = LinearSVC(random_state=0, tol=1e-5)
-    model_svm = SGDClassifier(max_iter=1000, tol=1e-3)
+    model_svm = SGDClassifier(max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-3)
     model_svm.fit(scaled_train,classes)
     for speaker_enum, id in enumerate(speaker_ids):
         test_data = scaler.transform(features[id]['test'])

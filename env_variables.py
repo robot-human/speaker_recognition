@@ -1,15 +1,16 @@
-LOG_FILE_PATH = "/media/Data/pedro_tesis/log_files/results.csv" 
-DATABASE_PATH = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
-
-N_SPEAKERS = 15
-SIGNAL_DURATION_IN_SECONDS = 30.0
-
 SAMPLE_RATE = 10000
 NFFT = 512
-VAD_TRESHOLD = 0.012
 N_SAMPLES = SAMPLE_RATE*2
 
-execution_times = {
+GENERAL = {
+    "LOG_FILE_PATH" : "/media/Data/pedro_tesis/log_files/results.csv",
+    "DATABASE_PATH" : "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100",
+    "FILE_HEADER" : "fecha,n_speakers,signal_length,model,features",
+    "N_SPEAKERS" : 3,  
+    "SIGNAL_DURATION_IN_SECONDS" : 2.0,
+    "N_SAMPLES" : N_SAMPLES
+}
+EXECUTION_TIMES = {
     'File reading' : 0,
     'Pre-processing' : 0,
     'MFCC' : 0,
@@ -25,11 +26,10 @@ execution_times = {
     'GMM PLP' : 0,
     'SVM PLP' : 0
 }
-
 FRAMES_ATTR = {
     "NFFT": NFFT,
-    "sample_rate": SAMPLE_RATE,
-    "VAD_TRESHOLD": VAD_TRESHOLD,
+    "SAMPLE_RATE": SAMPLE_RATE,
+    "VAD_TRESHOLD": 0.012,
     "PRE_EMPHASIS_COEF": 0.95,
     "FRAME_IN_SECS": 0.025,
     "OVERLAP_IN_SECS": 0.01,
@@ -37,14 +37,19 @@ FRAMES_ATTR = {
 }
 MFCC_ATTR = {
     "NFFT": NFFT,
-    "sample_rate": SAMPLE_RATE,
-    "n_filt": 22,
-    "num_ceps": 22,
-    "cep_lifter": 22
+    "SAMPLE_RATE": SAMPLE_RATE,
+    "N_FILT": 22,
+    "N_CEPS": 22,
+    "CEP_LIFTER": 22
 }
-
-P = 12
-
-N_MIXTURES = 50
-N_CODEWORDS = 40
-EPOCHS = 50
+LPC_ATTR = {
+    "P" : 12
+}
+PLP_ATTR = {
+    "P" : 12
+}
+MODEL_ATTR = {
+    "VQ" : {"N_CODEWORDS" : 40, "EPOCHS" : 50},
+    "GMM" : {"N_MIXTURES" : 50, "EPOCHS" : 50},
+    "SVM" : {"EPOCHS" : 50}
+}

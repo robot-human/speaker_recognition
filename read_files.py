@@ -3,7 +3,7 @@ import math
 import random
 import functions
 import feature_extraction as feats
-from env_variables import SAMPLE_RATE, GENERAL, SIGNAL_DURATION_IN_SECONDS, VAD_TRESHOLD
+from env_variables import SAMPLE_RATE, GENERAL, VAD_TRESHOLD
 
 
 def get_speaker_files(database_path):

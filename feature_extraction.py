@@ -62,8 +62,8 @@ def frame_matrix(signal,sample_rate, pre_emphasis_coef, frame_in_secs, overlap_i
 def voice_signal_processing(samples, attr):
     vad_signal = vad(samples,attr["VAD_TRESHOLD"])
     emph_signal = pre_emphasis(vad_signal, attr["PRE_EMPHASIS_COEF"])
-    frames = framing(emph_signal, attr["sample_rate"], attr["FRAME_IN_SECS"], attr["OVERLAP_IN_SECS"])
-    window_frames = window(frames, int(attr["FRAME_IN_SECS"]*attr["sample_rate"]), attr["WINDOW"])
+    frames = framing(emph_signal, attr["SAMPLE_RATE"], attr["FRAME_IN_SECS"], attr["OVERLAP_IN_SECS"])
+    window_frames = window(frames, int(attr["FRAME_IN_SECS"]*attr["SAMPLE_RATE"]), attr["WINDOW"])
     return window_frames
 
 def get_window_frames_dict(speaker_ids, signal_dict, attr):
@@ -115,19 +115,19 @@ def filter_banks(bin_freqs, nfft):
     return fbank
 
 def MFCC(pow_frames, attr):
-    mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["sample_rate"]/2), attr["n_filt"] + 2)
+    mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["SAMPLE_RATE"]/2), attr["n_filt"] + 2)
     freqs = [mel_to_freq(mel) for mel in mels]
-    bin_freqs = [freq_to_bin(f, attr["NFFT"], attr["sample_rate"]) for f in freqs]
+    bin_freqs = [freq_to_bin(f, attr["NFFT"], attr["SAMPLE_RATE"]) for f in freqs]
     fbank = filter_banks(bin_freqs,  attr["NFFT"])
     
     f_banks = np.dot(pow_frames, fbank.T)
     f_banks = np.where(f_banks == 0, np.finfo(float).eps, f_banks) 
     f_banks = 20 * np.log10(f_banks)
-    mfcc = dct(f_banks, type=2, axis=1, norm='ortho')[:, 1 : (attr["num_ceps"] + 1)]
+    mfcc = dct(f_banks, type=2, axis=1, norm='ortho')[:, 1 : (attr["N_CEPS"] + 1)]
 
     (nframes, ncoeff) = mfcc.shape
     n = np.arange(ncoeff)
-    lift = 1 + (attr["cep_lifter"] / 2) * np.sin(np.pi * n / attr["cep_lifter"])
+    lift = 1 + (attr["CEP_LIFTER"] / 2) * np.sin(np.pi * n / attr["CEP_LIFTER"])
     mfcc *= lift
     mfcc -= (np.mean(mfcc, axis=0) + 1e-8)
     return mfcc

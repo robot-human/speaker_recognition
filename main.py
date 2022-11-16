@@ -17,7 +17,7 @@ random.seed(10)
 MODELS_LIST = ['GMM','VQ']
 FEATURES_LIST = ['LPC']
 
-results_file = open(LOG_FILE_PATH, 'a')
+results_file = open(LOG_FILE_PATH, 'a+')
 writer = csv.writer(results_file)
 
 start_time = time.time()

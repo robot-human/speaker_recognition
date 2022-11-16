@@ -12,8 +12,6 @@ def print_properties(s, sr):
     print("Sample rate  ",sr)
     print("Seconds      ",s.shape[0]/sr)
     return None
-
-
 ######################################################################################################
 # Signal Processing
 def vad(mono_signal, threshold, buff_size=1000):

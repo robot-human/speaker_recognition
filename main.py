@@ -9,7 +9,6 @@ import feature_extraction as feats
 import classification_models as models
 from read_files import get_speaker_files, get_speaker_signals_dict
 from env_variables import GENERAL, EXECUTION_TIMES, FRAMES_ATTR, MFCC_ATTR, LPC_ATTR, PLP_ATTR
-# FRAMES_ATTR, MFCC_ATTR, P, N_CODEWORDS, EPOCHS, N_MIXTURES, execution_times,SIGNAL_DURATION_IN_SECONDS
 
 FRAMES_ATTR["NFFT"]
 
@@ -89,7 +88,7 @@ if("MFCC" in FEATURES_LIST):
 if("LPC" in FEATURES_LIST):
     print("LPC")
     start_time = time.time()
-    features = feats.get_lpc_feats(speaker_ids, window_frames, P)
+    features = feats.get_lpc_feats(speaker_ids, window_frames, LPC_ATTR["P"])
     classes = []
     train_set = []
     for enum, id in enumerate(speaker_ids):
@@ -135,7 +134,7 @@ if("LPC" in FEATURES_LIST):
 if("PLP" in FEATURES_LIST):
     print("PLP")
     start_time = time.time()
-    features = feats.get_plp_feats(speaker_ids, pow_frames, P, plp_filters)
+    features = feats.get_plp_feats(speaker_ids, pow_frames, PLP_ATTR["P"], plp_filters)
     classes = []
     train_set = []
     for enum, id in enumerate(speaker_ids):

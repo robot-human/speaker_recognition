@@ -1,6 +1,7 @@
 SAMPLE_RATE = 10000
 NFFT = 512
 N_SAMPLES = SAMPLE_RATE*2
+VAD_TRESHOLD = 0.012
 
 GENERAL = {
     "LOG_FILE_PATH" : "/media/Data/pedro_tesis/log_files/results.csv",
@@ -29,7 +30,7 @@ EXECUTION_TIMES = {
 FRAMES_ATTR = {
     "NFFT": NFFT,
     "SAMPLE_RATE": SAMPLE_RATE,
-    "VAD_TRESHOLD": 0.012,
+    "VAD_TRESHOLD": VAD_TRESHOLD,
     "PRE_EMPHASIS_COEF": 0.95,
     "FRAME_IN_SECS": 0.025,
     "OVERLAP_IN_SECS": 0.01,

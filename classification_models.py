@@ -4,7 +4,7 @@ from random import randrange
 from sklearn.svm import SVC, LinearSVC
 from sklearn.linear_model import SGDClassifier
 from sklearn.mixture import GaussianMixture
-from env_variables import MODEL_ATTR, N_CODEWORDS, EPOCHS, N_MIXTURES
+from env_variables import MODEL_ATTR
 
 MODEL_ATTR["VQ"]["N_CODEWORDS"]
 ######################################################################################################

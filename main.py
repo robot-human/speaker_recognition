@@ -2,8 +2,7 @@ import random
 import numpy as np
 import time
 import csv
-#from sklearn import svm
-#from sklearn.mixture import GaussianMixture
+import datetime
 from sklearn.preprocessing import StandardScaler
 import feature_extraction as feats
 import classification_models as models
@@ -14,6 +13,9 @@ FRAMES_ATTR["NFFT"]
 
 random.seed(10)
 
+
+
+date = datetime.datetime.now()
 
 MODELS_LIST = ['GMM','VQ']
 FEATURES_LIST = ['LPC']
@@ -107,22 +109,49 @@ if("LPC" in FEATURES_LIST):
     EXECUTION_TIMES['LPC'] = round(end_time - start_time,2)
 
     if("VQ" in MODELS_LIST):
+        str_data = []
         print("LPC with VQ")
         start_time = time.time()
         models.run_VQ_model(speaker_ids, features)
         end_time = time.time()
         EXECUTION_TIMES['VQ LPC'] = round(end_time - start_time,2)
         print("")
-        str_data =[1,GENERAL["N_SPEAKERS"],GENERAL["SIGNAL_DURATION_IN_SECONDS"],"VQ","LPC"]
+
+        str_data[0] = date
+        str_data[1] = GENERAL["N_SPEAKERS"]
+        str_data[2] = GENERAL["SIGNAL_DURATION_IN_SECONDS"]
+        str_data[3] = "VQ"
+        str_data[4] = "LPC"
+        str_data[5] = EXECUTION_TIMES['Pre-processing']
+        str_data[6] = "NA"
+        str_data[7] = EXECUTION_TIMES['LPC']
+        str_data[8] = "NA"
+        str_data[9] = EXECUTION_TIMES['VQ LPC']
+        str_data[10] = "NA"
+        str_data[11] = "NA"
+
         writer.writerow(str_data)
     if("GMM" in MODELS_LIST):
+        str_data = []
         print("LPC with GMM")
         start_time = time.time()
         models.run_GMM_model(speaker_ids, features, scaler)
         end_time = time.time()
         EXECUTION_TIMES['GMM LPC'] = round(end_time - start_time,2)
         print("")
-        str_data =[1,GENERAL["N_SPEAKERS"],GENERAL["SIGNAL_DURATION_IN_SECONDS"],"GMM","LPC"]
+
+        str_data[0] = date
+        str_data[1] = GENERAL["N_SPEAKERS"]
+        str_data[2] = GENERAL["SIGNAL_DURATION_IN_SECONDS"]
+        str_data[3] = "GMM"
+        str_data[4] = "LPC"
+        str_data[5] = EXECUTION_TIMES['Pre-processing']
+        str_data[6] = "NA"
+        str_data[7] = EXECUTION_TIMES['LPC']
+        str_data[8] = "NA"
+        str_data[9] = "NA"
+        str_data[10] = EXECUTION_TIMES['GMM LPC']
+        str_data[11] = "NA"
         writer.writerow(str_data)
 
     if("SVM" in MODELS_LIST):

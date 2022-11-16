@@ -1,7 +1,7 @@
 LOG_FILE_PATH = "/media/Data/pedro_tesis/log_files/results.csv" 
 DATABASE_PATH = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 
-N_SPEAKERS = 10
+N_SPEAKERS = 15
 SIGNAL_DURATION_IN_SECONDS = 30.0
 
 SAMPLE_RATE = 10000

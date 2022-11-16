@@ -6,7 +6,7 @@ VAD_TRESHOLD = 0.012
 GENERAL = {
     "LOG_FILE_PATH" : "/media/Data/pedro_tesis/log_files/results.csv",
     "DATABASE_PATH" : "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100",
-    "FILE_HEADER" : "fecha,n_speakers,signal_length,model,features",
+    "FILE_HEADER" : ["fecha","n_speakers","signal_length","model,features"],
     "N_SPEAKERS" : 3,  
     "SIGNAL_DURATION_IN_SECONDS" : 2.0,
     "N_SAMPLES" : N_SAMPLES

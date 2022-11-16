@@ -18,10 +18,13 @@ random.seed(10)
 MODELS_LIST = ['GMM','VQ']
 FEATURES_LIST = ['LPC']
 
-results_file = open(GENERAL["LOG_FILE_PATH"], 'a+')
+results_file = open(GENERAL["LOG_FILE_PATH"], 'w')
 writer = csv.writer(results_file)
 writer.writerow(GENERAL["FILE_HEADER"])
+results_file.close()
 
+results_file = open(GENERAL["LOG_FILE_PATH"], 'a+')
+writer = csv.writer(results_file)
 
 start_time = time.time()
 ids, speaker_files = get_speaker_files(GENERAL["DATABASE_PATH"])

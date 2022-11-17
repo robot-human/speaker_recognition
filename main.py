@@ -31,7 +31,7 @@ end_time = time.time()
 EXECUTION_TIMES['File reading'] = round(end_time - start_time,2)
 
 for speaker in speaker_files.keys():
-    print(speaker)
+    print(speaker_files[speaker])
 
 # start_time = time.time()
 # plp_filters = feats.get_PLP_filters(FRAMES_ATTR["SAMPLE_RATE"], FRAMES_ATTR["NFFT"])

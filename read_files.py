@@ -25,17 +25,19 @@ def get_speaker_files(database_path):
     return speaker_ids, speaker_files
 
 def get_speaker_signals_dict(speaker_files, speaker_ids):
+    n_vector_samples = math.floor(GENERAL["SIGNAL_DURATION_IN_SECONDS"]*SAMPLE_RATE)
     signal_dict = {}
     for id in speaker_ids:
         signal_data = {}
-        train_samples,valid_samples,test_samples = functions.get_samples(speaker_files,id)
-        train_vad_samples = functions.trim_signal(feats.vad(train_samples, VAD_TRESHOLD),SAMPLE_RATE,GENERAL["SIGNAL_DURATION_IN_SECONDS"])
-        valid_vad_samples = functions.trim_signal(feats.vad(valid_samples, VAD_TRESHOLD),SAMPLE_RATE,GENERAL["SIGNAL_DURATION_IN_SECONDS"])
-        test_vad_samples = functions.trim_signal(feats.vad(test_samples, VAD_TRESHOLD),SAMPLE_RATE,GENERAL["SIGNAL_DURATION_IN_SECONDS"])
-
-        signal_data['train'] = train_vad_samples
-        signal_data['valid'] = valid_vad_samples
-        signal_data['test'] = test_vad_samples
+        speaker_samples = functions.get_samples(speaker_files,id)
+        vad_samples = feats.vad(speaker_samples, VAD_TRESHOLD)
+        signal_data['train'] = vad_samples[:n_vector_samples]
+        vectors_left = math.floor((len(vad_samples) - n_vector_samples)/n_vector_samples)
+        test_vectors = []
+        for i in range(vectors_left):
+            test_vectors.append(vad_samples[n_vector_samples*i:n_vector_samples*(i + 1)])
+        signal_data['valid'] = test_vectors[:math.floor(len(test_vectors)/2)]
+        signal_data['test'] = test_vectors[math.floor(len(test_vectors)/2):]
         signal_dict[id] = signal_data
     return signal_dict
 

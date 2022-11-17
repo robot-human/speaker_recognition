@@ -20,14 +20,8 @@ def trim_signal(signal, sample_rate, secs):
 
 def get_samples(speaker_files, speaker_id):
     path_list = speaker_files[speaker_id]
-    train = []
-    valid = []
-    test = []
+    samples = []
     for i in range(8):
-        train_samples, _ = librosa.load(path_list[i], mono=True, sr=SAMPLE_RATE)
-        valid_samples, _ = librosa.load(path_list[i+8], mono=True, sr=SAMPLE_RATE)
-        test_samples, _ = librosa.load(path_list[i+16], mono=True, sr=SAMPLE_RATE)
-        train.extend(train_samples)
-        valid.extend(valid_samples)
-        test.extend(test_samples)
-    return np.array(train),np.array(valid),np.array(test)
+        speaker_samples, _ = librosa.load(path_list[i], mono=True, sr=SAMPLE_RATE)
+        samples.extend(speaker_samples)
+    return np.array(samples)

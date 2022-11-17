@@ -1,7 +1,7 @@
 import numpy as np
 import math
 from scipy.fftpack import dct
-
+from sklearn.preprocessing import StandardScaler
 
 
 ######################################################################################################
@@ -141,6 +141,21 @@ def get_mfcc_feats(speaker_ids, pow_frames_dict, attr):
         speaker_dict['test'] = MFCC(pow_frames_dict[id]['test'], attr)
         mfcc_dict[id] = speaker_dict
     return mfcc_dict
+
+def prepared_scaled_mfcc_feats(speaker_ids,pow_frames, MFCC_ATTR):
+    features = get_mfcc_feats(speaker_ids, pow_frames, MFCC_ATTR)
+    classes = []
+    train_set = []
+    for enum, id in enumerate(speaker_ids):
+        for val in features[id]['train']:
+            train_set.extend(features[id]['train'])
+            for i in range(len(features[id]['train'])):
+                classes.append(enum)
+
+    scaler = StandardScaler()
+    scaler.fit(train_set)
+    scaled_train = scaler.transform(train_set)
+    return features, scaled_train, classes, scaler
 ######################################################################################################
 # LPC
 def correlations(frames, p, N):
@@ -189,6 +204,21 @@ def get_lpc_feats(speaker_ids, window_frames_dict, p):
         speaker_dict['test'] = LPC(window_frames_dict[id]['test'], p)
         lpc_dict[id] = speaker_dict
     return lpc_dict
+
+def prepared_scaled_lpc_feats(speaker_ids, window_frames, LPC_ATTR):
+    features = get_lpc_feats(speaker_ids, window_frames, LPC_ATTR["P"])
+    classes = []
+    train_set = []
+    for enum, id in enumerate(speaker_ids):
+        for val in features[id]['train']:
+            train_set.extend(features[id]['train'])
+            for i in range(len(features[id]['train'])):
+                classes.append(enum)
+
+    scaler = StandardScaler()
+    scaler.fit(train_set)
+    scaled_train = scaler.transform(train_set)
+    return features, scaled_train, classes, scaler
 ######################################################################################################
 # PLP
 def sample_num_to_freq(x, sample_rate, n_points):
@@ -329,3 +359,18 @@ def get_plp_feats(speaker_ids, pow_frames_dict, p, filters):
         speaker_dict['test'] = PLP(pow_frames_dict[id]['test'], p, filters)
         plp_dict[id] = speaker_dict
     return plp_dict
+
+def prepared_scaled_plp_feats(speaker_ids, pow_frames, PLP_ATTR, plp_filters):
+    features = get_plp_feats(speaker_ids, pow_frames, PLP_ATTR["P"], plp_filters)
+    classes = []
+    train_set = []
+    for enum, id in enumerate(speaker_ids):
+        for val in features[id]['train']:
+            train_set.extend(features[id]['train'])
+            for i in range(len(features[id]['train'])):
+                classes.append(enum)
+
+    scaler = StandardScaler()
+    scaler.fit(train_set)
+    scaled_train = scaler.transform(train_set)
+    return features, scaled_train, classes, scaler

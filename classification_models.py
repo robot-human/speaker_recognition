@@ -166,12 +166,12 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
     #model_svm = SVC(kernel='rbf', max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-5, class_weight='balanced')
     #model_svm = NuSVC(kernel='rbf', max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-5, class_weight='balanced')
     #model_svm = LinearSVC(random_state=0, max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-5, fit_intercept=False, class_weight='balanced')
-    model_svm = SGDClassifier(max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-3, fit_intercept=False, class_weight='balanced',average=True)
+    model_svm = SGDClassifier(max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-3, fit_intercept=True, class_weight='balanced',average=False)
     model_svm.fit(scaled_train,classes)
 
     for speaker_enum, id in enumerate(speaker_ids):
         for vector in features[id]['test']:
-            dist = -1/0.000000001
+            dist = 0.0
             speaker = -1
             test_data = scaler.transform(vector)
             #test_classes = model_svm.predict(test_data)

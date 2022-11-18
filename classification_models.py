@@ -1,7 +1,7 @@
 import numpy as np
 from math import sqrt
 from random import randrange
-from sklearn.svm import SVC, LinearSVC
+from sklearn.svm import SVC, LinearSVC, NuSVC
 from sklearn.linear_model import SGDClassifier
 from sklearn.mixture import GaussianMixture
 from env_variables import MODEL_ATTR
@@ -163,7 +163,8 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
     good_classifications = 0
     bad_classifications = 0
     classifications = []
-    model_svm = SVC(kernel='rbf', max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-5,class_weight='balanced')
+    #model_svm = SVC(kernel='rbf', max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-5, class_weight='balanced')
+    model_svm = NuSVC(kernel='rbf', max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-5, class_weight='balanced')
     #model_svm = LinearSVC(random_state=0, max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-5, fit_intercept=False, class_weight='balanced')
     #model_svm = SGDClassifier(max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-3, fit_intercept=False, class_weight='balanced',average=True)
     model_svm.fit(scaled_train,classes)

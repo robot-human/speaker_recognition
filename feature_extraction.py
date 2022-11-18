@@ -88,8 +88,15 @@ def get_pow_frames_dict(speaker_ids, window_frames_dict, NFFT):
     for id in speaker_ids:
         speaker_dict = {}
         speaker_dict['train'] = (np.absolute(np.fft.rfft(window_frames_dict[id]['train'], NFFT))** 2)/NFFT
-        speaker_dict['valid'] = (np.absolute(np.fft.rfft(window_frames_dict[id]['valid'], NFFT))** 2)/NFFT
-        speaker_dict['test'] = (np.absolute(np.fft.rfft(window_frames_dict[id]['test'], NFFT))** 2)/NFFT
+        valid_vectors = []
+        test_vectors = []
+        for vector in window_frames_dict[id]['valid']:
+            valid_vectors.append((np.absolute(np.fft.rfft(vector, NFFT))** 2)/NFFT)
+        for vector in window_frames_dict[id]['test']:
+            test_vectors.append((np.absolute(np.fft.rfft(vector, NFFT))** 2)/NFFT)
+
+        speaker_dict['valid'] = valid_vectors
+        speaker_dict['test'] = test_vectors
         pow_frames_dict[id] = speaker_dict
     return pow_frames_dict
 ######################################################################################################

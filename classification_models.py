@@ -164,8 +164,8 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
     bad_classifications = 0
     classifications = []
     #model_svm = SVC(kernel='rbf', max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-5,class_weight='balanced')
-    model_svm = LinearSVC(random_state=0, max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-5, fit_intercept=False, class_weight='balanced')
-    #model_svm = SGDClassifier(max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-3, fit_intercept=False, class_weight='balanced')
+    #model_svm = LinearSVC(random_state=0, max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-5, fit_intercept=False, class_weight='balanced')
+    model_svm = SGDClassifier(max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-3, fit_intercept=False, class_weight='balanced')
     model_svm.fit(scaled_train,classes)
 
     for speaker_enum, id in enumerate(speaker_ids):

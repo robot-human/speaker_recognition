@@ -101,20 +101,21 @@ def run_VQ_model(speaker_ids, features):
         speaker_models.append(codebook)
     
     for speaker_enum, id in enumerate(speaker_ids):
-        speaker = -1
-        dist = 1/0.00000001
-        for enum, speaker_model in enumerate(speaker_models):
-            classes = assign_classes(features[id]['test'], speaker_model)
-            speaker_dist = featureset_distortion(features[id]['test'], classes, speaker_model)
-            if(speaker_dist < dist):
-                dist = speaker_dist
-                speaker = enum
-        classifications.append(speaker)
-        print(id, speaker_ids[speaker])
-        if(speaker_enum == speaker):
-            good_classifications += 1
-        else:
-            bad_classifications += 1
+        for vector in features[id]['test']:
+            speaker = -1
+            dist = 1/0.00000001
+            for enum, speaker_model in enumerate(speaker_models):
+                classes = assign_classes(vector, speaker_model)
+                speaker_dist = featureset_distortion(vector, classes, speaker_model)
+                if(speaker_dist < dist):
+                    dist = speaker_dist
+                    speaker = enum
+            classifications.append(speaker)
+            print(id, speaker_ids[speaker])
+            if(speaker_enum == speaker):
+                good_classifications += 1
+            else:
+                bad_classifications += 1
     print(f'Casos bien clasificados: {good_classifications}')
     print(f'Casos mal clasificados: {bad_classifications}')
     print("")

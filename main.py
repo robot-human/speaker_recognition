@@ -27,6 +27,7 @@ start_time = time.time()
 ids, speaker_files = get_speaker_files(DATABASE_PATH)
 
 for n_speakers in N_SPEAKERS_LIST:
+    print(f"Numero de locutores: {n_speakers}")
     GENERAL["N_SPEAKERS"] = n_speakers
     speaker_ids = random.sample(ids, k=GENERAL["N_SPEAKERS"])
     signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)

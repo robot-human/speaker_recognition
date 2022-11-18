@@ -171,10 +171,17 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
 
     for speaker_enum, id in enumerate(speaker_ids):
         for vector in features[id]['test']:
+            dist = -1/0.000000001
+            speaker = -1
             test_data = scaler.transform(vector)
-            test_classes = model_svm.predict(test_data)
-            counts = np.bincount(test_classes)
-            speaker = np.argmax(counts)
+            #test_classes = model_svm.predict(test_data)
+            #counts = np.bincount(test_classes)
+            #speaker = np.argmax(counts)
+            for idx in range(len(speaker_ids)):
+                speaker_dist = model_svm.score(test_data, [idx for i in range(test_data)])
+                if(speaker_dist > dist):
+                    dist = speaker_dist
+                    speaker = idx
             classifications.append(speaker)
             print(id, speaker_ids[speaker])
             if(speaker_enum == speaker):

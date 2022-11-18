@@ -56,5 +56,5 @@ PLP_ATTR = {
 MODEL_ATTR = {
     "VQ" : {"N_CODEWORDS" : 40, "EPOCHS" : 50},
     "GMM" : {"N_MIXTURES" : min(350,math.floor(0.75*N_VECTOR_SAMPLES)), "EPOCHS" : 5000},
-    "SVM" : {"EPOCHS" : 500}
+    "SVM" : {"EPOCHS" : 5000}
 }

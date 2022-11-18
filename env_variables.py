@@ -1,13 +1,17 @@
+import math
+
+SIGNAL_DURATION_IN_SECONDS = 10.0
 SAMPLE_RATE = 10000
 NFFT = 512
 N_SAMPLES = SAMPLE_RATE*2
 VAD_TRESHOLD = 0.012
 LOG_FILE_PATH = "/media/Data/pedro_tesis/speaker_recognition/log_files/"
 DATABASE_PATH = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
+N_VECTOR_SAMPLES = math.floor(SIGNAL_DURATION_IN_SECONDS*SAMPLE_RATE)
 
 GENERAL = {
     "N_SPEAKERS" : 10,  
-    "SIGNAL_DURATION_IN_SECONDS" : 10.0,
+    "SIGNAL_DURATION_IN_SECONDS" : SIGNAL_DURATION_IN_SECONDS,
     "N_SAMPLES" : N_SAMPLES
 }
 EXECUTION_TIMES = {
@@ -50,6 +54,6 @@ PLP_ATTR = {
 }
 MODEL_ATTR = {
     "VQ" : {"N_CODEWORDS" : 40, "EPOCHS" : 50},
-    "GMM" : {"N_MIXTURES" : 50, "EPOCHS" : 50},
+    "GMM" : {"N_MIXTURES" : math.floor(N_VECTOR_SAMPLES/2), "EPOCHS" : 50},
     "SVM" : {"EPOCHS" : 50}
 }

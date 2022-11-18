@@ -129,7 +129,7 @@ def filter_banks(bin_freqs, nfft):
     return fbank
 
 def MFCC(pow_frames, attr):
-    mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["SAMPLE_RATE"]/2), attr["n_filt"] + 2)
+    mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["SAMPLE_RATE"]/2), attr["N_FILT"] + 2)
     freqs = [mel_to_freq(mel) for mel in mels]
     bin_freqs = [freq_to_bin(f, attr["NFFT"], attr["SAMPLE_RATE"]) for f in freqs]
     fbank = filter_banks(bin_freqs,  attr["NFFT"])
@@ -157,7 +157,6 @@ def get_mfcc_feats(speaker_ids, pow_frames_dict, attr):
             valid_vectors.append(MFCC(vector, attr))
         for vector in pow_frames_dict[id]['test']:
             test_vectors.append(MFCC(vector, attr))
-
         speaker_dict['valid'] = valid_vectors
         speaker_dict['test'] = test_vectors
         mfcc_dict[id] = speaker_dict

@@ -24,7 +24,7 @@ def get_speaker_files(database_path):
         speaker_files[speaker] = speaker_files_list
     return speaker_ids, speaker_files
 
-def get_speaker_signals_dict(speaker_files, speaker_ids):
+def get_speaker_signals_dict(speaker_files, speaker_ids, pct=1.0):
     n_vector_samples = math.floor(GENERAL["SIGNAL_DURATION_IN_SECONDS"]*SAMPLE_RATE)
     signal_dict = {}
     for id in speaker_ids:
@@ -36,8 +36,8 @@ def get_speaker_signals_dict(speaker_files, speaker_ids):
         test_vectors = []
         for i in range(vectors_left):
             test_vectors.append(vad_samples[n_vector_samples*i:n_vector_samples*(i + 1)])
-        signal_data['valid'] = test_vectors[:math.floor(len(test_vectors)/2)]
-        signal_data['test'] = test_vectors[math.floor(len(test_vectors)/2):]
+        signal_data['test'] = test_vectors[:math.floor(len(test_vectors)*pct)]
+        signal_data['valid'] = test_vectors[math.floor(len(test_vectors)*(1-pct)):]
         signal_dict[id] = signal_data
     return signal_dict
 

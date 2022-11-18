@@ -151,8 +151,15 @@ def get_mfcc_feats(speaker_ids, pow_frames_dict, attr):
     for id in speaker_ids:
         speaker_dict = {}
         speaker_dict['train'] = MFCC(pow_frames_dict[id]['train'], attr)
-        speaker_dict['valid'] = MFCC(pow_frames_dict[id]['valid'], attr)
-        speaker_dict['test'] = MFCC(pow_frames_dict[id]['test'], attr)
+        valid_vectors = []
+        test_vectors = []
+        for vector in pow_frames_dict[id]['valid']:
+            valid_vectors.append(MFCC(vector, attr))
+        for vector in pow_frames_dict[id]['test']:
+            test_vectors.append(MFCC(vector, attr))
+
+        speaker_dict['valid'] = valid_vectors
+        speaker_dict['test'] = test_vectors
         mfcc_dict[id] = speaker_dict
     return mfcc_dict
 

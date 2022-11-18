@@ -166,17 +166,19 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
     #model_svm = LinearSVC(random_state=0, tol=1e-5)
     model_svm = SGDClassifier(max_iter=MODEL_ATTR["SVM"]["EPOCHS"], tol=1e-3)
     model_svm.fit(scaled_train,classes)
+
     for speaker_enum, id in enumerate(speaker_ids):
-        test_data = scaler.transform(features[id]['test'])
-        test_classes = model_svm.predict(test_data)
-        counts = np.bincount(test_classes)
-        speaker = np.argmax(counts)
-        classifications.append(speaker)
-        print(id, speaker_ids[speaker])
-        if(speaker_enum == speaker):
-            good_classifications += 1
-        else:
-            bad_classifications += 1
+        for vector in features[id]['test']:
+            test_data = scaler.transform(vector)
+            test_classes = model_svm.predict(test_data)
+            counts = np.bincount(test_classes)
+            speaker = np.argmax(counts)
+            classifications.append(speaker)
+            print(id, speaker_ids[speaker])
+            if(speaker_enum == speaker):
+                good_classifications += 1
+            else:
+                bad_classifications += 1
     print(f'Casos bien clasificados: {good_classifications}')
     print(f'Casos mal clasificados: {bad_classifications}')
     print("")

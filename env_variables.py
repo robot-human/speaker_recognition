@@ -6,8 +6,8 @@ LOG_FILE_PATH = "/media/Data/pedro_tesis/speaker_recognition/log_files/"
 DATABASE_PATH = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 
 GENERAL = {
-    "N_SPEAKERS" : 3,  
-    "SIGNAL_DURATION_IN_SECONDS" : 2.0,
+    "N_SPEAKERS" : 10,  
+    "SIGNAL_DURATION_IN_SECONDS" : 10.0,
     "N_SAMPLES" : N_SAMPLES
 }
 EXECUTION_TIMES = {

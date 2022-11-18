@@ -220,8 +220,14 @@ def get_lpc_feats(speaker_ids, window_frames_dict, p):
     for id in speaker_ids:
         speaker_dict = {}
         speaker_dict['train'] = LPC(window_frames_dict[id]['train'], p)
-        speaker_dict['valid'] = LPC(window_frames_dict[id]['valid'], p)
-        speaker_dict['test'] = LPC(window_frames_dict[id]['test'], p)
+        valid_vectors = []
+        test_vectors = []
+        for vector in window_frames_dict[id]['valid']:
+            valid_vectors.append(LPC(vector, p))
+        for vector in window_frames_dict[id]['test']:
+            test_vectors.append(LPC(vector, p))
+        speaker_dict['valid'] = valid_vectors
+        speaker_dict['test'] = test_vectors
         lpc_dict[id] = speaker_dict
     return lpc_dict
 
@@ -375,8 +381,14 @@ def get_plp_feats(speaker_ids, pow_frames_dict, p, filters):
     for id in speaker_ids:
         speaker_dict = {}
         speaker_dict['train'] = PLP(pow_frames_dict[id]['train'], p, filters)
-        speaker_dict['valid'] = PLP(pow_frames_dict[id]['valid'], p, filters)
-        speaker_dict['test'] = PLP(pow_frames_dict[id]['test'], p, filters)
+        valid_vectors = []
+        test_vectors = []
+        for vector in pow_frames_dict[id]['valid']:
+            valid_vectors.append(PLP(vector, p, filters))
+        for vector in pow_frames_dict[id]['test']:
+            test_vectors.append(PLP(vector, p, filters))
+        speaker_dict['valid'] = valid_vectors
+        speaker_dict['test'] = test_vectors
         plp_dict[id] = speaker_dict
     return plp_dict
 
@@ -389,7 +401,6 @@ def prepared_scaled_plp_feats(speaker_ids, pow_frames, PLP_ATTR, plp_filters):
             train_set.extend(features[id]['train'])
             for i in range(len(features[id]['train'])):
                 classes.append(enum)
-
     scaler = StandardScaler()
     scaler.fit(train_set)
     scaled_train = scaler.transform(train_set)

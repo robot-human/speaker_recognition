@@ -147,8 +147,8 @@ results_dict = {
     "PLP" : PLP_ATTR,
     "Results" : results
 }
-with open(file_path, 'w') as json_file:
-  json.dump(results_dict, json_file)
+# with open(file_path, 'w') as json_file:
+#   json.dump(results_dict, json_file)
 
 for k in  EXECUTION_TIMES.keys():
     print(f"{k} :  {EXECUTION_TIMES[k]}")

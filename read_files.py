@@ -35,6 +35,7 @@ def get_speaker_signals_dict(speaker_files, speaker_ids, pct=1.0):
         vectors_left = math.floor((len(vad_samples) - n_vector_samples)/n_vector_samples)
         test_vectors = []
         for i in range(vectors_left):
+            print(len(vad_samples[n_vector_samples*i:n_vector_samples*(i + 1)]))
             test_vectors.append(vad_samples[n_vector_samples*i:n_vector_samples*(i + 1)])
         signal_data['test'] = test_vectors[:math.floor(len(test_vectors)*pct)]
         signal_data['valid'] = test_vectors[math.floor(len(test_vectors)*(1-pct)):]

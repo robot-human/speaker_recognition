@@ -28,7 +28,8 @@ def ratio_distortion(a,b,R):
     return abs(dist)
 
 def get_best_matching_unit(feat, codebook):
-    min_distortion = 1000
+    min_distortion = 1/0.000000001
+    class_num = -1
     for enum, codeword in enumerate(codebook):
         #distortion = ratio_distortion(np.array(feat), np.array(codeword), R)
         distortion = euclidean_distance(np.array(feat), np.array(codeword))

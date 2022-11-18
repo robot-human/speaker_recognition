@@ -133,7 +133,7 @@ def run_GMM_model(speaker_ids, features, scaler):
 
     speaker_gm_models = []
     for sp in scaled_separate_set:
-        gm = GaussianMixture(n_components=MODEL_ATTR["GMM"]["N_MIXTURES"], random_state=0, max_iter=MODEL_ATTR["GMM"]["EPOCHS"], tol=1e-8).fit(sp)
+        gm = GaussianMixture(n_components=MODEL_ATTR["GMM"]["N_MIXTURES"], random_state=0, max_iter=MODEL_ATTR["GMM"]["EPOCHS"], tol=1e-8, covariance_type='tied').fit(sp)
         speaker_gm_models.append(gm)
 
     for speaker_enum, id in enumerate(speaker_ids):
@@ -147,7 +147,7 @@ def run_GMM_model(speaker_ids, features, scaler):
                     dist = speaker_dist
                     speaker = enum
             classifications.append(speaker)
-            #print(id, speaker_ids[speaker])
+            print(speaker)
             if(speaker_enum == speaker):
                 good_classifications += 1
             else:
@@ -175,7 +175,7 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
             counts = np.bincount(test_classes)
             speaker = np.argmax(counts)
             classifications.append(speaker)
-            #print(id, speaker_ids[speaker])
+            print(speaker)
             if(speaker_enum == speaker):
                 good_classifications += 1
             else:

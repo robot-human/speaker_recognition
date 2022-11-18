@@ -136,20 +136,21 @@ def run_GMM_model(speaker_ids, features, scaler):
         speaker_gm_models.append(gm)
 
     for speaker_enum, id in enumerate(speaker_ids):
-        dist = -1/0.000000001
-        speaker = -1
-        test_data = scaler.transform(features[id]['test'])
-        for enum, model in enumerate(speaker_gm_models):
-            speaker_dist = model.score(test_data)
-            if(speaker_dist > dist):
-                dist = speaker_dist
-                speaker = enum
-        classifications.append(speaker)
-        print(id, speaker_ids[speaker])
-        if(speaker_enum == speaker):
-            good_classifications += 1
-        else:
-            bad_classifications += 1
+        for vector in features[id]['test']:
+            dist = -1/0.000000001
+            speaker = -1
+            test_data = scaler.transform(vector)
+            for enum, model in enumerate(speaker_gm_models):
+                speaker_dist = model.score(test_data)
+                if(speaker_dist > dist):
+                    dist = speaker_dist
+                    speaker = enum
+            classifications.append(speaker)
+            print(id, speaker_ids[speaker])
+            if(speaker_enum == speaker):
+                good_classifications += 1
+            else:
+                bad_classifications += 1
     print(f'Casos bien clasificados: {good_classifications}')
     print(f'Casos mal clasificados: {bad_classifications}')
     print("")

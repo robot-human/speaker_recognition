@@ -70,6 +70,7 @@ def get_window_frames_dict(speaker_ids, signal_dict, attr):
     window_frames_dict = {}
     for id in speaker_ids:
         speaker_dict = {}
+        print(len(voice_signal_processing(signal_dict[id]['train'], attr)))
         speaker_dict['train'] = voice_signal_processing(signal_dict[id]['train'], attr)
         valid_vectors = []
         test_vectors = []

@@ -15,7 +15,7 @@ date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
 
 
 MODELS_LIST = ['GMM','VQ']
-FEATURES_LIST = ['LPC']
+FEATURES_LIST = ['MFCC','LPC']
 
 results = {
     "Models" : MODELS_LIST,
@@ -41,13 +41,13 @@ EXECUTION_TIMES['Pre-processing'] = round(end_time - start_time,2)
 
 # print(speaker_ids)
 # ########################################################################################################
-# ## MFCC
-# if("MFCC" in FEATURES_LIST):
-#     start_time = time.time()
-#     print("MFCC")
-#     features, scaled_train, classes, scaler = feats.prepared_scaled_mfcc_feats(speaker_ids, pow_frames, MFCC_ATTR)
-#     end_time = time.time()
-#     EXECUTION_TIMES['MFCC'] = round(end_time - start_time,2)
+## MFCC
+if("MFCC" in FEATURES_LIST):
+    start_time = time.time()
+    print("MFCC")
+    features, scaled_train, classes, scaler = feats.prepared_scaled_mfcc_feats(speaker_ids, pow_frames, MFCC_ATTR)
+    end_time = time.time()
+    EXECUTION_TIMES['MFCC'] = round(end_time - start_time,2)
 
 #     if("VQ" in MODELS_LIST):
 #         start_time = time.time()

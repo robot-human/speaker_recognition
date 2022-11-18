@@ -31,16 +31,13 @@ end_time = time.time()
 EXECUTION_TIMES['File reading'] = round(end_time - start_time,2)
 
 
-print(len(signal_dict[speaker_ids[0]]['train']))
-print(len(signal_dict[speaker_ids[0]]['test'][0]))
-print(len(signal_dict[speaker_ids[0]]['valid'][14]))
 
-# start_time = time.time()
-# plp_filters = feats.get_PLP_filters(FRAMES_ATTR["SAMPLE_RATE"], FRAMES_ATTR["NFFT"])
-# window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , FRAMES_ATTR)
-# pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, FRAMES_ATTR["NFFT"])
-# end_time = time.time()
-# EXECUTION_TIMES['Pre-processing'] = round(end_time - start_time,2)
+start_time = time.time()
+plp_filters = feats.get_PLP_filters(FRAMES_ATTR["SAMPLE_RATE"], FRAMES_ATTR["NFFT"])
+window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , FRAMES_ATTR)
+pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, FRAMES_ATTR["NFFT"])
+end_time = time.time()
+EXECUTION_TIMES['Pre-processing'] = round(end_time - start_time,2)
 
 # print(speaker_ids)
 # ########################################################################################################

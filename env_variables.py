@@ -1,13 +1,14 @@
 import math
 
 N_SPEAKERS = 10
-SIGNAL_DURATION_IN_SECONDS = 3.0
+SIGNAL_DURATION_IN_SECONDS = 5.0
 SAMPLE_RATE = 10000
 NFFT = 512
 VAD_TRESHOLD = 0.012
 LOG_FILE_PATH = "/media/Data/pedro_tesis/speaker_recognition/log_files/"
 DATABASE_PATH = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
 N_VECTOR_SAMPLES = math.floor(SIGNAL_DURATION_IN_SECONDS*SAMPLE_RATE)
+WINDOW_SIZE = 0.30
 
 GENERAL = {
     "N_SPEAKERS" : N_SPEAKERS,  
@@ -34,7 +35,7 @@ FRAMES_ATTR = {
     "SAMPLE_RATE": SAMPLE_RATE,
     "VAD_TRESHOLD": VAD_TRESHOLD,
     "PRE_EMPHASIS_COEF": 0.95,
-    "FRAME_IN_SECS": 0.025,
+    "FRAME_IN_SECS": WINDOW_SIZE,
     "OVERLAP_IN_SECS": 0.01,
     "WINDOW": 'hanning'
 }
@@ -53,6 +54,6 @@ PLP_ATTR = {
 }
 MODEL_ATTR = {
     "VQ" : {"N_CODEWORDS" : 40, "EPOCHS" : 50},
-    "GMM" : {"N_MIXTURES" : min(350,math.floor(0.75*0.025*SAMPLE_RATE)), "EPOCHS" : 5000},
+    "GMM" : {"N_MIXTURES" : min(350,math.floor(0.75*WINDOW_SIZE*SAMPLE_RATE)), "EPOCHS" : 5000},
     "SVM" : {"EPOCHS" : 1000}
 }

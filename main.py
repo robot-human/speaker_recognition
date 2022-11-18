@@ -14,8 +14,8 @@ random.seed(10)
 date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
 
 
-MODELS_LIST = ['GMM','SVM']
-FEATURES_LIST = ['LPC']
+MODELS_LIST = ['GMM']
+FEATURES_LIST = ['MFCC','LPC','PLP']
 
 results = {
     "Models" : MODELS_LIST,

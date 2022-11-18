@@ -71,8 +71,8 @@ def get_window_frames_dict(speaker_ids, signal_dict, attr):
     for id in speaker_ids:
         speaker_dict = {}
         speaker_dict['train'] = voice_signal_processing(signal_dict[id]['train'], attr)
-        speaker_dict['valid'] = voice_signal_processing(signal_dict[id]['valid'], attr)
-        speaker_dict['test'] = voice_signal_processing(signal_dict[id]['test'], attr)
+        #speaker_dict['valid'] = voice_signal_processing(signal_dict[id]['valid'], attr)
+        #speaker_dict['test'] = voice_signal_processing(signal_dict[id]['test'], attr)
         window_frames_dict[id] = speaker_dict
     return window_frames_dict
 

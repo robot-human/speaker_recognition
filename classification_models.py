@@ -178,7 +178,7 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
             #counts = np.bincount(test_classes)
             #speaker = np.argmax(counts)
             for idx in range(len(speaker_ids)):
-                speaker_dist = model_svm.score(test_data, [idx for i in range(test_data)])
+                speaker_dist = model_svm.score(test_data, [idx for i in range(len(test_data))])
                 if(speaker_dist > dist):
                     dist = speaker_dist
                     speaker = idx

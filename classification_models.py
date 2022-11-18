@@ -111,7 +111,7 @@ def run_VQ_model(speaker_ids, features):
                     dist = speaker_dist
                     speaker = enum
             classifications.append(speaker)
-            print(id, speaker_ids[speaker])
+            #print(id, speaker_ids[speaker])
             if(speaker_enum == speaker):
                 good_classifications += 1
             else:
@@ -146,7 +146,7 @@ def run_GMM_model(speaker_ids, features, scaler):
                     dist = speaker_dist
                     speaker = enum
             classifications.append(speaker)
-            print(id, speaker_ids[speaker])
+            #print(id, speaker_ids[speaker])
             if(speaker_enum == speaker):
                 good_classifications += 1
             else:
@@ -174,7 +174,7 @@ def run_SVM_model(speaker_ids, features, scaled_train, classes, scaler):
             counts = np.bincount(test_classes)
             speaker = np.argmax(counts)
             classifications.append(speaker)
-            print(id, speaker_ids[speaker])
+            #print(id, speaker_ids[speaker])
             if(speaker_enum == speaker):
                 good_classifications += 1
             else:

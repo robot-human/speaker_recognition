@@ -16,7 +16,7 @@ date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
 
 
 MODELS_LIST = ['VQ','GMM','SVM']
-FEATURES_LIST = ['MFCC','LPC','PLP']
+FEATURES_LIST = ['MFB','MFCC','LPC','PLP']
 
 results = {
     "Model" : "",

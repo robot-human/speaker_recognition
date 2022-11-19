@@ -10,6 +10,7 @@ import classification_models as models
 from read_files import get_speaker_files, get_speaker_signals_dict
 from env_variables import GENERAL, EXECUTION_TIMES, FRAMES_ATTR, MFCC_ATTR, LPC_ATTR, PLP_ATTR, LOG_FILE_PATH, DATABASE_PATH, N_SPEAKERS_LIST
 
+PRINT_FILES = False
 random.seed(10)
 date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
 
@@ -68,17 +69,18 @@ for n_speakers in N_SPEAKERS_LIST:
             results["Features"] = "MFCC"
             results["Confusion matrix"] = confusion_matrix
             
-            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-            results_dict = {
-                "General" : GENERAL,
-                "Frames" : FRAMES_ATTR,
-                "MFCC" : MFCC_ATTR, 
-                "LPC" : LPC_ATTR, 
-                "PLP" : PLP_ATTR,
-                "Results" : results
-            }
-            with open(file_path, 'w') as json_file:
-                json.dump(results_dict, json_file)
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
     
         if("GMM" in MODELS_LIST):
             model_name = "GMM"
@@ -92,17 +94,19 @@ for n_speakers in N_SPEAKERS_LIST:
             results["Model"] = "GMM"
             results["Features"] = "MFCC"
             results["Confusion matrix"] = confusion_matrix
-            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-            results_dict = {
-                "General" : GENERAL,
-                "Frames" : FRAMES_ATTR,
-                "MFCC" : MFCC_ATTR, 
-                "LPC" : LPC_ATTR, 
-                "PLP" : PLP_ATTR,
-                "Results" : results
-            }
-            with open(file_path, 'w') as json_file:
-                json.dump(results_dict, json_file)
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
 
         if("SVM" in MODELS_LIST):
             model_name = "SVM"
@@ -116,17 +120,19 @@ for n_speakers in N_SPEAKERS_LIST:
             results["Model"] = "SVM"
             results["Features"] = "MFCC"
             results["Confusion matrix"] = confusion_matrix
-            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-            results_dict = {
-                "General" : GENERAL,
-                "Frames" : FRAMES_ATTR,
-                "MFCC" : MFCC_ATTR, 
-                "LPC" : LPC_ATTR, 
-                "PLP" : PLP_ATTR,
-                "Results" : results
-            }
-            with open(file_path, 'w') as json_file:
-                json.dump(results_dict, json_file)
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
 # ########################################################################################################
 # ## LPC
     if("LPC" in FEATURES_LIST):
@@ -149,17 +155,19 @@ for n_speakers in N_SPEAKERS_LIST:
             results["Model"] = "VQ"
             results["Features"] = "LPC"
             results["Confusion matrix"] = confusion_matrix
-            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-            results_dict = {
-                "General" : GENERAL,
-                "Frames" : FRAMES_ATTR,
-                "MFCC" : MFCC_ATTR, 
-                "LPC" : LPC_ATTR, 
-                "PLP" : PLP_ATTR,
-                "Results" : results
-            }
-            with open(file_path, 'w') as json_file:
-                json.dump(results_dict, json_file)
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
 
         if("GMM" in MODELS_LIST):
             model_name = "GMM"
@@ -173,17 +181,19 @@ for n_speakers in N_SPEAKERS_LIST:
             results["Model"] = "GMM"
             results["Features"] = "LPC"
             results["Confusion matrix"] = confusion_matrix
-            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-            results_dict = {
-                "General" : GENERAL,
-                "Frames" : FRAMES_ATTR,
-                "MFCC" : MFCC_ATTR, 
-                "LPC" : LPC_ATTR, 
-                "PLP" : PLP_ATTR,
-                "Results" : results
-            }
-            with open(file_path, 'w') as json_file:
-                json.dump(results_dict, json_file)
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
 
         if("SVM" in MODELS_LIST):
             model_name = "SVM"
@@ -197,17 +207,19 @@ for n_speakers in N_SPEAKERS_LIST:
             results["Model"] = "SVM"
             results["Features"] = "LPC"
             results["Confusion matrix"] = confusion_matrix
-            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-            results_dict = {
-                "General" : GENERAL,
-                "Frames" : FRAMES_ATTR,
-                "MFCC" : MFCC_ATTR, 
-                "LPC" : LPC_ATTR, 
-                "PLP" : PLP_ATTR,
-                "Results" : results
-            }
-            with open(file_path, 'w') as json_file:
-                json.dump(results_dict, json_file)
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
 # ########################################################################################################
 # ## PLP
     if("PLP" in FEATURES_LIST):
@@ -230,17 +242,19 @@ for n_speakers in N_SPEAKERS_LIST:
             results["Model"] = "VQ"
             results["Features"] = "PLP"
             results["Confusion matrix"] = confusion_matrix
-            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-            results_dict = {
-                "General" : GENERAL,
-                "Frames" : FRAMES_ATTR,
-                "MFCC" : MFCC_ATTR, 
-                "LPC" : LPC_ATTR, 
-                "PLP" : PLP_ATTR,
-                "Results" : results
-            }
-            with open(file_path, 'w') as json_file:
-                json.dump(results_dict, json_file)
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
 
         if("GMM" in MODELS_LIST):
             model_name = "GMM"
@@ -254,17 +268,19 @@ for n_speakers in N_SPEAKERS_LIST:
             results["Model"] = "GMM"
             results["Features"] = "PLP"
             results["Confusion matrix"] = confusion_matrix
-            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-            results_dict = {
-                "General" : GENERAL,
-                "Frames" : FRAMES_ATTR,
-                "MFCC" : MFCC_ATTR, 
-                "LPC" : LPC_ATTR, 
-                "PLP" : PLP_ATTR,
-                "Results" : results
-            }
-            with open(file_path, 'w') as json_file:
-                json.dump(results_dict, json_file)
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
 
         if("SVM" in MODELS_LIST):
             model_name = "SVM"
@@ -277,17 +293,19 @@ for n_speakers in N_SPEAKERS_LIST:
             results["Model"] = "SVM"
             results["Features"] = "PLP"
             results["Confusion matrix"] = confusion_matrix
-            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-            results_dict = {
-                "General" : GENERAL,
-                "Frames" : FRAMES_ATTR,
-                "MFCC" : MFCC_ATTR, 
-                "LPC" : LPC_ATTR, 
-                "PLP" : PLP_ATTR,
-                "Results" : results
-            }
-            with open(file_path, 'w') as json_file:
-                json.dump(results_dict, json_file)
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
 
 
     

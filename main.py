@@ -47,6 +47,96 @@ for n_speakers in N_SPEAKERS_LIST:
 
 # print(speaker_ids)
 # ########################################################################################################
+## MFB
+    if("MFB" in FEATURES_LIST):
+        feature_name = "MFB"
+        start_time = time.time()
+        print("MFB")
+        features, scaled_train, classes, scaler = feats.prepared_scaled_mfb_feats(speaker_ids, pow_frames, MFCC_ATTR)
+        end_time = time.time()
+        EXECUTION_TIMES['MFCC'] = round(end_time - start_time,2)
+
+        if("VQ" in MODELS_LIST):
+            model_name = "VQ"
+            start_time = time.time()
+            print("MFB with VQ")
+            confusion_matrix = models.run_VQ_model(speaker_ids, features)
+            end_time = time.time()
+            EXECUTION_TIMES['VQ MFB'] = round(end_time - start_time,2)
+            print("")
+            
+            results["Model"] = "VQ"
+            results["Features"] = "MFB"
+            results["Confusion matrix"] = confusion_matrix
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
+    
+        if("GMM" in MODELS_LIST):
+            model_name = "GMM"
+            start_time = time.time()
+            print("MFB with GMM")
+            confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler)
+            end_time = time.time()
+            EXECUTION_TIMES['GMM MFB'] = round(end_time - start_time,2)
+            print("")
+
+            results["Model"] = "GMM"
+            results["Features"] = "MFB"
+            results["Confusion matrix"] = confusion_matrix
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR, 
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
+
+        if("SVM" in MODELS_LIST):
+            model_name = "SVM"
+            start_time = time.time()
+            print("MFB with SVM")
+            confusion_matrix = models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
+            end_time = time.time()
+            EXECUTION_TIMES['SVM MFB'] = round(end_time - start_time,2)
+            print("")
+
+            results["Model"] = "SVM"
+            results["Features"] = "MFB"
+            results["Confusion matrix"] = confusion_matrix
+            
+            if(PRINT_FILES):
+                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                results_dict = {
+                    "General" : GENERAL,
+                    "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
+                    "MFCC" : MFCC_ATTR, 
+                    "LPC" : LPC_ATTR, 
+                    "PLP" : PLP_ATTR,
+                    "Results" : results
+                }
+                with open(file_path, 'w') as json_file:
+                    json.dump(results_dict, json_file)
+# ########################################################################################################
 ## MFCC
     if("MFCC" in FEATURES_LIST):
         feature_name = "MFCC"
@@ -74,6 +164,7 @@ for n_speakers in N_SPEAKERS_LIST:
                 results_dict = {
                     "General" : GENERAL,
                     "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
                     "MFCC" : MFCC_ATTR, 
                     "LPC" : LPC_ATTR, 
                     "PLP" : PLP_ATTR,
@@ -100,6 +191,7 @@ for n_speakers in N_SPEAKERS_LIST:
                 results_dict = {
                     "General" : GENERAL,
                     "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
                     "MFCC" : MFCC_ATTR, 
                     "LPC" : LPC_ATTR, 
                     "PLP" : PLP_ATTR,
@@ -126,6 +218,7 @@ for n_speakers in N_SPEAKERS_LIST:
                 results_dict = {
                     "General" : GENERAL,
                     "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
                     "MFCC" : MFCC_ATTR, 
                     "LPC" : LPC_ATTR, 
                     "PLP" : PLP_ATTR,
@@ -161,6 +254,7 @@ for n_speakers in N_SPEAKERS_LIST:
                 results_dict = {
                     "General" : GENERAL,
                     "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
                     "MFCC" : MFCC_ATTR, 
                     "LPC" : LPC_ATTR, 
                     "PLP" : PLP_ATTR,
@@ -187,6 +281,7 @@ for n_speakers in N_SPEAKERS_LIST:
                 results_dict = {
                     "General" : GENERAL,
                     "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
                     "MFCC" : MFCC_ATTR, 
                     "LPC" : LPC_ATTR, 
                     "PLP" : PLP_ATTR,
@@ -213,6 +308,7 @@ for n_speakers in N_SPEAKERS_LIST:
                 results_dict = {
                     "General" : GENERAL,
                     "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
                     "MFCC" : MFCC_ATTR, 
                     "LPC" : LPC_ATTR, 
                     "PLP" : PLP_ATTR,
@@ -248,6 +344,7 @@ for n_speakers in N_SPEAKERS_LIST:
                 results_dict = {
                     "General" : GENERAL,
                     "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
                     "MFCC" : MFCC_ATTR, 
                     "LPC" : LPC_ATTR, 
                     "PLP" : PLP_ATTR,
@@ -274,6 +371,7 @@ for n_speakers in N_SPEAKERS_LIST:
                 results_dict = {
                     "General" : GENERAL,
                     "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
                     "MFCC" : MFCC_ATTR, 
                     "LPC" : LPC_ATTR, 
                     "PLP" : PLP_ATTR,
@@ -299,6 +397,7 @@ for n_speakers in N_SPEAKERS_LIST:
                 results_dict = {
                     "General" : GENERAL,
                     "Frames" : FRAMES_ATTR,
+                    "MFB" : MFCC_ATTR,
                     "MFCC" : MFCC_ATTR, 
                     "LPC" : LPC_ATTR, 
                     "PLP" : PLP_ATTR,

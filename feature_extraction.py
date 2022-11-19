@@ -104,12 +104,15 @@ def get_pow_frames_dict(speaker_ids, window_frames_dict, NFFT):
 def freq_to_mel(freq):
     mel = 1127*math.log(1 + freq/700)
     return mel
+
 def mel_to_freq(mel):
     freq = 700*(math.exp(mel/1127) - 1)
     return freq
+
 def freq_to_bin(freq, nfft, sample_rate):
     bin_freq = int(np.floor(((nfft + 1)*freq/sample_rate)))
     return bin_freq
+
 def triangular_filter(bin_freqs, n_bin, length):
     filt = np.zeros(length)
     l = int(bin_freqs[n_bin - 1])
@@ -120,6 +123,7 @@ def triangular_filter(bin_freqs, n_bin, length):
     for i in range(c, r):
         filt[i] = (i - r) / (c - r)
     return filt
+
 def filter_banks(bin_freqs, nfft):
     n_filt = len(bin_freqs) - 2
     length = int(np.floor(nfft / 2 + 1))
@@ -127,6 +131,67 @@ def filter_banks(bin_freqs, nfft):
     for i in range(1, n_filt + 1): 
         fbank[i - 1] = triangular_filter(bin_freqs, i, length)
     return fbank
+
+def delta(mfcc_frames):
+    deltas     = (mfcc_frames[0:len(mfcc_frames)-2,:] - mfcc_frames[2:,:])/2
+    new_frames = mfcc_frames[1:len(mfcc_frames) - 1,:]
+    coeffs     = np.concatenate((new_frames, deltas),axis=1)
+    return coeffs
+
+def d_delta(mfcc_frames):
+    deltas     = (mfcc_frames[0:len(mfcc_frames)-2,:] - mfcc_frames[2:,:])/2
+    d_deltas   = (deltas[0:len(deltas)-2,:] - deltas[2:,:])/2
+    new_frames = mfcc_frames[2:len(mfcc_frames) - 2,:]
+    new_deltas = deltas[1:len(deltas) - 1,:]
+    coeffs     = np.concatenate((new_frames,new_deltas),axis=1)
+    coeffs     = np.concatenate((coeffs,d_deltas),axis=1)
+    return coeffs
+
+def mel_filter_bank_spectrum(pow_frames, fbank):
+    filter_banks = np.dot(pow_frames, fbank.T)
+    filter_banks = np.where(filter_banks == 0, np.finfo(float).eps, filter_banks)  # Numerical Stability
+    filter_banks = 20 * np.log10(filter_banks)                                     # dB
+    return filter_banks
+
+def MFB(pow_frames, attr):
+    mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["SAMPLE_RATE"]/2), attr["N_FILT"] + 2)
+    freqs = [mel_to_freq(mel) for mel in mels]
+    bin_freqs = [freq_to_bin(f, attr["NFFT"], attr["SAMPLE_RATE"]) for f in freqs]
+    fbank = filter_banks(bin_freqs,  attr["NFFT"])
+
+    mfb_spectrum        = mel_filter_bank_spectrum(pow_frames, fbank)
+    return mfb_spectrum
+
+def get_mfb_feats(speaker_ids, pow_frames_dict, attr):
+    mfb_dict = {}
+    for id in speaker_ids:
+        speaker_dict = {}
+        speaker_dict['train'] = MFB(pow_frames_dict[id]['train'], attr)
+        valid_vectors = []
+        test_vectors = []
+        for vector in pow_frames_dict[id]['valid']:
+            valid_vectors.append(MFB(vector, attr))
+        for vector in pow_frames_dict[id]['test']:
+            test_vectors.append(MFB(vector, attr))
+        speaker_dict['valid'] = valid_vectors
+        speaker_dict['test'] = test_vectors
+        mfb_dict[id] = speaker_dict
+    return mfb_dict
+
+def prepared_scaled_mfb_feats(speaker_ids,pow_frames, MFB_ATTR):
+    features = get_mfb_feats(speaker_ids, pow_frames, MFB_ATTR)
+    classes = []
+    train_set = []
+    for enum, id in enumerate(speaker_ids):
+        for val in features[id]['train']:
+            train_set.extend(features[id]['train'])
+            for i in range(len(features[id]['train'])):
+                classes.append(enum)
+
+    scaler = StandardScaler()
+    scaler.fit(train_set)
+    scaled_train = scaler.transform(train_set)
+    return features, scaled_train, classes, scaler
 
 def MFCC(pow_frames, attr):
     mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["SAMPLE_RATE"]/2), attr["N_FILT"] + 2)
@@ -144,6 +209,8 @@ def MFCC(pow_frames, attr):
     lift = 1 + (attr["CEP_LIFTER"] / 2) * np.sin(np.pi * n / attr["CEP_LIFTER"])
     mfcc *= lift
     mfcc -= (np.mean(mfcc, axis=0) + 1e-8)
+
+    mfcc = d_delta(mfcc)
     return mfcc
 
 def get_mfcc_feats(speaker_ids, pow_frames_dict, attr):

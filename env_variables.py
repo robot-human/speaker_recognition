@@ -43,7 +43,7 @@ FRAMES_ATTR = {
 MFCC_ATTR = {
     "NFFT": NFFT,
     "SAMPLE_RATE": SAMPLE_RATE,
-    "N_FILT": 22,
+    "N_FILT": 40,
     "N_CEPS": 22,
     "CEP_LIFTER": 22
 }

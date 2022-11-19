@@ -1,6 +1,6 @@
 import math
 
-N_SPEAKERS_LIST = [4]
+N_SPEAKERS_LIST = [10]
 SAMPLE_RATE = 10000
 NFFT = 512
 

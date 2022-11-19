@@ -18,8 +18,9 @@ MODELS_LIST = ['VQ','GMM','SVM']
 FEATURES_LIST = ['MFCC','LPC','PLP']
 
 results = {
-    "Models" : MODELS_LIST,
-    "Features" : FEATURES_LIST
+    "Model" : "",
+    "Features" : "",
+    "Confusion matrix" : []
 }
 
 
@@ -56,26 +57,71 @@ for n_speakers in N_SPEAKERS_LIST:
         if("VQ" in MODELS_LIST):
             start_time = time.time()
             print("MFFC with VQ")
-            models.run_VQ_model(speaker_ids, features)
+            confusion_matrix = models.run_VQ_model(speaker_ids, features)
             end_time = time.time()
             EXECUTION_TIMES['VQ MFCC'] = round(end_time - start_time,2)
             print("")
+            
+            results["Model"] = "VQ"
+            results["Features"] = "MFCC"
+            results["Confusion matrix"] = confusion_matrix
+            file_path = LOG_FILE_PATH + f"MFCC_VQ_session_{date}.json"
+            results_dict = {
+                "General" : GENERAL,
+                "Frames" : FRAMES_ATTR,
+                "MFCC" : MFCC_ATTR, 
+                "LPC" : LPC_ATTR, 
+                "PLP" : PLP_ATTR,
+                "Results" : results
+            }
+            with open(file_path, 'w') as json_file:
+                json.dump(results_dict, json_file)
     
         if("GMM" in MODELS_LIST):
             start_time = time.time()
             print("MFFC with GMM")
-            models.run_GMM_model(speaker_ids, features, scaler)
+            confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler)
             end_time = time.time()
             EXECUTION_TIMES['GMM MFCC'] = round(end_time - start_time,2)
             print("")
 
+            results["Model"] = "GMM"
+            results["Features"] = "MFCC"
+            results["Confusion matrix"] = confusion_matrix
+            file_path = LOG_FILE_PATH + f"MFCC_GMM_session_{date}.json"
+            results_dict = {
+                "General" : GENERAL,
+                "Frames" : FRAMES_ATTR,
+                "MFCC" : MFCC_ATTR, 
+                "LPC" : LPC_ATTR, 
+                "PLP" : PLP_ATTR,
+                "Results" : results
+            }
+            with open(file_path, 'w') as json_file:
+                json.dump(results_dict, json_file)
+
         if("SVM" in MODELS_LIST):
             start_time = time.time()
             print("MFFC with SVM")
-            models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
+            confusion_matrix = models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
             end_time = time.time()
             EXECUTION_TIMES['SVM MFCC'] = round(end_time - start_time,2)
             print("")
+
+            results["Model"] = "SVM"
+            results["Features"] = "MFCC"
+            results["Confusion matrix"] = confusion_matrix
+            file_path = LOG_FILE_PATH + f"MFCC_SVM_session_{date}.json"
+            results_dict = {
+                "General" : GENERAL,
+                "Frames" : FRAMES_ATTR,
+                "MFCC" : MFCC_ATTR, 
+                "LPC" : LPC_ATTR, 
+                "PLP" : PLP_ATTR,
+                "Results" : results
+            }
+            with open(file_path, 'w') as json_file:
+                json.dump(results_dict, json_file)
 # ########################################################################################################
 # ## LPC
     if("LPC" in FEATURES_LIST):
@@ -88,26 +134,71 @@ for n_speakers in N_SPEAKERS_LIST:
         if("VQ" in MODELS_LIST):
             print("LPC with VQ")
             start_time = time.time()
-            models.run_VQ_model(speaker_ids, features)
+            confusion_matrix = models.run_VQ_model(speaker_ids, features)
             end_time = time.time()
             EXECUTION_TIMES['VQ LPC'] = round(end_time - start_time,2)
             print("")
 
+            results["Model"] = "VQ"
+            results["Features"] = "LPC"
+            results["Confusion matrix"] = confusion_matrix
+            file_path = LOG_FILE_PATH + f"LPC_VQ_session_{date}.json"
+            results_dict = {
+                "General" : GENERAL,
+                "Frames" : FRAMES_ATTR,
+                "MFCC" : MFCC_ATTR, 
+                "LPC" : LPC_ATTR, 
+                "PLP" : PLP_ATTR,
+                "Results" : results
+            }
+            with open(file_path, 'w') as json_file:
+                json.dump(results_dict, json_file)
+
         if("GMM" in MODELS_LIST):
             print("LPC with GMM")
             start_time = time.time()
-            models.run_GMM_model(speaker_ids, features, scaler)
+            confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler)
             end_time = time.time()
             EXECUTION_TIMES['GMM LPC'] = round(end_time - start_time,2)
             print("")
 
+            results["Model"] = "GMM"
+            results["Features"] = "LPC"
+            results["Confusion matrix"] = confusion_matrix
+            file_path = LOG_FILE_PATH + f"LPC_GMM_session_{date}.json"
+            results_dict = {
+                "General" : GENERAL,
+                "Frames" : FRAMES_ATTR,
+                "MFCC" : MFCC_ATTR, 
+                "LPC" : LPC_ATTR, 
+                "PLP" : PLP_ATTR,
+                "Results" : results
+            }
+            with open(file_path, 'w') as json_file:
+                json.dump(results_dict, json_file)
+
         if("SVM" in MODELS_LIST):
             print("LPC with SVM")
             start_time = time.time()
-            models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
+            confusion_matrix = models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
             end_time = time.time()
             EXECUTION_TIMES['SVM LPC'] = round(end_time - start_time,2)
             print("")
+
+            results["Model"] = "SVM"
+            results["Features"] = "LPC"
+            results["Confusion matrix"] = confusion_matrix
+            file_path = LOG_FILE_PATH + f"LPC_SVM_session_{date}.json"
+            results_dict = {
+                "General" : GENERAL,
+                "Frames" : FRAMES_ATTR,
+                "MFCC" : MFCC_ATTR, 
+                "LPC" : LPC_ATTR, 
+                "PLP" : PLP_ATTR,
+                "Results" : results
+            }
+            with open(file_path, 'w') as json_file:
+                json.dump(results_dict, json_file)
 # ########################################################################################################
 # ## PLP
     if("PLP" in FEATURES_LIST):
@@ -120,39 +211,73 @@ for n_speakers in N_SPEAKERS_LIST:
         if("VQ" in MODELS_LIST):
             print("PLP with VQ")
             start_time = time.time()
-            models.run_VQ_model(speaker_ids, features)
+            confusion_matrix = models.run_VQ_model(speaker_ids, features)
             end_time = time.time()
             EXECUTION_TIMES['VQ PLP'] = round(end_time - start_time,2)
             print("")
 
+            results["Model"] = "VQ"
+            results["Features"] = "PLP"
+            results["Confusion matrix"] = confusion_matrix
+            file_path = LOG_FILE_PATH + f"PLP_VQ_session_{date}.json"
+            results_dict = {
+                "General" : GENERAL,
+                "Frames" : FRAMES_ATTR,
+                "MFCC" : MFCC_ATTR, 
+                "LPC" : LPC_ATTR, 
+                "PLP" : PLP_ATTR,
+                "Results" : results
+            }
+            with open(file_path, 'w') as json_file:
+                json.dump(results_dict, json_file)
+
         if("GMM" in MODELS_LIST):
             print("PLP with GMM")
             start_time = time.time()
-            models.run_GMM_model(speaker_ids, features, scaler)
+            confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler)
             end_time = time.time()
             EXECUTION_TIMES['GMM PLP'] = round(end_time - start_time,2)
             print("")
 
+            results["Model"] = "GMM"
+            results["Features"] = "PLP"
+            results["Confusion matrix"] = confusion_matrix
+            file_path = LOG_FILE_PATH + f"PLP_GMM_session_{date}.json"
+            results_dict = {
+                "General" : GENERAL,
+                "Frames" : FRAMES_ATTR,
+                "MFCC" : MFCC_ATTR, 
+                "LPC" : LPC_ATTR, 
+                "PLP" : PLP_ATTR,
+                "Results" : results
+            }
+            with open(file_path, 'w') as json_file:
+                json.dump(results_dict, json_file)
+
         if("SVM" in MODELS_LIST):
             print("PLP with SVM")
             start_time = time.time()
-            models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
+            confusion_matrix = models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
             end_time = time.time()
             EXECUTION_TIMES['SVM PLP'] = round(end_time - start_time,2)
             print("")
+            results["Model"] = "SVM"
+            results["Features"] = "PLP"
+            results["Confusion matrix"] = confusion_matrix
+            file_path = LOG_FILE_PATH + f"PLP_SVM_session_{date}.json"
+            results_dict = {
+                "General" : GENERAL,
+                "Frames" : FRAMES_ATTR,
+                "MFCC" : MFCC_ATTR, 
+                "LPC" : LPC_ATTR, 
+                "PLP" : PLP_ATTR,
+                "Results" : results
+            }
+            with open(file_path, 'w') as json_file:
+                json.dump(results_dict, json_file)
 
 
-    file_path = LOG_FILE_PATH + f"session_{date}.json"
-    results_dict = {
-        "General" : GENERAL,
-        "Frames" : FRAMES_ATTR,
-        "MFCC" : MFCC_ATTR, 
-        "LPC" : LPC_ATTR, 
-        "PLP" : PLP_ATTR,
-        "Results" : results
-    }
-    with open(file_path, 'w') as json_file:
-        json.dump(results_dict, json_file)
+    
 
     for k in  EXECUTION_TIMES.keys():
         print(f"{k} :  {EXECUTION_TIMES[k]}")

@@ -4,7 +4,7 @@ N_SPEAKERS_LIST = [10]
 SAMPLE_RATE = 10000
 NFFT = 512
 
-SIGNAL_DURATION_IN_SECONDS = 5.0
+SIGNAL_DURATION_IN_SECONDS = 10.0
 VAD_TRESHOLD = 0.02
 LOG_FILE_PATH = "/media/Data/pedro_tesis/speaker_recognition/log_files/"
 DATABASE_PATH = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
@@ -18,9 +18,13 @@ GENERAL = {
 EXECUTION_TIMES = {
     'File reading' : 0,
     'Pre-processing' : 0,
+    'MFB' : 0,
     'MFCC' : 0,
     'LPC' : 0,
     'PLP' : 0,
+    'VQ MFB' : 0,
+    'GMM MFB' : 0,
+    'SVM MFB' : 0,
     'VQ MFCC' : 0,
     'GMM MFCC' : 0,
     'SVM MFCC' : 0,

@@ -54,7 +54,7 @@ for n_speakers in N_SPEAKERS_LIST:
         print("MFB")
         features, scaled_train, classes, scaler = feats.prepared_scaled_mfb_feats(speaker_ids, pow_frames, MFCC_ATTR)
         end_time = time.time()
-        EXECUTION_TIMES['MFCC'] = round(end_time - start_time,2)
+        EXECUTION_TIMES['MFB'] = round(end_time - start_time,2)
 
         if("VQ" in MODELS_LIST):
             model_name = "VQ"

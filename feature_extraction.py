@@ -158,8 +158,7 @@ def MFB(pow_frames, attr):
     freqs = [mel_to_freq(mel) for mel in mels]
     bin_freqs = [freq_to_bin(f, attr["NFFT"], attr["SAMPLE_RATE"]) for f in freqs]
     fbank = filter_banks(bin_freqs,  attr["NFFT"])
-
-    mfb_spectrum        = mel_filter_bank_spectrum(pow_frames, fbank)
+    mfb_spectrum = mel_filter_bank_spectrum(pow_frames, fbank)
     return mfb_spectrum
 
 def get_mfb_feats(speaker_ids, pow_frames_dict, attr):
@@ -199,17 +198,14 @@ def MFCC(pow_frames, attr):
     bin_freqs = [freq_to_bin(f, attr["NFFT"], attr["SAMPLE_RATE"]) for f in freqs]
     fbank = filter_banks(bin_freqs,  attr["NFFT"])
     
-    f_banks = np.dot(pow_frames, fbank.T)
-    f_banks = np.where(f_banks == 0, np.finfo(float).eps, f_banks) 
-    f_banks = 20 * np.log10(f_banks)
-    mfcc = dct(f_banks, type=2, axis=1, norm='ortho')[:, 1 : (attr["N_CEPS"] + 1)]
+    mfb_spectrum = mel_filter_bank_spectrum(pow_frames, fbank)
+    mfcc = dct(mfb_spectrum, type=2, axis=1, norm='ortho')[:, 1 : (attr["N_CEPS"] + 1)]
 
     (nframes, ncoeff) = mfcc.shape
     n = np.arange(ncoeff)
     lift = 1 + (attr["CEP_LIFTER"] / 2) * np.sin(np.pi * n / attr["CEP_LIFTER"])
     mfcc *= lift
     mfcc -= (np.mean(mfcc, axis=0) + 1e-8)
-
     mfcc = d_delta(mfcc)
     return mfcc
 

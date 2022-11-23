@@ -3,7 +3,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import librosa
-from env_variables import LOG_FILES_PATH
+from env_variables import LOG_FILE_PATH
 from config import cfg
 
 def samples_to_seconds(samples, sample_rate):
@@ -12,7 +12,7 @@ def samples_to_seconds(samples, sample_rate):
 
 def plot_signal(signal,name):
     plt.plot(signal)
-    plt.savefig(LOG_FILES_PATH+f"/{name}.png")
+    plt.savefig(LOG_FILE_PATH+f"/{name}.png")
 
 def trim_signal(signal, sample_rate, secs):
     n_samples = math.floor(secs*sample_rate)

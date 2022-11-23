@@ -7,16 +7,11 @@ import json
 from sklearn.preprocessing import StandardScaler
 import feature_extraction as feats
 import classification_models as models
+from env_variables import LOG_FILE_PATH,DATABASE_PATH,MODELS_LIST,FEATURES_LIST,PRINT_FILES
 from read_files import get_speaker_files, get_speaker_signals_dict
 from config import cfg
 
 
-LOG_FILE_PATH = "/media/Data/pedro_tesis/speaker_recognition/log_files/"
-DATABASE_PATH = "/media/Data/databases/LibriSpeech/train-clean-100/train-clean-100"
-MODELS_LIST = ['VQ','GMM','SVM']
-FEATURES_LIST = ['MFB','MFCC','LPC','PLP']
-
-PRINT_FILES = False
 random.seed(10)
 date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
 

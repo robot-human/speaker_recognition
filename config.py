@@ -103,4 +103,6 @@ else:
         "Results" : RESULTS
     }
     for k in (cfg_dict.keys()):
+        print(k)
         print(cfg_dict[k])
+        print(""))

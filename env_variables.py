@@ -12,32 +12,14 @@ N_VECTOR_SAMPLES = math.floor(SIGNAL_DURATION_IN_SECONDS*SAMPLE_RATE)
 WINDOW_SIZE = 0.025
 
 GENERAL = {
-    "N_SPEAKERS" : 0,  
-    "SIGNAL_DURATION_IN_SECONDS" : SIGNAL_DURATION_IN_SECONDS,
-}
-EXECUTION_TIMES = {
-    'File reading' : 0,
-    'Pre-processing' : 0,
-    'MFB' : 0,
-    'MFCC' : 0,
-    'LPC' : 0,
-    'PLP' : 0,
-    'VQ MFB' : 0,
-    'GMM MFB' : 0,
-    'SVM MFB' : 0,
-    'VQ MFCC' : 0,
-    'GMM MFCC' : 0,
-    'SVM MFCC' : 0,
-    'VQ LPC' : 0,
-    'GMM LPC' : 0,
-    'SVM LPC' : 0,
-    'VQ PLP' : 0,
-    'GMM PLP' : 0,
-    'SVM PLP' : 0
+    "N_SPEAKERS" : 0,
+    "SAMPLE_RATE": SAMPLE_RATE,
+    "NFFT": NFFT,
+    "SIGNAL_DURATION_IN_SECONDS" : SIGNAL_DURATION_IN_SECONDS
 }
 FRAMES_ATTR = {
-    "NFFT": NFFT,
     "SAMPLE_RATE": SAMPLE_RATE,
+    "NFFT": NFFT,
     "VAD_TRESHOLD": VAD_TRESHOLD,
     "PRE_EMPHASIS_COEF": 0.95,
     "FRAME_IN_SECS": WINDOW_SIZE,
@@ -61,4 +43,24 @@ MODEL_ATTR = {
     "VQ" : {"N_CODEWORDS" : 40, "EPOCHS" : 50},
     "GMM" : {"N_MIXTURES" : min(350,math.floor(0.75*WINDOW_SIZE*SAMPLE_RATE)), "EPOCHS" : 5000},
     "SVM" : {"EPOCHS" : 1000}
+}
+EXECUTION_TIMES = {
+    'File reading' : 0,
+    'Pre-processing' : 0,
+    'MFB' : 0,
+    'MFCC' : 0,
+    'LPC' : 0,
+    'PLP' : 0,
+    'VQ MFB' : 0,
+    'GMM MFB' : 0,
+    'SVM MFB' : 0,
+    'VQ MFCC' : 0,
+    'GMM MFCC' : 0,
+    'SVM MFCC' : 0,
+    'VQ LPC' : 0,
+    'GMM LPC' : 0,
+    'SVM LPC' : 0,
+    'VQ PLP' : 0,
+    'GMM PLP' : 0,
+    'SVM PLP' : 0
 }

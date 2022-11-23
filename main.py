@@ -28,6 +28,9 @@ results_dict = cfg
 for pre_emph in cfg["Frames"]["PRE_EMPHASIS_COEF"]:
     for frame_size in cfg["Frames"]["FRAME_IN_SECS"]:
         for frame_overlap in cfg["Frames"]["OVERLAP_PCT"]:
+
+            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+
             results_dict["Frames"]["PRE_EMPHASIS_COEF"] = float(pre_emph)
             results_dict["Frames"]["FRAME_IN_SECS"] = float(frame_size)
             results_dict["Frames"]["OVERLAP_PCT"] = float(frame_overlap)

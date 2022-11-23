@@ -32,7 +32,7 @@ for pre_emph in cfg["Frames"]["PRE_EMPHASIS_COEF"]:
             results_dict["Frames"]["FRAME_IN_SECS"] = float(frame_size)
             results_dict["Frames"]["OVERLAP_PCT"] = float(frame_overlap)
             results_dict["Frames"]["OVERLAP_IN_SECS"] = float(frame_size)*float(frame_overlap)
-            results_dict["Model attr"]["GMM"]["N_MIXTURES"] = min(350,math.floor(0.75*results_dict["General"]["SAMPLE_RATE"]*results_dict["Frames"]["FRAME_IN_SECS"]))
+            results_dict["Model attr"]["GMM"]["N_MIXTURES"] = min(350,math.floor(0.75*int(results_dict["General"]["SAMPLE_RATE"]*results_dict["Frames"]["FRAME_IN_SECS"])))
             print(f"Pre_emph: {pre_emph}, Frame size: {frame_size}, Frame overlap: {frame_overlap}")
 
             start_time = time.time()

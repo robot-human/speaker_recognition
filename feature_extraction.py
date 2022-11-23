@@ -53,7 +53,7 @@ def window(frames, frame_length, window_type = 'hamming'):
         out = frames*np.hamming(frame_length)
     return out
 
-def frame_matrix(signal,sample_rate, pre_emphasis_coef, frame_in_secs, overlap_in_secs, window_type):
+def frame_matrix(signal, sample_rate, pre_emphasis_coef, frame_in_secs, overlap_in_secs, window_type):
     emph_signal = pre_emphasis(signal, pre_emphasis_coef)
     frames = framing(emph_signal, sample_rate, frame_in_secs, overlap_in_secs)
     window_frames = window(frames, int(frame_in_secs*sample_rate), window_type)

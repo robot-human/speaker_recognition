@@ -29,6 +29,7 @@ def pre_emphasis(signal, pre_emphasis_coef):
     return emphasized_signal
 
 def framing(signal, sample_rate, frame_size, frame_stride):
+    print(sample_rate, frame_size)
     nsamples_signal = len(signal)
     nsamples_frame = int(sample_rate*frame_size)
     nsamples_stride = int(sample_rate*frame_stride)

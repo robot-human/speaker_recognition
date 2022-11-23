@@ -3,7 +3,7 @@ import math
 import random
 import functions
 import feature_extraction as feats
-from env_variables import SAMPLE_RATE, GENERAL, VAD_TRESHOLD
+from config import cfg
 
 
 def get_speaker_files(database_path):
@@ -25,12 +25,12 @@ def get_speaker_files(database_path):
     return speaker_ids, speaker_files
 
 def get_speaker_signals_dict(speaker_files, speaker_ids, pct=1.0):
-    n_vector_samples = math.floor(GENERAL["SIGNAL_DURATION_IN_SECONDS"]*SAMPLE_RATE)
+    n_vector_samples = math.floor(cfg["General"]["SIGNAL_DURATION_IN_SECONDS"]*cfg["General"]["SAMPLE_RATE"])
     signal_dict = {}
     for id in speaker_ids:
         signal_data = {}
         speaker_samples = functions.get_samples(speaker_files,id)
-        vad_samples = feats.vad(speaker_samples, VAD_TRESHOLD)
+        vad_samples = feats.vad(speaker_samples, cfg["Frames"]["VAD_TRESHOLD"])
         signal_data['train'] = vad_samples[:n_vector_samples]
         vectors_left = math.floor((len(vad_samples) - n_vector_samples)/n_vector_samples)
         test_vectors = []

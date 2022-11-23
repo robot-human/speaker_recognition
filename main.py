@@ -32,9 +32,8 @@ for pre_emph in cfg["Frames"]["PRE_EMPHASIS_COEF"]:
             results_dict["Frames"]["FRAME_IN_SECS"] = float(frame_size)
             results_dict["Frames"]["OVERLAP_PCT"] = float(frame_overlap)
             results_dict["Frames"]["OVERLAP_IN_SECS"] = float(frame_size)*float(frame_overlap)
-            results_dict["Model attr"]["GMM"]["N_MIXTURES"] = min(350,math.floor(0.75*int(results_dict["General"]["SAMPLE_RATE"]*results_dict["Frames"]["FRAME_IN_SECS"])))
-            print(results_dict["Model attr"]["GMM"]["N_MIXTURES"])
-            print(f"Pre_emph: {pre_emph}, Frame size: {frame_size}, Frame overlap: {frame_overlap}")
+            n_frames = int((math.floor((results_dict["General"]["SIGNAL_DURATION_IN_SECONDS"]-results_dict["Frames"]["FRAME_IN_SECS"])/results_dict["Frames"]["OVERLAP_IN_SECS"])*results_dict["General"]["SAMPLE_RATE"] + 1))
+            results_dict["Model attr"]["GMM"]["N_MIXTURES"] = min(350,math.floor(0.70*n_frames ))
 
             start_time = time.time()
             plp_filters = feats.get_PLP_filters(results_dict["General"]["SAMPLE_RATE"], results_dict["General"]["NFFT"])

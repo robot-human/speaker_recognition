@@ -11,7 +11,7 @@ else:
     cfgParser = ConfigParser()
     cfgParser.read(os.path.join(os.getcwd(), 'config.ini'))
 
-    N_SPEAKERS = int(cfgParser.get('config', 'N_SPEAKERS'))
+    N_SPEAKERS = cfgParser.get('config', 'N_SPEAKERS').split(",")
     SAMPLE_RATE = int(cfgParser.get('config', 'SAMPLE_RATE'))
     NFFT = int(cfgParser.get('config', 'NFFT'))
     SIGNAL_DURATION_IN_SECONDS = float(cfgParser.get('config', 'SIGNAL_DURATION_IN_SECONDS'))
@@ -92,17 +92,18 @@ else:
     "Confusion matrix" : []
     }
 
-    cfg_dict = {
+    cfg = {
         "General" : GENERAL,
         "Frames" : FRAMES_ATTR,
         "MFB" : MFCC_ATTR,
         "MFCC" : MFCC_ATTR, 
         "LPC" : LPC_ATTR, 
         "PLP" : PLP_ATTR,
+        "Model attr" : MODEL_ATTR,
         "Execution times" : EXECUTION_TIMES,
         "Results" : RESULTS
     }
-    for k in (cfg_dict.keys()):
+    for k in (cfg.keys()):
         print(k)
-        print(cfg_dict[k])
+        print(cfg[k])
         print("")

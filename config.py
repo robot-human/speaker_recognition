@@ -62,7 +62,7 @@ else:
     }
     MODEL_ATTR = {
         "VQ" : {"N_CODEWORDS" : N_CODEWORDS, "EPOCHS" : EPOCHS_VQ},
-        "GMM" : {"N_MIXTURES" : min(N_MIXTURES,math.floor(0.75*FRAME_IN_SECS*SAMPLE_RATE)), "EPOCHS" : EPOCHS_GMM},
+        "GMM" : {"N_MIXTURES" : 200, "EPOCHS" : EPOCHS_GMM},
         "SVM" : {"EPOCHS" : EPOCHS_SVM}
     }
     EXECUTION_TIMES = {

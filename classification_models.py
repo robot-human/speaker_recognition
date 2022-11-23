@@ -4,9 +4,9 @@ from random import randrange
 from sklearn.svm import SVC, LinearSVC, NuSVC
 from sklearn.linear_model import SGDClassifier
 from sklearn.mixture import GaussianMixture
-from env_variables import MODEL_ATTR
+from config import cfg
 
-MODEL_ATTR["VQ"]["N_CODEWORDS"]
+MODEL_ATTR = cfg["Model attr"]
 ######################################################################################################
 # Vector Quantization
 def random_codebook(train):

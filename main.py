@@ -24,10 +24,14 @@ signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
 end_time = time.time()
 cfg["Execution times"]['File reading'] = round(end_time - start_time,2)
 
+preemph_list =cfg["Frames"]["PRE_EMPHASIS_COEF"]
+frmes_size_list =cfg["Frames"]["FRAME_IN_SECS"]
+overlap_list =cfg["Frames"]["OVERLAP_PCT"]
+
 results_dict = cfg
-for pre_emph in cfg["Frames"]["PRE_EMPHASIS_COEF"]:
-    for frame_size in cfg["Frames"]["FRAME_IN_SECS"]:
-        for frame_overlap in cfg["Frames"]["OVERLAP_PCT"]:
+for pre_emph in preemph_list:
+    for frame_size in frmes_size_list:
+        for frame_overlap in overlap_list:
 
             print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
 

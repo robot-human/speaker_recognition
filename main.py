@@ -75,7 +75,7 @@ for pre_emph in cfg["Frames"]["PRE_EMPHASIS_COEF"]:
                     model_name = "GMM"
                     start_time = time.time()
                     print("MFB with GMM")
-                    confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler)
+                    confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler, results_dict["Model attr"]["GMM"])
                     end_time = time.time()
                     results_dict["Execution times"]['GMM MFB'] = round(end_time - start_time,2)
                     print("")
@@ -138,7 +138,7 @@ for pre_emph in cfg["Frames"]["PRE_EMPHASIS_COEF"]:
                     model_name = "GMM"
                     start_time = time.time()
                     print("MFFC with GMM")
-                    confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler)
+                    confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler, results_dict["Model attr"]["GMM"])
                     end_time = time.time()
                     results_dict["Execution times"]['GMM MFCC'] = round(end_time - start_time,2)
                     print("")
@@ -201,7 +201,7 @@ for pre_emph in cfg["Frames"]["PRE_EMPHASIS_COEF"]:
                     model_name = "GMM"
                     print("LPC with GMM")
                     start_time = time.time()
-                    confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler)
+                    confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler, results_dict["Model attr"]["GMM"])
                     end_time = time.time()
                     results_dict["Execution times"]['GMM LPC'] = round(end_time - start_time,2)
                     print("")
@@ -264,7 +264,7 @@ for pre_emph in cfg["Frames"]["PRE_EMPHASIS_COEF"]:
                     model_name = "GMM"
                     print("PLP with GMM")
                     start_time = time.time()
-                    confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler)
+                    confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler, results_dict["Model attr"]["GMM"])
                     end_time = time.time()
                     results_dict["Execution times"]['GMM PLP'] = round(end_time - start_time,2)
                     print("")

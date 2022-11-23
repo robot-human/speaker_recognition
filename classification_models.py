@@ -123,7 +123,7 @@ def run_VQ_model(speaker_ids, features):
     return classifications
 ######################################################################################################
 # Gaussian Mixture Model
-def run_GMM_model(speaker_ids, features, scaler):
+def run_GMM_model(speaker_ids, features, scaler, attr):
     good_classifications = 0
     bad_classifications = 0
     classifications = []
@@ -133,7 +133,7 @@ def run_GMM_model(speaker_ids, features, scaler):
 
     speaker_gm_models = []
     for sp in scaled_separate_set:
-        gm = GaussianMixture(n_components=MODEL_ATTR["GMM"]["N_MIXTURES"], random_state=0, max_iter=MODEL_ATTR["GMM"]["EPOCHS"], tol=1e-8, covariance_type='tied').fit(sp)
+        gm = GaussianMixture(n_components=attr["N_MIXTURES"], random_state=0, max_iter=attr["EPOCHS"], tol=1e-8, covariance_type='tied').fit(sp)
         speaker_gm_models.append(gm)
 
     for speaker_enum, id in enumerate(speaker_ids):

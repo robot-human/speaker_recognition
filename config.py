@@ -10,4 +10,4 @@ else:
     cfgParser = ConfigParser()
     cfgParser.read(os.path.join(os.getcwd(), 'config.ini'))
 
-    print(cfgParser)
+    print(cfgParser.get('config', 'N_SPEAKERS'))

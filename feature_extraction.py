@@ -63,8 +63,8 @@ def voice_signal_processing(samples, attr):
     vad_signal = vad(samples,attr["VAD_TRESHOLD"])
     emph_signal = pre_emphasis(vad_signal, attr["PRE_EMPHASIS_COEF"])
     frames = framing(emph_signal, attr["SAMPLE_RATE"], attr["FRAME_IN_SECS"], attr["OVERLAP_IN_SECS"])
-    print("frames",len(frames[0]))
     window_frames = window(frames, int(attr["FRAME_IN_SECS"]*attr["SAMPLE_RATE"]), attr["WINDOW"])
+    print("frames",len(window_frames[0]))
     return window_frames
 
 def get_window_frames_dict(speaker_ids, signal_dict, attr):

@@ -17,7 +17,7 @@ else:
     SIGNAL_DURATION_IN_SECONDS = float(cfgParser.get('config', 'SIGNAL_DURATION_IN_SECONDS'))
     VAD_TRESHOLD = float(cfgParser.get('config', 'VAD_TRESHOLD'))
 
-    PRE_EMPHASIS_COEF = float(cfgParser.get('config', 'PRE_EMPHASIS_COEF'))
+    PRE_EMPHASIS_COEF = cfgParser.get('config', 'PRE_EMPHASIS_COEF').split(",")
     FRAME_IN_SECS = cfgParser.get('config', 'FRAME_IN_SECS').split(",")
     OVERLAP_PCT = cfgParser.get('config', 'OVERLAP_PCT').split(",")
     WINDOW = cfgParser.get('config', 'WINDOW')

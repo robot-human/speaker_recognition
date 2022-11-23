@@ -102,4 +102,5 @@ else:
         "Execution times" : EXECUTION_TIMES,
         "Results" : RESULTS
     }
-    print(cfg_dict)
+    for k in (cfg_dict.keys()):
+        print(cfg_dict[k])

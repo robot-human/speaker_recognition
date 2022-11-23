@@ -11,15 +11,15 @@ else:
     cfgParser = ConfigParser()
     cfgParser.read(os.path.join(os.getcwd(), 'config.ini'))
 
-    N_SPEAKERS = cfgParser.get('config', 'N_SPEAKERS').split(",")
+    N_SPEAKERS = int(cfgParser.get('config', 'N_SPEAKERS'))
     SAMPLE_RATE = int(cfgParser.get('config', 'SAMPLE_RATE'))
     NFFT = int(cfgParser.get('config', 'NFFT'))
     SIGNAL_DURATION_IN_SECONDS = float(cfgParser.get('config', 'SIGNAL_DURATION_IN_SECONDS'))
     VAD_TRESHOLD = float(cfgParser.get('config', 'VAD_TRESHOLD'))
-    PRE_EMPHASIS_COEF = float(cfgParser.get('config', 'PRE_EMPHASIS_COEF'))
 
-    FRAME_IN_SECS = float(cfgParser.get('config', 'FRAME_IN_SECS'))
-    OVERLAP_IN_SECS = float(cfgParser.get('config', 'OVERLAP_IN_SECS'))
+    PRE_EMPHASIS_COEF = float(cfgParser.get('config', 'PRE_EMPHASIS_COEF'))
+    FRAME_IN_SECS = cfgParser.get('config', 'FRAME_IN_SECS').split(",")
+    OVERLAP_PCT = cfgParser.get('config', 'OVERLAP_PCT').split(",")
     WINDOW = cfgParser.get('config', 'WINDOW')
     N_FILT = int(cfgParser.get('config', 'N_FILT'))
     N_CEPS = int(cfgParser.get('config', 'N_CEPS'))
@@ -44,7 +44,7 @@ else:
         "VAD_TRESHOLD": VAD_TRESHOLD,
         "PRE_EMPHASIS_COEF": PRE_EMPHASIS_COEF,
         "FRAME_IN_SECS": FRAME_IN_SECS,
-        "OVERLAP_IN_SECS": OVERLAP_IN_SECS,
+        "OVERLAP_PCT": OVERLAP_PCT,
         "WINDOW": WINDOW
     }
     MFCC_ATTR = {

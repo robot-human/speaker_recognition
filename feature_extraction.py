@@ -64,7 +64,6 @@ def voice_signal_processing(samples, attr):
     emph_signal = pre_emphasis(vad_signal, attr["PRE_EMPHASIS_COEF"])
     frames = framing(emph_signal, attr["SAMPLE_RATE"], attr["FRAME_IN_SECS"], attr["OVERLAP_IN_SECS"])
     window_frames = window(frames, int(attr["FRAME_IN_SECS"]*attr["SAMPLE_RATE"]), attr["WINDOW"])
-    print("frames",len(window_frames[0]))
     return window_frames
 
 def get_window_frames_dict(speaker_ids, signal_dict, attr):
@@ -88,6 +87,7 @@ def get_pow_frames_dict(speaker_ids, window_frames_dict, NFFT):
     pow_frames_dict = {}
     for id in speaker_ids:
         speaker_dict = {}
+        print("frames size",window_frames_dict[id]['train'])
         speaker_dict['train'] = (np.absolute(np.fft.rfft(window_frames_dict[id]['train'], NFFT))** 2)/NFFT
         print(len(window_frames_dict[id]['train']), len(np.fft.rfft(window_frames_dict[id]['train'], NFFT)))
         valid_vectors = []

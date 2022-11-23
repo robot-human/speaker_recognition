@@ -62,7 +62,7 @@ else:
     }
     MODEL_ATTR = {
         "VQ" : {"N_CODEWORDS" : N_CODEWORDS, "EPOCHS" : EPOCHS_VQ},
-        "GMM" : {"N_MIXTURES" : 200, "EPOCHS" : EPOCHS_GMM},
+        "GMM" : {"N_MIXTURES" : 150, "EPOCHS" : EPOCHS_GMM},
         "SVM" : {"EPOCHS" : EPOCHS_SVM}
     }
     EXECUTION_TIMES = {
@@ -103,7 +103,3 @@ else:
         "Execution times" : EXECUTION_TIMES,
         "Results" : RESULTS
     }
-    for k in (cfg.keys()):
-        print(k)
-        print(cfg[k])
-        print("")

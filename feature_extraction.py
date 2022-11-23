@@ -31,7 +31,6 @@ def pre_emphasis(signal, pre_emphasis_coef):
 def framing(signal, sample_rate, frame_size, frame_stride):
     nsamples_signal = len(signal)
     nsamples_frame = int(sample_rate*frame_size)
-    print(nsamples_frame)
     nsamples_stride = int(sample_rate*frame_stride)
     n_frames = int(np.ceil((nsamples_signal-nsamples_frame)/nsamples_stride) + 1)
     nsamples_padding = ((n_frames - 1)*nsamples_stride + nsamples_frame) - nsamples_signal
@@ -64,6 +63,7 @@ def voice_signal_processing(samples, attr):
     vad_signal = vad(samples,attr["VAD_TRESHOLD"])
     emph_signal = pre_emphasis(vad_signal, attr["PRE_EMPHASIS_COEF"])
     frames = framing(emph_signal, attr["SAMPLE_RATE"], attr["FRAME_IN_SECS"], attr["OVERLAP_IN_SECS"])
+    print(len(frames[0]))
     window_frames = window(frames, int(attr["FRAME_IN_SECS"]*attr["SAMPLE_RATE"]), attr["WINDOW"])
     return window_frames
 

@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 git_push.sh
+/log_files

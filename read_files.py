@@ -29,6 +29,7 @@ def get_speaker_signals_dict(speaker_files, speaker_ids, pct=1.0):
     signal_dict = {}
     for id in speaker_ids:
         signal_data = {}
+        print("here")
         speaker_samples = functions.get_samples(speaker_files,id)
         vad_samples = feats.vad(speaker_samples, cfg["Frames"]["VAD_TRESHOLD"])
         signal_data['train'] = vad_samples[:n_vector_samples]

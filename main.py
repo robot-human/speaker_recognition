@@ -21,7 +21,6 @@ n_speakers = cfg["General"]["N_SPEAKERS"]
 speaker_ids = random.sample(ids, k=n_speakers)
 start_time = time.time()
 signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
-print("here")
 end_time = time.time()
 cfg["Execution times"]['File reading'] = round(end_time - start_time,2)
 

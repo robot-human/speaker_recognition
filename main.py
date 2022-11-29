@@ -37,6 +37,7 @@ for pre_emph in preemph_list:
             results_dict["Frames"]["FRAME_IN_SECS"] = float(frame_size)
             results_dict["Frames"]["OVERLAP_PCT"] = float(frame_overlap)
             results_dict["Frames"]["OVERLAP_IN_SECS"] = float(frame_size)*float(frame_overlap)
+            print("here")
             n_frames = int((math.floor((results_dict["General"]["SIGNAL_DURATION_IN_SECONDS"]-results_dict["Frames"]["FRAME_IN_SECS"])/results_dict["Frames"]["OVERLAP_IN_SECS"])))
             results_dict["Model attr"]["GMM"]["N_MIXTURES"] = min(350,math.floor(0.70*n_frames ))
             start_time = time.time()

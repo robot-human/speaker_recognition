@@ -36,3 +36,7 @@ for speaker in database_dir:
 
 print(len(speakers_id))
 print(len(speaker_sessions))
+
+for idx in [7,11,25,40]:
+    print(speakers_id[idx])
+    print(speaker_sessions[idx])

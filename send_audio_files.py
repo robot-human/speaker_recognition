@@ -35,4 +35,4 @@ for speaker in database_dir:
     speaker_sessions.append(sessions)
 
 print(speakers_id)
-peinr(speaker_sessions)
+print(speaker_sessions)

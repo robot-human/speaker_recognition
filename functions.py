@@ -22,8 +22,11 @@ def trim_signal(signal, sample_rate, secs):
 def get_samples(speaker_files, speaker_id):
     path_list = speaker_files[speaker_id]
     samples = []
+    total_samples = 0
     for i in range(len(path_list)):
         print(path_list[i])
         speaker_samples, _ = librosa.load(path_list[i], mono=True, sr=cfg["General"]["SAMPLE_RATE"])
+        total_samples = total_samples + len(speaker_samples)
+        print(total_samples)
         samples.extend(speaker_samples)
     return np.array(samples)

@@ -85,7 +85,6 @@ if __name__ == '__main__':
         content, _ = librosa.load(file_name_path, mono=True, sr=10000)
         print(type(content))
         content = content.tobytes()
-        print(content)
         print(getsizeof(content)/1000, " kbts")
         #client.publish(topic, payload=content, qos=QOS)
         publish.single(topic, payload=content, qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")

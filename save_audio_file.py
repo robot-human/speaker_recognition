@@ -2,6 +2,7 @@ import time
 import paho.mqtt.client as paho
 from paho import mqtt
 import soundfile as sf
+import numpy as np
 
 SERVER = 0
 topic = "speaker_recognition_server"
@@ -49,12 +50,14 @@ def on_message(client, userdata, msg):
             print("success")
         elif(count%2==0):
             print("Got 2.2")
-            sf.write('stereo_file.flac', message, 10000, format='flac', subtype='PCM_24')
+            content = np.frombuffer(message)
+            sf.write('stereo_file.flac', content, 10000, format='flac', subtype='PCM_24')
             count+=1
             print("success")
     elif(count >= num*2):
         print("Got 3.0")
-        sf.write('stereo_file.flac', message, 10000, format='flac', subtype='PCM_24')
+        content = np.frombuffer(message)
+        sf.write('stereo_file.flac', content, 10000, format='flac', subtype='PCM_24')
         count=0
         client.disconnect()
         print("success")

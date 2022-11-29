@@ -23,10 +23,9 @@ def get_samples(speaker_files, speaker_id):
     path_list = speaker_files[speaker_id]
     samples = []
     total_seconds = 0
-    #while(total_seconds < 10):
     for i in range(2):
         speaker_samples, _ = librosa.load(path_list[i], mono=True, sr=cfg["General"]["SAMPLE_RATE"])
-        total_seconds = total_seconds + (len(speaker_samples)*cfg["General"]["SAMPLE_RATE"])
+        total_seconds = total_seconds + (len(speaker_samples)/cfg["General"]["SAMPLE_RATE"])
         samples.extend(speaker_samples)
     print(total_seconds)
     return np.array(samples)

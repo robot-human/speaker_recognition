@@ -105,4 +105,3 @@ else:
         "Execution times" : EXECUTION_TIMES,
         "Results" : RESULTS
     }
-    print(FRAMES_ATTR)

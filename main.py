@@ -41,13 +41,9 @@ for pre_emph in preemph_list:
             n_frames = int((math.floor((results_dict["General"]["SIGNAL_DURATION_IN_SECONDS"]-results_dict["Frames"]["FRAME_IN_SECS"])/results_dict["Frames"]["OVERLAP_IN_SECS"])))
             results_dict["Model attr"]["GMM"]["N_MIXTURES"] = min(350,math.floor(0.70*n_frames ))
             start_time = time.time()
-            print("start process")
             plp_filters = feats.get_PLP_filters(results_dict["General"]["SAMPLE_RATE"], results_dict["General"]["NFFT"])
-            print("PLP filters done")
             window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , results_dict["Frames"])
-            print("window frames filters done")
             pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, results_dict["General"]["NFFT"])
-            print("Power framse filters done")
             end_time = time.time()
             results_dict["Execution times"]['Pre-processing'] = round(end_time - start_time,2)
 
@@ -192,7 +188,7 @@ for pre_emph in preemph_list:
                 if("VQ" in MODELS_LIST):
                     model_name = "VQ"
                     start_time = time.time()
-                    print("MFFC with VQ")
+                    print("MFFC Deltas with VQ")
                     confusion_matrix = models.run_VQ_model(speaker_ids, deltas[0])
                     end_time = time.time()
                     results_dict["Execution times"]['VQ MFCC'] = round(end_time - start_time,2)
@@ -211,7 +207,7 @@ for pre_emph in preemph_list:
                 if("GMM" in MODELS_LIST):
                     model_name = "GMM"
                     start_time = time.time()
-                    print("MFFC with GMM")
+                    print("MFFC Deltas with GMM")
                     confusion_matrix = models.run_GMM_model(speaker_ids, deltas[0], deltas[3], results_dict["Model attr"]["GMM"])
                     end_time = time.time()
                     results_dict["Execution times"]['GMM MFCC'] = round(end_time - start_time,2)
@@ -230,7 +226,7 @@ for pre_emph in preemph_list:
                 if("SVM" in MODELS_LIST):
                     model_name = "SVM"
                     start_time = time.time()
-                    print("MFFC with SVM")
+                    print("MFFC Deltas with SVM")
                     confusion_matrix = models.run_SVM_model(speaker_ids, deltas[0], deltas[1], deltas[2], deltas[3])
                     end_time = time.time()
                     results_dict["Execution times"]['SVM MFCC'] = round(end_time - start_time,2)
@@ -251,7 +247,7 @@ for pre_emph in preemph_list:
                 if("VQ" in MODELS_LIST):
                     model_name = "VQ"
                     start_time = time.time()
-                    print("MFFC with VQ")
+                    print("MFFC Doble Deltas with VQ")
                     confusion_matrix = models.run_VQ_model(speaker_ids,ddeltas[0])
                     end_time = time.time()
                     results_dict["Execution times"]['VQ MFCC'] = round(end_time - start_time,2)
@@ -270,7 +266,7 @@ for pre_emph in preemph_list:
                 if("GMM" in MODELS_LIST):
                     model_name = "GMM"
                     start_time = time.time()
-                    print("MFFC with GMM")
+                    print("MFFC Doble Deltas with GMM")
                     confusion_matrix = models.run_GMM_model(speaker_ids, ddeltas[0], ddeltas[3], results_dict["Model attr"]["GMM"])
                     end_time = time.time()
                     results_dict["Execution times"]['GMM MFCC'] = round(end_time - start_time,2)
@@ -289,7 +285,7 @@ for pre_emph in preemph_list:
                 if("SVM" in MODELS_LIST):
                     model_name = "SVM"
                     start_time = time.time()
-                    print("MFFC with SVM")
+                    print("MFFC Doble Deltas with SVM")
                     confusion_matrix = models.run_SVM_model(speaker_ids, ddeltas[0], ddeltas[1], ddeltas[2], ddeltas[3])
                     end_time = time.time()
                     results_dict["Execution times"]['SVM MFCC'] = round(end_time - start_time,2)

@@ -3,6 +3,7 @@ import paho.mqtt.client as paho
 from paho import mqtt
 import soundfile as sf
 import numpy as np
+import librosa
 
 SERVER = 0
 topic = "speaker_recognition_server"
@@ -53,13 +54,15 @@ def on_message(client, userdata, msg):
         elif(count%2==0):
             print("Got 2.2")
             #content = np.frombuffer(msg,dtype=np.ndarray)
-            sf.write('stereo_file.flac', msg, 10000, format='flac', subtype='PCM_24')
+            sf.write('mono_file.wav', msg, 10000, subtype='PCM_24')
+            #librosa.output.write_wav(file_name, msg, 10000)
             count+=1
             print("success")
     elif(count >= num*2):
         print("Got 3.0")
         #content = np.frombuffer(msg,dtype=np.ndarray)
-        sf.write('stereo_file.flac', msg, 10000, format='flac', subtype='PCM_24')
+        sf.write('mono_file.wav', msg, 10000, subtype='PCM_24')
+        #librosa.output.write_wav(file_name, msg, 10000)
         count=0
         client.disconnect()
         print("success")

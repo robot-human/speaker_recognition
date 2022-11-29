@@ -69,3 +69,5 @@ def main():
     client.subscribe(topic, qos=2)
     client.on_message = on_message
     client.loop_forever()
+
+main()

@@ -1,0 +1,4 @@
+n_speakers,sample_rate,nfft,signal_duration,vad_treshold,pre_emph,frame_length,overlap,window,model,n_filters,pre_processing_time,mfcc_time,model_time,microF1,macroF1
+5,10000,512,10.0,0.02,0.99,0.02,0.01,hanning,GMM,40,0.61,12.09,14.3,1.0,1.0
+5,10000,512,10.0,0.02,0.99,0.02,0.01,hanning,VQ,40,0.61,12.09,313.02,1.0,1.0
+5,10000,512,10.0,0.02,0.99,0.02,0.01,hanning,SVM,40,0.61,12.09,82.09,1.0,1.0

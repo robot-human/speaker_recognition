@@ -52,7 +52,9 @@ else:
         "SAMPLE_RATE": SAMPLE_RATE,
         "N_FILT": N_FILT,
         "N_CEPS": N_CEPS,
-        "CEP_LIFTER": CEP_LIFTER
+        "CEP_LIFTER": CEP_LIFTER,
+        "DELTAS": False,
+        "DOBLE_DELTAS": False
     }
     LPC_ATTR = {
         "P" : P

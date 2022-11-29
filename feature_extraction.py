@@ -206,39 +206,66 @@ def MFCC(pow_frames, attr):
     lift = 1 + (attr["CEP_LIFTER"] / 2) * np.sin(np.pi * n / attr["CEP_LIFTER"])
     mfcc *= lift
     mfcc -= (np.mean(mfcc, axis=0) + 1e-8)
-    mfcc = d_delta(mfcc)
-    return mfcc
+    mfcc_delta = d_delta(mfcc)
+    mfcc_ddelta = d_delta(mfcc)
+    return mfcc, mfcc_delta, mfcc_ddelta
 
 def get_mfcc_feats(speaker_ids, pow_frames_dict, attr):
     mfcc_dict = {}
+    mfcc_delta_dict = {}
+    mfcc_ddelta_dict = {}
     for id in speaker_ids:
-        speaker_dict = {}
-        speaker_dict['train'] = MFCC(pow_frames_dict[id]['train'], attr)
-        valid_vectors = []
-        test_vectors = []
+        speaker_mfcc_dict = {}
+        speaker_mfcc_delta_dict = {}
+        speaker_mfcc_ddelta_dict = {}
+        speaker_mfcc_dict['train'],speaker_mfcc_delta_dict['train'], speaker_mfcc_ddelta_dict['train'] = MFCC(pow_frames_dict[id]['train'], attr)
+        mfcc_valid_vectors = []
+        mfcc_delta_valid_vectors = []
+        mfcc_ddelta_valid_vectors = []
+        mfcc_test_vectors = []
+        mfcc_delta_test_vectors = []
+        mfcc_ddelta_test_vectors = []
         for vector in pow_frames_dict[id]['valid']:
-            valid_vectors.append(MFCC(vector, attr))
+            mfcc_vector, delta_vector, ddelta_vector = MFCC(vector, attr)
+            mfcc_valid_vectors.append(mfcc_vector)
+            mfcc_delta_valid_vectors.append(delta_vector)
+            mfcc_ddelta_valid_vectors.append(ddelta_vector)
         for vector in pow_frames_dict[id]['test']:
-            test_vectors.append(MFCC(vector, attr))
-        speaker_dict['valid'] = valid_vectors
-        speaker_dict['test'] = test_vectors
-        mfcc_dict[id] = speaker_dict
-    return mfcc_dict
+            mfcc_vector, delta_vector, ddelta_vector = MFCC(vector, attr)
+            mfcc_test_vectors.append(mfcc_vector)
+            mfcc_delta_test_vectors.append(delta_vector)
+            mfcc_ddelta_test_vectors.append(ddelta_vector)
+        speaker_mfcc_dict['valid'] = mfcc_valid_vectors
+        speaker_mfcc_dict['test'] = mfcc_test_vectors
+        speaker_mfcc_delta_dict['valid'] = mfcc_delta_valid_vectors
+        speaker_mfcc_delta_dict['test'] = mfcc_delta_valid_vectors
+        speaker_mfcc_ddelta_dict['valid'] = mfcc_ddelta_valid_vectors
+        speaker_mfcc_ddelta_dict['test'] = mfcc_ddelta_valid_vectors
+        mfcc_dict[id] = speaker_mfcc_dict
+        mfcc_delta_dict[id] = speaker_mfcc_delta_dict
+        mfcc_ddelta_dict[id] = speaker_mfcc_ddelta_dict
+    return mfcc_dict, mfcc_delta_dict, mfcc_ddelta_dict
 
-def prepared_scaled_mfcc_feats(speaker_ids,pow_frames, MFCC_ATTR):
-    features = get_mfcc_feats(speaker_ids, pow_frames, MFCC_ATTR)
+def features_classes_and_scalers(feats, speaker_ids):
     classes = []
     train_set = []
     for enum, id in enumerate(speaker_ids):
-        for val in features[id]['train']:
-            train_set.extend(features[id]['train'])
-            for i in range(len(features[id]['train'])):
+        for val in feats[id]['train']:
+            train_set.extend(feats[id]['train'])
+            for i in range(len(feats[id]['train'])):
                 classes.append(enum)
 
     scaler = StandardScaler()
     scaler.fit(train_set)
     scaled_train = scaler.transform(train_set)
-    return features, scaled_train, classes, scaler
+    return [feats, scaled_train, classes, scaler]
+
+def prepared_scaled_mfcc_feats(speaker_ids,pow_frames, MFCC_ATTR):
+    mfcc, deltas, ddeltas = get_mfcc_feats(speaker_ids, pow_frames, MFCC_ATTR)
+    mfcc_list = features_classes_and_scalers(mfcc, speaker_ids)
+    deltas_list = features_classes_and_scalers(deltas, speaker_ids)
+    ddeltas_list = features_classes_and_scalers(ddeltas, speaker_ids)
+    return mfcc_list, deltas_list, ddeltas_list
 ######################################################################################################
 # LPC
 def correlations(frames, p, N):

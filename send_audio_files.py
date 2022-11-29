@@ -38,9 +38,10 @@ audio_files_list = []
 for idx in [7,11,25,40]:
     audio_path = DATABASE_PATH + "/" + speakers_id[idx] + "/" + speaker_sessions[idx][0]
     audio_dir = os.listdir(audio_path)
-    for audio in audio_dir:
+    for enum, audio in enumerate(audio_dir):
         if(audio.find(".flac") > 0):
-            audio_files_list.append(audio_path+"/"+audio)
+            if(enum < 2):
+                audio_files_list.append(audio_path+"/"+audio)
 
 for audio in audio_files_list:
     print(audio)

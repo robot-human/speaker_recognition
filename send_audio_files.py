@@ -86,7 +86,7 @@ if __name__ == '__main__':
         content, _ = librosa.load(file_name_path, mono=True, sr=10000)
         my_string = str(content[0])
         for i in range(1,len(content)):
-            my_string = my_string + "," + str(content[0])
+            my_string = my_string + "," + str(content[i])
         #content = np.array2string(content)
         #encoded=content.encode('utf-8')
         #array=bytearray(encoded)    

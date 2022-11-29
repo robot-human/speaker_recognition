@@ -266,7 +266,9 @@ def features_classes_and_scalers(feats, speaker_ids):
     return [feats, scaled_train, classes, scaler]
 
 def prepared_scaled_mfcc_feats(speaker_ids,pow_frames, MFCC_ATTR):
+    print("start good")
     mfcc, deltas, ddeltas = get_mfcc_feats(speaker_ids, pow_frames, MFCC_ATTR)
+    print("mfcc finished")
     mfcc_list = features_classes_and_scalers(mfcc, speaker_ids)
     deltas_list = features_classes_and_scalers(deltas, speaker_ids)
     ddeltas_list = features_classes_and_scalers(ddeltas, speaker_ids)

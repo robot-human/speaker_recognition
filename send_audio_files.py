@@ -84,17 +84,19 @@ if __name__ == '__main__':
         publish.single(topic, payload=f"{name}", qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
         sleep(0.2)
         content, _ = librosa.load(file_name_path, mono=True, sr=10000)
+        for c in content:
+            print(c)
         #content = np.array2string(content)
-        encoded=content.encode('utf-8')
-        array=bytearray(encoded)    
-        print(array)
+        #encoded=content.encode('utf-8')
+        #array=bytearray(encoded)    
+        #print(array)
         #content = str(content.tobytes())
         #content = content.tobytes()
         #content = content.encode(encoding='utf-8')
         #print(getsizeof(content)/1000, " kbts")
         #client.publish(topic, payload=content, qos=QOS)
         
-        publish.single(topic, payload=content, qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
+        #publish.single(topic, payload=content, qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
         sleep(0.2)     
     client.on_disconnect = on_disconnect
     client.disconnect()

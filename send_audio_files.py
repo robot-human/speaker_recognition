@@ -8,6 +8,7 @@ import paho.mqtt.client as paho
 from paho import mqtt
 import paho.mqtt.publish as publish
 from time import sleep
+import librosa
 from env_variables import DATABASE_PATH
 
 SERVER = 0
@@ -81,14 +82,11 @@ if __name__ == '__main__':
         #client.publish(topic, payload=f"{name}", qos=QOS)
         publish.single(topic, payload=f"{name}", qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
         sleep(0.2)
-        f = open(file_name_path, "r")
-        content = f.read()
+        content, _ = librosa.load(file_name_path, mono=True)
         print(getsizeof(content)/1000, " kbts")
         #client.publish(topic, payload=content, qos=QOS)
         publish.single(topic, payload=content, qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
-        sleep(0.2)
-        f.close()
-        print(f"{name} closed")     
+        sleep(0.2)     
     
     client.on_disconnect = on_disconnect
     client.disconnect()

@@ -34,11 +34,13 @@ for speaker in database_dir:
         sessions.append(session)
     speaker_sessions.append(sessions)
 
-
+audio_files_list = []
 for idx in [7,11,25,40]:
-    print(speakers_id[idx])
-    print(speaker_sessions[idx][0])
     audio_path = DATABASE_PATH + "/" + speakers_id[idx] + "/" + speaker_sessions[idx][0]
     audio_dir = os.listdir(audio_path)
     for audio in audio_dir:
-        print(audio)
+        if(audio.find(".flac") > 0):
+            audio_files_list.append(audio_path+"/"+audio)
+
+for audio in audio_files_list:
+    print(audio)

@@ -34,5 +34,5 @@ for speaker in database_dir:
         sessions.append(session)
     speaker_sessions.append(sessions)
 
-print(speakers_id)
-print(speaker_sessions)
+print(len(speakers_id))
+print(len(speaker_sessions))

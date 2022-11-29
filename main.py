@@ -32,12 +32,11 @@ for pre_emph in preemph_list:
     for frame_size in frmes_size_list:
         for frame_overlap in overlap_list:
             print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
-
+            print("here")
             results_dict["Frames"]["PRE_EMPHASIS_COEF"] = float(pre_emph)
             results_dict["Frames"]["FRAME_IN_SECS"] = float(frame_size)
             results_dict["Frames"]["OVERLAP_PCT"] = float(frame_overlap)
             results_dict["Frames"]["OVERLAP_IN_SECS"] = float(frame_size)*float(frame_overlap)
-            print("here")
             n_frames = int((math.floor((results_dict["General"]["SIGNAL_DURATION_IN_SECONDS"]-results_dict["Frames"]["FRAME_IN_SECS"])/results_dict["Frames"]["OVERLAP_IN_SECS"])))
             results_dict["Model attr"]["GMM"]["N_MIXTURES"] = min(350,math.floor(0.70*n_frames ))
             start_time = time.time()

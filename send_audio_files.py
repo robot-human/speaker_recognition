@@ -82,7 +82,7 @@ if __name__ == '__main__':
         #client.publish(topic, payload=f"{name}", qos=QOS)
         publish.single(topic, payload=f"{name}", qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
         sleep(0.2)
-        content, _ = librosa.load(file_name_path, mono=True)
+        content, _ = librosa.load(file_name_path, mono=True, sr=10000)
         print(getsizeof(content)/1000, " kbts")
         #client.publish(topic, payload=content, qos=QOS)
         publish.single(topic, payload=content, qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")

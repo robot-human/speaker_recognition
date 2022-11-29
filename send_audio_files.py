@@ -34,9 +34,11 @@ for speaker in database_dir:
         sessions.append(session)
     speaker_sessions.append(sessions)
 
-print(len(speakers_id))
-print(len(speaker_sessions))
 
 for idx in [7,11,25,40]:
     print(speakers_id[idx])
-    print(speaker_sessions[idx])
+    print(speaker_sessions[idx][0])
+    audio_path = DATABASE_PATH + "/" + speakers_id[idx] + "/" + speaker_sessions[idx][0]
+    audio_dir = os.listdir(audio_path)
+    for audio in audio_dir:
+        print(audio)

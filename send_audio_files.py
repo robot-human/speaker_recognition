@@ -43,6 +43,10 @@ for idx in [7,11,25,40]:
             if(enum < 1):
                 audio_files_list.append(audio_path+"/"+audio)
 
+for audio in audio_files_list:
+    print(audio)
+
+
 def on_connect(client, userdata, flags, rc, properties=None):
     print("on connect %s." % rc)
 def on_disconnect(client, userdata, flags, rc):

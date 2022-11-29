@@ -10,6 +10,7 @@ import paho.mqtt.publish as publish
 from time import sleep
 import librosa
 from env_variables import DATABASE_PATH
+import numpy as np
 
 SERVER = 0
 topic = "speaker_recognition_server"
@@ -84,7 +85,7 @@ if __name__ == '__main__':
         sleep(0.2)
         content, _ = librosa.load(file_name_path, mono=True, sr=10000)
         print(type(content))
-        content = content.tobytes()
+        content = np.array2string(content)
         print(getsizeof(content)/1000, " kbts")
         #client.publish(topic, payload=content, qos=QOS)
         publish.single(topic, payload=content, qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")

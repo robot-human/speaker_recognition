@@ -49,19 +49,22 @@ def on_message(client, userdata, msg):
             message = msg.payload.decode('utf-8')
             print(message)
             file_name = file_path+message
+            out_file = open(file_name, 'w')
             count+=1
             print("success")
         elif(count%2==0):
             print("Got 2.2")
-            #content = np.frombuffer(msg,dtype=np.ndarray)
-            sf.write('mono_file.wav', msg, 10000, subtype='PCM_24')
+            content = np.frombuffer(msg,dtype=np.ndarray)
+            out_file.write(content)
+            out_file.close()
             #librosa.output.write_wav(file_name, msg, 10000)
             count+=1
             print("success")
     elif(count >= num*2):
         print("Got 3.0")
-        #content = np.frombuffer(msg,dtype=np.ndarray)
-        sf.write('mono_file.wav', msg, 10000, subtype='PCM_24')
+        content = np.frombuffer(msg,dtype=np.ndarray)
+        out_file.write(content)
+        out_file.close()
         #librosa.output.write_wav(file_name, msg, 10000)
         count=0
         client.disconnect()

@@ -50,13 +50,13 @@ def on_message(client, userdata, msg):
             print("success")
         elif(count%2==0):
             print("Got 2.2")
-            content = np.frombuffer(message)
+            content = np.frombuffer(message,dtype=np.ndarray)
             sf.write('stereo_file.flac', content, 10000, format='flac', subtype='PCM_24')
             count+=1
             print("success")
     elif(count >= num*2):
         print("Got 3.0")
-        content = np.frombuffer(message)
+        content = np.frombuffer(message,dtype=np.ndarray)
         sf.write('stereo_file.flac', content, 10000, format='flac', subtype='PCM_24')
         count=0
         client.disconnect()

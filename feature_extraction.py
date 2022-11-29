@@ -254,21 +254,20 @@ def get_mfcc_feats(speaker_ids, pow_frames_dict, attr):
 def features_classes_and_scalers(feats, speaker_ids):
     classes = []
     train_set = []
+    print("start loop")
     for enum, id in enumerate(speaker_ids):
         for val in feats[id]['train']:
             train_set.extend(feats[id]['train'])
             for i in range(len(feats[id]['train'])):
                 classes.append(enum)
-
+    print("finish loop")
     scaler = StandardScaler()
     scaler.fit(train_set)
     scaled_train = scaler.transform(train_set)
     return [feats, scaled_train, classes, scaler]
 
 def prepared_scaled_mfcc_feats(speaker_ids,pow_frames, MFCC_ATTR):
-    print("start good")
     mfcc, deltas, ddeltas = get_mfcc_feats(speaker_ids, pow_frames, MFCC_ATTR)
-    print("mfcc finished")
     mfcc_list = features_classes_and_scalers(mfcc, speaker_ids)
     print("mfcc list finished")
     deltas_list = features_classes_and_scalers(deltas, speaker_ids)

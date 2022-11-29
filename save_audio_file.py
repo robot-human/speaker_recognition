@@ -33,11 +33,11 @@ def on_message(client, userdata, msg):
     global count
     global num
     
-    message = msg.payload.decode('utf-8')
     print(count,num)
     #print(message)
     if(count==0):
         print("Got 1.0")
+        message = msg.payload.decode('utf-8')
         num=int(message.split(" ")[4])
         print("Number of files",num)
         count+=1
@@ -45,6 +45,7 @@ def on_message(client, userdata, msg):
     elif((count > 0) and (num > 0) and (count < num*2)):
         if(count%2==1):
             print("Got 2.1")
+            message = msg.payload.decode('utf-8')
             print(message)
             file_name = file_path+message
             out_file = open(file_name, 'w')
@@ -52,12 +53,14 @@ def on_message(client, userdata, msg):
             print("success")
         elif(count%2==0):
             print("Got 2.2")
+            message = msg.payload.decode()
             sf.write(file_name, message, 10000, subtype='PCM_24')
             #librosa.output.write_wav(file_name, msg, 10000)
             count+=1
             print("success")
     elif(count >= num*2):
         print("Got 3.0")
+        message = msg.payload.decode()
         sf.write(file_name, message, 10000, subtype='PCM_24')
         #librosa.output.write_wav(file_name, msg, 10000)
         count=0

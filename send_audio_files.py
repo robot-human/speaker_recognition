@@ -87,6 +87,7 @@ if __name__ == '__main__':
         #content = np.array2string(content)
         #content = content.tobytes()
         print(content)
+        content = content.tobytes()
         #content = content.encode(encoding='utf-8')
         #print(getsizeof(content)/1000, " kbts")
         #client.publish(topic, payload=content, qos=QOS)

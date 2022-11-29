@@ -243,9 +243,9 @@ def get_mfcc_feats(speaker_ids, pow_frames_dict, attr):
         speaker_mfcc_dict['valid'] = mfcc_valid_vectors
         speaker_mfcc_dict['test'] = mfcc_test_vectors
         speaker_mfcc_delta_dict['valid'] = mfcc_delta_valid_vectors
-        speaker_mfcc_delta_dict['test'] = mfcc_delta_valid_vectors
+        speaker_mfcc_delta_dict['test'] = mfcc_delta_test_vectors
         speaker_mfcc_ddelta_dict['valid'] = mfcc_ddelta_valid_vectors
-        speaker_mfcc_ddelta_dict['test'] = mfcc_ddelta_valid_vectors
+        speaker_mfcc_ddelta_dict['test'] = mfcc_ddelta_test_vectors
         mfcc_dict[id] = speaker_mfcc_dict
         mfcc_delta_dict[id] = speaker_mfcc_delta_dict
         mfcc_ddelta_dict[id] = speaker_mfcc_ddelta_dict

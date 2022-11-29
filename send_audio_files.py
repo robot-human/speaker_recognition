@@ -34,16 +34,18 @@ for speaker in database_dir:
         sessions.append(session)
     speaker_sessions.append(sessions)
 
-audio_files_list = []
+audio_files_name = []
+audio_files_path = []
 for idx in [7,11,25,40]:
     audio_path = DATABASE_PATH + "/" + speakers_id[idx] + "/" + speaker_sessions[idx][0]
     audio_dir = os.listdir(audio_path)
     for enum, audio in enumerate(audio_dir):
         if(audio.find(".flac") > 0):
             if(enum < 1):
-                audio_files_list.append(audio_path+"/"+audio)
+                audio_files_name.append(audio)
+                audio_files_path.append(audio_path+"/")
 
-for audio in audio_files_list:
+for audio in audio_files_name:
     print(audio)
 
 
@@ -67,15 +69,15 @@ if __name__ == '__main__':
     client.on_publish = on_publish
     
     n_files = 0
-    for file_path in audio_files_list:
+    for file_path in audio_files_name:
         n_files += 1
     
     print(f"Number of files {n_files}")
     #client.publish(topic, payload=f"Hello GUI am sending {n_files} files", qos=QOS)
     publish.single(topic, payload=f"Hello GUI am sending {n_files} files", qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
-    for name in audio_files_list:
+    for enum, name in enumerate(audio_files_name):
         print(name)
-        file_name_path = name
+        file_name_path = audio_files_path[enum] + name
         #client.publish(topic, payload=f"{name}", qos=QOS)
         publish.single(topic, payload=f"{name}", qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
         sleep(0.2)

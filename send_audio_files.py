@@ -40,7 +40,7 @@ for idx in [7,11,25,40]:
     audio_dir = os.listdir(audio_path)
     for enum, audio in enumerate(audio_dir):
         if(audio.find(".flac") > 0):
-            if(enum < 2):
+            if(enum < 1):
                 audio_files_list.append(audio_path+"/"+audio)
 
 for audio in audio_files_list:

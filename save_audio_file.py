@@ -32,11 +32,12 @@ def on_message(client, userdata, msg):
     global count
     global num
     
-    message = msg.payload.decode('utf-8')
+    #message = msg.payload.decode('utf-8')
     print(count,num)
     #print(message)
     if(count==0):
         print("Got 1.0")
+        message = msg.payload.decode('utf-8')
         num=int(message.split(" ")[4])
         print("Number of files",num)
         count+=1
@@ -44,20 +45,21 @@ def on_message(client, userdata, msg):
     elif((count > 0) and (num > 0) and (count < num*2)):
         if(count%2==1):
             print("Got 2.1")
+            message = msg.payload.decode('utf-8')
             print(message)
             file_name = file_path+message
             count+=1
             print("success")
         elif(count%2==0):
             print("Got 2.2")
-            content = np.frombuffer(message,dtype=np.ndarray)
-            sf.write('stereo_file.flac', content, 10000, format='flac', subtype='PCM_24')
+            #content = np.frombuffer(msg,dtype=np.ndarray)
+            sf.write('stereo_file.flac', msg, 10000, format='flac', subtype='PCM_24')
             count+=1
             print("success")
     elif(count >= num*2):
         print("Got 3.0")
-        content = np.frombuffer(message,dtype=np.ndarray)
-        sf.write('stereo_file.flac', content, 10000, format='flac', subtype='PCM_24')
+        #content = np.frombuffer(msg,dtype=np.ndarray)
+        sf.write('stereo_file.flac', msg, 10000, format='flac', subtype='PCM_24')
         count=0
         client.disconnect()
         print("success")

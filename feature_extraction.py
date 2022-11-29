@@ -15,10 +15,15 @@ def print_properties(s, sr):
 ######################################################################################################
 # Signal Processing
 def vad(mono_signal, threshold, buff_size=1000):
-    total_s = int(mono_signal.shape[0]/buff_size)
+    s_max = mono_signal.max()
+    n_samples = []
+    for s in samples:
+        n_samples.append(s/s_max)
+    n_samples = np.array(n_samples)
+    total_s = int(n_samples.shape[0]/buff_size)
     signal = []
     for i in range(total_s):
-        sig = mono_signal[i*buff_size:(i+1)*buff_size]
+        sig = n_samples[i*buff_size:(i+1)*buff_size]
         rms = math.sqrt(np.square(sig).mean())
         if(rms > threshold):
             signal = np.append(signal,sig)

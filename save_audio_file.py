@@ -53,15 +53,20 @@ def on_message(client, userdata, msg):
             print("success")
         elif(count%2==0):
             print("Got 2.2")
-            message = msg.payload.decode()
-            sf.write(file_name, message, 10000, subtype='PCM_24')
+            message = msg.payload.decode('utf-8')
+            #print(message)
+            message = np.frombuffer(message, dtype=np.array)
+            print(message)
+            #sf.write(file_name, message, 10000, subtype='PCM_24')
             #librosa.output.write_wav(file_name, msg, 10000)
             count+=1
             print("success")
     elif(count >= num*2):
         print("Got 3.0")
-        message = msg.payload.decode()
-        sf.write(file_name, message, 10000, subtype='PCM_24')
+        message = msg.payload.decode('utf-8')
+        message = np.frombuffer(message, dtype=np.array)
+        print(message)
+        #sf.write(file_name, message, 10000, subtype='PCM_24')
         #librosa.output.write_wav(file_name, msg, 10000)
         count=0
         client.disconnect()

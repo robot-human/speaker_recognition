@@ -41,8 +41,11 @@ for pre_emph in preemph_list:
             results_dict["Model attr"]["GMM"]["N_MIXTURES"] = min(350,math.floor(0.70*n_frames ))
             start_time = time.time()
             plp_filters = feats.get_PLP_filters(results_dict["General"]["SAMPLE_RATE"], results_dict["General"]["NFFT"])
+            print("PLP filters done")
             window_frames = feats.get_window_frames_dict(speaker_ids, signal_dict , results_dict["Frames"])
+            print("window frames filters done")
             pow_frames = feats.get_pow_frames_dict(speaker_ids, window_frames, results_dict["General"]["NFFT"])
+            print("Power framse filters done")
             end_time = time.time()
             results_dict["Execution times"]['Pre-processing'] = round(end_time - start_time,2)
 

@@ -128,12 +128,14 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-git_push.sh
-/log_files
-subscribe.py
-read_log_files.py
-Evaluacion.ipynb
-/summary
 /audios
+/log_files
+/summary
+.gitignore
 aux.ipynb
+Evaluacion.ipynb
+git_push.sh
+read_log_files.py
+subscribe.py
 Untitled.ipynb
+.DS_Store

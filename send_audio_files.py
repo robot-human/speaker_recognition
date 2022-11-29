@@ -87,7 +87,6 @@ if __name__ == '__main__':
         my_string = str(content[0])
         for i in range(1,len(content)):
             my_string = my_string + "," + str(content[0])
-        print(my_string)
         #content = np.array2string(content)
         #encoded=content.encode('utf-8')
         #array=bytearray(encoded)    
@@ -98,7 +97,7 @@ if __name__ == '__main__':
         #print(getsizeof(content)/1000, " kbts")
         #client.publish(topic, payload=content, qos=QOS)
         
-        #publish.single(topic, payload=content, qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
+        publish.single(topic, payload=my_string, qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
         sleep(0.2)     
     client.on_disconnect = on_disconnect
     client.disconnect()

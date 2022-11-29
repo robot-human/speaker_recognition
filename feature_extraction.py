@@ -17,7 +17,7 @@ def print_properties(s, sr):
 def vad(mono_signal, threshold, buff_size=1000):
     s_max = mono_signal.max()
     n_samples = []
-    for s in samples:
+    for s in mono_signal:
         n_samples.append(s/s_max)
     n_samples = np.array(n_samples)
     total_s = int(n_samples.shape[0]/buff_size)

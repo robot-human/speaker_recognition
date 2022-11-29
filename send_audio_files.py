@@ -24,7 +24,7 @@ if(SERVER == 0):
 database_dir = os.listdir(DATABASE_PATH)
 
 for speaker in database_dir:
-    speaker_path = database_path + "/" + speaker
+    speaker_path = DATABASE_PATH + "/" + speaker
     sessions_dir = os.listdir(speaker_path)
     for session in sessions_dir:
         print(session)

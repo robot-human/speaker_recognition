@@ -15,8 +15,10 @@ from config import cfg
 
 random.seed(10)
 
+
 ids, speaker_files = get_speaker_files(DATABASE_PATH)
 n_speakers = cfg["General"]["N_SPEAKERS"]
+print("here")
 speaker_ids = random.sample(ids, k=n_speakers)
 start_time = time.time()
 signal_dict = get_speaker_signals_dict(speaker_files, speaker_ids)
@@ -32,7 +34,7 @@ for pre_emph in preemph_list:
     for frame_size in frmes_size_list:
         for frame_overlap in overlap_list:
             print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
-            print("here")
+            
             results_dict["Frames"]["PRE_EMPHASIS_COEF"] = float(pre_emph)
             results_dict["Frames"]["FRAME_IN_SECS"] = float(frame_size)
             results_dict["Frames"]["OVERLAP_PCT"] = float(frame_overlap)

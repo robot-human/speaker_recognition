@@ -23,6 +23,7 @@ def get_samples(speaker_files, speaker_id):
     path_list = speaker_files[speaker_id]
     samples = []
     for i in range(len(path_list)):
+        print(path_list[i])
         speaker_samples, _ = librosa.load(path_list[i], mono=True, sr=cfg["General"]["SAMPLE_RATE"])
         samples.extend(speaker_samples)
     return np.array(samples)

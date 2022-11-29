@@ -85,7 +85,7 @@ if __name__ == '__main__':
         sleep(0.2)
         content, _ = librosa.load(file_name_path, mono=True, sr=10000)
         #content = np.array2string(content)
-        print(np.dtype(content))
+        print(type(content))
         content = str(content.tobytes())
         #content = content.tobytes()
         #content = content.encode(encoding='utf-8')

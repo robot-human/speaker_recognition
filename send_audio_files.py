@@ -23,8 +23,16 @@ if(SERVER == 0):
 
 database_dir = os.listdir(DATABASE_PATH)
 
+speakers_id = []
+speaker_sessions = []
 for speaker in database_dir:
+    speakers_id.append(speaker)
     speaker_path = DATABASE_PATH + "/" + speaker
     sessions_dir = os.listdir(speaker_path)
+    sessions = []
     for session in sessions_dir:
-        print(session)
+        sessions.append(session)
+    speaker_sessions.append(sessions)
+
+print(speakers_id)
+peinr(speaker_sessions)

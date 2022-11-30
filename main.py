@@ -117,7 +117,8 @@ for pre_emph in preemph_list:
 # ########################################################################################################
 ## MFCC
             if("MFCC" in FEATURES_LIST):
-                for n_ceps in results_dict["MFCC"]["N_CEPS"]:
+                for n_ceps in cfg["MFCC"]["N_CEPS"]:
+                    results_dict["MFCC"]["N_CEPS"] = int(n_ceps)
                     feature_name = "MFCC"
                     start_time = time.time()
                     print("MFCC")
@@ -304,7 +305,8 @@ for pre_emph in preemph_list:
 # ########################################################################################################
 # ## LPC
             if("LPC" in FEATURES_LIST):
-                for p in results_dict["LPC"]["P"]:
+                for p in cfg["LPC"]["P"]:
+                    results_dict["LPC"]["P"] = int (p)
                     feature_name = "LPC"
                     print(f"LPC de orden {p}")
                     start_time = time.time()
@@ -371,7 +373,8 @@ for pre_emph in preemph_list:
 # ########################################################################################################
 # ## PLP
             if("PLP" in FEATURES_LIST):
-                for p in results_dict["PLP"]["P"]:
+                for p in cfg["PLP"]["P"]:
+                    results_dict["PLP"]["P"] = int(p)
                     feature_name = "PLP"
                     print(f"PLP de orden {p}")
                     start_time = time.time()

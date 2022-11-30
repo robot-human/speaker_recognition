@@ -307,7 +307,7 @@ for pre_emph in preemph_list:
                     feature_name = "LPC"
                     print(f"LPC de orden {p}")
                     start_time = time.time()
-                    features, scaled_train, classes, scaler = feats.prepared_scaled_lpc_feats(speaker_ids, window_frames, p)
+                    features, scaled_train, classes, scaler = feats.prepared_scaled_lpc_feats(speaker_ids, window_frames, int(p))
                     end_time = time.time()
                     results_dict["Execution times"]['LPC'] = round(end_time - start_time,2)
 
@@ -374,7 +374,7 @@ for pre_emph in preemph_list:
                     feature_name = "PLP"
                     print(f"PLP de orden {p}")
                     start_time = time.time()
-                    features, scaled_train, classes, scaler = feats.prepared_scaled_plp_feats(speaker_ids, pow_frames, p, plp_filters)
+                    features, scaled_train, classes, scaler = feats.prepared_scaled_plp_feats(speaker_ids, pow_frames, int(p), plp_filters)
                     end_time = time.time()
                     results_dict["Execution times"]['PLP'] = round(end_time - start_time,2)
 

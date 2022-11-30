@@ -25,7 +25,7 @@ else:
     N_CEPS = int(cfgParser.get('config', 'N_CEPS'))
     CEP_LIFTER = int(cfgParser.get('config', 'CEP_LIFTER'))
 
-    P = int(cfgParser.get('config', 'P')).split(",")
+    P = cfgParser.get('config', 'P').split(",")
     N_CODEWORDS = int(cfgParser.get('config', 'N_CODEWORDS'))
     EPOCHS_VQ = int(cfgParser.get('config', 'EPOCHS_VQ'))
     N_MIXTURES = int(cfgParser.get('config', 'N_MIXTURES'))

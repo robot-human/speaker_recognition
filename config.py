@@ -22,7 +22,7 @@ else:
     OVERLAP_PCT = cfgParser.get('config', 'OVERLAP_PCT').split(",")
     WINDOW = cfgParser.get('config', 'WINDOW')
     N_FILT = int(cfgParser.get('config', 'N_FILT'))
-    N_CEPS = int(cfgParser.get('config', 'N_CEPS'))
+    N_CEPS = cfgParser.get('config', 'N_CEPS').split(",")
     CEP_LIFTER = int(cfgParser.get('config', 'CEP_LIFTER'))
 
     P = cfgParser.get('config', 'P').split(",")

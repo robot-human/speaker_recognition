@@ -15,7 +15,7 @@ def print_properties(s, sr):
 ######################################################################################################
 # Signal Processing
 def vad(mono_signal, threshold, buff_size=1000):
-    s_max = mono_signal.max()
+    s_max = abs(mono_signal).max()
     n_samples = []
     for s in mono_signal:
         n_samples.append(s/s_max)
@@ -164,6 +164,7 @@ def MFB(pow_frames, attr):
     bin_freqs = [freq_to_bin(f, attr["NFFT"], attr["SAMPLE_RATE"]) for f in freqs]
     fbank = filter_banks(bin_freqs,  attr["NFFT"])
     mfb_spectrum = mel_filter_bank_spectrum(pow_frames, fbank)
+    mfb_spectrum -= (np.mean(mfb_spectrum, axis=0) + 1e-8)
     return mfb_spectrum
 
 def get_mfb_feats(speaker_ids, pow_frames_dict, attr):
@@ -208,8 +209,8 @@ def MFCC(pow_frames, attr):
 
     (nframes, ncoeff) = mfcc.shape
     n = np.arange(ncoeff)
-    lift = 1 + (attr["CEP_LIFTER"] / 2) * np.sin(np.pi * n / attr["CEP_LIFTER"])
-    mfcc *= lift
+    #lift = 1 + (attr["CEP_LIFTER"] / 2) * np.sin(np.pi * n / attr["CEP_LIFTER"])
+    #mfcc *= lift
     mfcc -= (np.mean(mfcc, axis=0) + 1e-8)
     mfcc_delta = delta(mfcc)
     mfcc_ddelta = d_delta(mfcc)
@@ -266,11 +267,8 @@ def features_classes_and_scalers(feats, speaker_ids):
 
 def prepared_scaled_mfcc_feats(speaker_ids,pow_frames, MFCC_ATTR):
     mfcc, deltas, ddeltas = get_mfcc_feats(speaker_ids, pow_frames, MFCC_ATTR)
-    print("mfcc")
     mfcc_list = features_classes_and_scalers(mfcc, speaker_ids)
-    print("mfcc deltas")
     deltas_list = features_classes_and_scalers(deltas, speaker_ids)
-    print("mfcc doble deltas")
     ddeltas_list = features_classes_and_scalers(ddeltas, speaker_ids)
     return mfcc_list, deltas_list, ddeltas_list
 ######################################################################################################
@@ -328,8 +326,8 @@ def get_lpc_feats(speaker_ids, window_frames_dict, p):
         lpc_dict[id] = speaker_dict
     return lpc_dict
 
-def prepared_scaled_lpc_feats(speaker_ids, window_frames, LPC_ATTR):
-    features = get_lpc_feats(speaker_ids, window_frames, LPC_ATTR["P"])
+def prepared_scaled_lpc_feats(speaker_ids, window_frames, p):
+    features = get_lpc_feats(speaker_ids, window_frames, p)
     classes = []
     train_set = []
     for enum, id in enumerate(speaker_ids):
@@ -489,8 +487,8 @@ def get_plp_feats(speaker_ids, pow_frames_dict, p, filters):
         plp_dict[id] = speaker_dict
     return plp_dict
 
-def prepared_scaled_plp_feats(speaker_ids, pow_frames, PLP_ATTR, plp_filters):
-    features = get_plp_feats(speaker_ids, pow_frames, PLP_ATTR["P"], plp_filters)
+def prepared_scaled_plp_feats(speaker_ids, pow_frames, p, plp_filters):
+    features = get_plp_feats(speaker_ids, pow_frames, p, plp_filters)
     classes = []
     train_set = []
     for enum, id in enumerate(speaker_ids):

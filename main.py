@@ -27,6 +27,8 @@ cfg["Execution times"]['File reading'] = round(end_time - start_time,2)
 preemph_list =cfg["Frames"]["PRE_EMPHASIS_COEF"]
 frmes_size_list =cfg["Frames"]["FRAME_IN_SECS"]
 overlap_list =cfg["Frames"]["OVERLAP_PCT"]
+n_ceps_list = cfg["MFCC"]["N_CEPS"]
+p_order_list = cfg["LPC"]["P"]
 
 results_dict = cfg
 for pre_emph in preemph_list:
@@ -117,7 +119,7 @@ for pre_emph in preemph_list:
 # ########################################################################################################
 ## MFCC
             if("MFCC" in FEATURES_LIST):
-                for n_ceps in cfg["MFCC"]["N_CEPS"]:
+                for n_ceps in n_ceps_list:
                     results_dict["MFCC"]["N_CEPS"] = int(n_ceps)
                     feature_name = "MFCC"
                     start_time = time.time()
@@ -305,8 +307,8 @@ for pre_emph in preemph_list:
 # ########################################################################################################
 # ## LPC
             if("LPC" in FEATURES_LIST):
-                for p in cfg["LPC"]["P"]:
-                    results_dict["LPC"]["P"] = int (p)
+                for p in p_order_list:
+                    results_dict["LPC"]["P"] = int(p)
                     feature_name = "LPC"
                     print(f"LPC de orden {p}")
                     start_time = time.time()
@@ -373,7 +375,7 @@ for pre_emph in preemph_list:
 # ########################################################################################################
 # ## PLP
             if("PLP" in FEATURES_LIST):
-                for p in cfg["PLP"]["P"]:
+                for p in p_order_list:
                     results_dict["PLP"]["P"] = int(p)
                     feature_name = "PLP"
                     print(f"PLP de orden {p}")

@@ -211,7 +211,7 @@ def MFCC(pow_frames, attr):
     lift = 1 + (attr["CEP_LIFTER"] / 2) * np.sin(np.pi * n / attr["CEP_LIFTER"])
     mfcc *= lift
     mfcc -= (np.mean(mfcc, axis=0) + 1e-8)
-    mfcc_delta = d_delta(mfcc)
+    mfcc_delta = delta(mfcc)
     mfcc_ddelta = d_delta(mfcc)
     return mfcc, mfcc_delta, mfcc_ddelta
 

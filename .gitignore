@@ -136,6 +136,7 @@ aux.ipynb
 Evaluacion.ipynb
 git_push.sh
 read_log_files.py
+parse_log_files.py
 subscribe.py
 Untitled.ipynb
 .DS_Store

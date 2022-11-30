@@ -266,8 +266,11 @@ def features_classes_and_scalers(feats, speaker_ids):
 
 def prepared_scaled_mfcc_feats(speaker_ids,pow_frames, MFCC_ATTR):
     mfcc, deltas, ddeltas = get_mfcc_feats(speaker_ids, pow_frames, MFCC_ATTR)
+    print("mfcc")
     mfcc_list = features_classes_and_scalers(mfcc, speaker_ids)
+    print("mfcc deltas")
     deltas_list = features_classes_and_scalers(deltas, speaker_ids)
+    print("mfcc doble deltas")
     ddeltas_list = features_classes_and_scalers(ddeltas, speaker_ids)
     return mfcc_list, deltas_list, ddeltas_list
 ######################################################################################################

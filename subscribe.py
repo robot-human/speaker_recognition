@@ -31,35 +31,26 @@ def on_message(client, userdata, msg):
     global num
     
     message = msg.payload.decode('utf-8')
-    print(count,num)
-    #print(message)
     if(count==0):
-        print("Got 1.0")
         num=int(message.split(" ")[4])
         print("Number of files",num)
         count+=1
-        print("success")
     elif((count > 0) and (num > 0) and (count < num*2)):
         if(count%2==1):
-            print("Got 2.1")
             print(message)
             file_name = file_path+message
             out_file = open(file_name, 'w')
             count+=1
-            print("success")
         elif(count%2==0):
-            print("Got 2.2")
             out_file.write(message)
             out_file.close()
             count+=1
-            print("success")
+            print("File saved")
     elif(count >= num*2):
-        print("Got 3.0")
         out_file.write(message)
         out_file.close()
         count=0
         client.disconnect()
-        print("success")
     return None
 
 def main():

@@ -131,7 +131,6 @@ dmypy.json
 /audios
 /log_files
 /summary
-.gitignore
 aux.ipynb
 Evaluacion.ipynb
 git_push.sh

@@ -72,12 +72,14 @@ for pre_emph in preemph_list:
                     results_dict["Results"]["Model"] = "VQ"
                     results_dict["Results"]["Features"] = "MFB"
                     results_dict["Results"]["Confusion matrix"] = confusion_matrix
-            
+
                     if(PRINT_FILES):
                         date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
                         file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                         with open(file_path, 'w') as json_file:
                             json.dump(results_dict, json_file)
+                        print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                        print("MFB VQ file saved")
     
                 if("GMM" in MODELS_LIST):
                     model_name = "GMM"
@@ -97,6 +99,8 @@ for pre_emph in preemph_list:
                         file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                         with open(file_path, 'w') as json_file:
                             json.dump(results_dict, json_file)
+                        print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                        print("MFB GMM file saved")
 
                 if("SVM" in MODELS_LIST):
                     model_name = "SVM"
@@ -116,6 +120,8 @@ for pre_emph in preemph_list:
                         file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                         with open(file_path, 'w') as json_file:
                             json.dump(results_dict, json_file)
+                        print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                        print("MFB SVM file saved")
 # ########################################################################################################
 ## MFCC
             if("MFCC" in FEATURES_LIST):
@@ -148,6 +154,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"MFCC {n_ceps} VQ file saved")
     
                     if("GMM" in MODELS_LIST):
                         model_name = "GMM"
@@ -167,6 +175,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"MFCC {n_ceps} GMM file saved")
 
                     if("SVM" in MODELS_LIST):
                         model_name = "SVM"
@@ -186,6 +196,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"MFCC {n_ceps} SVM file saved")
 
                     results_dict["MFCC"]["DELTAS"] = True
                     results_dict["MFCC"]["DOBLE_DELTAS"] = False
@@ -207,6 +219,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"MFCC {n_ceps} DELTA VQ file saved")
     
                     if("GMM" in MODELS_LIST):
                         model_name = "GMM"
@@ -226,6 +240,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"MFCC {n_ceps} DELTA GMM file saved")
 
                     if("SVM" in MODELS_LIST):
                         model_name = "SVM"
@@ -245,6 +261,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"MFCC {n_ceps} DELTA SVM file saved")
                 
                     results_dict["MFCC"]["DELTAS"] = False
                     results_dict["MFCC"]["DOBLE_DELTAS"] = True
@@ -266,6 +284,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"MFCC {n_ceps} D DELTA VQ file saved")
     
                     if("GMM" in MODELS_LIST):
                         model_name = "GMM"
@@ -285,6 +305,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"MFCC {n_ceps} D DELTA GMM file saved")
 
                     if("SVM" in MODELS_LIST):
                         model_name = "SVM"
@@ -304,6 +326,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"MFCC {n_ceps} D DELTA SVM file saved")
 # ########################################################################################################
 # ## LPC
             if("LPC" in FEATURES_LIST):
@@ -334,6 +358,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"LPC {p} VQ file saved")
 
                     if("GMM" in MODELS_LIST):
                         model_name = "GMM"
@@ -353,6 +379,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"LPC {p} GMM file saved")
 
                     if("SVM" in MODELS_LIST):
                         model_name = "SVM"
@@ -372,6 +400,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"LPC {p} SVM file saved")
 # ########################################################################################################
 # ## PLP
             if("PLP" in FEATURES_LIST):
@@ -402,6 +432,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"PLP {p} VQ file saved")
 
                     if("GMM" in MODELS_LIST):
                         model_name = "GMM"
@@ -421,6 +453,8 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"PLP {p} GMM file saved")
 
                     if("SVM" in MODELS_LIST):
                         model_name = "SVM"
@@ -439,3 +473,5 @@ for pre_emph in preemph_list:
                             file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
                             with open(file_path, 'w') as json_file:
                                 json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print(f"PLP {p} SVM file saved")

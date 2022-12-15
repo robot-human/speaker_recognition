@@ -13,7 +13,7 @@ from read_files import get_speaker_files, get_speaker_signals_dict
 from config import cfg
 
 
-random.seed(cfg["General"]["N_SPEAKERS"])
+random.seed(cfg["General"]["N_SPEAKERS"]-5)
 
 
 ids, speaker_files = get_speaker_files(DATABASE_PATH)

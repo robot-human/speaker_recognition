@@ -265,17 +265,20 @@ def features_classes_and_scalers(feats, speaker_ids):
     scaled_train = scaler.transform(train_set)
     return [feats, scaled_train, classes, scaler]
 
-def prepared_scaled_mfcc_feats(speaker_ids, pow_frames, n_ceps, MFCC_ATTR):
+def prepared_scaled_mfcc_feats(speaker_ids, pow_frames, n_ceps, MFCC_ATTR, type="MFCC"):
     print("get mfcc feats")
     mfcc, deltas, ddeltas = get_mfcc_feats(speaker_ids, pow_frames, n_ceps, MFCC_ATTR)
-    print("features classes and scalers")
-    mfcc_list = features_classes_and_scalers(mfcc, speaker_ids)
-    #print("features classes and scalers deltas")
-    #deltas_list = features_classes_and_scalers(deltas, speaker_ids)
-    #print("features classes and scalers double deltas")
-    #ddeltas_list = features_classes_and_scalers(ddeltas, speaker_ids)
+    if(type=="MFCC"):
+        print("features classes and scalers")
+        mfcc_list = features_classes_and_scalers(mfcc, speaker_ids)
+    elif(type=="DELTAS"):
+        print("features classes and scalers deltas")
+        mfcc_list = features_classes_and_scalers(deltas, speaker_ids)
+    elif(type=="DOUBLE DELTAS"):
+        print("features classes and scalers double deltas")
+        mfcc_list = features_classes_and_scalers(ddeltas, speaker_ids)
     print("end prepared scaled feats")
-    return mfcc_list#, deltas_list, ddeltas_list
+    return mfcc_list
 ######################################################################################################
 # LPC
 def correlations(frames, p, N):

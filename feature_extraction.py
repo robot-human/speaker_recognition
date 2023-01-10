@@ -275,7 +275,7 @@ def prepared_scaled_mfcc_feats(speaker_ids, pow_frames, n_ceps, MFCC_ATTR):
     #print("features classes and scalers double deltas")
     #ddeltas_list = features_classes_and_scalers(ddeltas, speaker_ids)
     print("end prepared scaled feats")
-    return mfcc_list, deltas_list, ddeltas_list
+    return mfcc_list#, deltas_list, ddeltas_list
 ######################################################################################################
 # LPC
 def correlations(frames, p, N):

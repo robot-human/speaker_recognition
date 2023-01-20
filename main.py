@@ -12,7 +12,7 @@ from env_variables import LOG_FILE_PATH,DATABASE_PATH,MODELS_LIST,FEATURES_LIST,
 from read_files import get_speaker_files, get_speaker_signals_dict
 from config import cfg
 
-MFCC_TYPE="DOUBLE DELTAS"
+MFCC_TYPE="MFCC"
 random.seed(15)
 
 

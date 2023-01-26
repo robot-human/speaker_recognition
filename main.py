@@ -13,7 +13,7 @@ from read_files import get_speaker_files, get_speaker_signals_dict
 from config import cfg
 
 MFCC_TYPE="DOUBLE DELTAS"
-random.seed(15)
+random.seed(50)
 
 
 ids, speaker_files = get_speaker_files(DATABASE_PATH)

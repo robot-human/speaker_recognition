@@ -267,11 +267,11 @@ def features_classes_and_scalers(feats, speaker_ids):
 
 def prepared_scaled_mfcc_feats(speaker_ids, pow_frames, n_ceps, MFCC_ATTR, type="MFCC"):
     mfcc, deltas, ddeltas = get_mfcc_feats(speaker_ids, pow_frames, n_ceps, MFCC_ATTR)
-    if(type=="MFCC"):
+    if((type=="MFCC") or (type=="ALL")):
         mfcc_list = features_classes_and_scalers(mfcc, speaker_ids)
-    elif(type=="DELTAS"):
+    elif((type=="DELTAS") or (type=="ALL")):
         mfcc_list = features_classes_and_scalers(deltas, speaker_ids)
-    elif(type=="DOUBLE DELTAS"):
+    elif((type=="DOUBLE DELTAS") or (type=="ALL")):
         mfcc_list = features_classes_and_scalers(ddeltas, speaker_ids)
     return mfcc_list
 ######################################################################################################

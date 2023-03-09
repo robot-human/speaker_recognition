@@ -131,11 +131,12 @@ dmypy.json
 /audios
 /log_files
 /summary
+/notebooks
 aux.ipynb
+Evaluacion.ipynb
 Evaluacion.ipynb
 git_push.sh
 read_log_files.py
 parse_log_files.py
 subscribe.py
-Untitled.ipynb
 .DS_Store

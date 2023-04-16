@@ -38,7 +38,7 @@ def on_message(client, userdata, msg):
         count+=1
     elif((count > 0) and (num > 0) and (count < num*2)):
         if(count%2==1):
-            print(math.ceil(count/2)/num)
+            print(round(100*math.ceil(count/2)/num),2)
             file_name = file_path+message
             out_file = open(file_name, 'w')
             count+=1

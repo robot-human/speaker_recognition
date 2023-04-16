@@ -1,6 +1,7 @@
 import time
 import paho.mqtt.client as paho
 from paho import mqtt
+import math
 
 SERVER = 0
 topic = "speaker_recognition_server"
@@ -37,7 +38,7 @@ def on_message(client, userdata, msg):
         count+=1
     elif((count > 0) and (num > 0) and (count < num*2)):
         if(count%2==1):
-            print(message)
+            print(math.ceil(count/2)/num)
             file_name = file_path+message
             out_file = open(file_name, 'w')
             count+=1
@@ -45,7 +46,7 @@ def on_message(client, userdata, msg):
             out_file.write(message)
             out_file.close()
             count+=1
-            print("File saved")
+            #print("File saved")
     elif(count >= num*2):
         out_file.write(message)
         out_file.close()

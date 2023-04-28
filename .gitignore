@@ -140,3 +140,4 @@ read_log_files.py
 parse_log_files.py
 subscribe.py
 .DS_Store
+full_init.ini

@@ -12,7 +12,7 @@ from env_variables import LOG_FILE_PATH,DATABASE_PATH,MODELS_LIST,FEATURES_LIST,
 from read_files import get_speaker_files, get_speaker_signals_dict
 from config import cfg
 
-MFCC_TYPES=["MFCC","DELTAS","DOUBLE DELTAS"]
+MFCC_TYPES=["MFCC"]
 random.seed(10)
 
 
@@ -25,14 +25,14 @@ end_time = time.time()
 cfg["Execution times"]['File reading'] = round(end_time - start_time,2)
 
 preemph_list =cfg["Frames"]["PRE_EMPHASIS_COEF"]
-frmes_size_list =cfg["Frames"]["FRAME_IN_SECS"]
+frames_size_list =cfg["Frames"]["FRAME_IN_SECS"]
 overlap_list =cfg["Frames"]["OVERLAP_PCT"]
 n_ceps_list = cfg["MFCC"]["N_CEPS"]
 p_order_list = cfg["LPC"]["P"]
 
 results_dict = cfg
 for pre_emph in preemph_list:
-    for frame_size in frmes_size_list:
+    for frame_size in frames_size_list:
         for frame_overlap in overlap_list:
             print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
             

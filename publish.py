@@ -8,7 +8,7 @@ from time import sleep
 
 SERVER = 0
 topic = "speaker_recognition_server"
-clientID = "clientId-xMODDl314VwR-speaker-recognition"
+clientID = "clientId-xMODDl314Vw314R-speaker-recognition"
 file_path = f'./config.ini'
 QOS = 2
 KEEPALIVE=60
@@ -60,7 +60,8 @@ if __name__ == '__main__':
         publish.single(topic, payload=content, qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
         sleep(0.2)
         f.close()
-        print(f"{name} closed")     
+        print(f"{name} closed")
+        os.remove(file_name_path, dir_fd = None)
     
     client.on_disconnect = on_disconnect
     client.disconnect()

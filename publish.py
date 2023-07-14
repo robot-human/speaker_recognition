@@ -10,7 +10,7 @@ SERVER = 0
 topic = "speaker_recognition_server"
 clientID = "clientId-xMODDl314Vw314R-speaker-recognition"
 file_path = f'./config.ini'
-QOS = 2
+QOS = 1
 KEEPALIVE=60
 
 if(SERVER == 0):

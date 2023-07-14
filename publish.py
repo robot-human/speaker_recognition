@@ -10,12 +10,12 @@ SERVER = 0
 topic = "speaker_recognition_server"
 clientID = "clientId-xMODDl314Vw314R-speaker-recognition"
 file_path = f'./config.ini'
-QOS = 1
+QOS = 2
 KEEPALIVE=60
 
 if(SERVER == 0):
     host ="broker.mqttdashboard.com"
-    port=1883
+    port=1991
 
 
 output_files_path = f'./log_files/'
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     
     print(f"Number of files {n_files}")
     #client.publish(topic, payload=f"Hello GUI am sending {n_files} files", qos=QOS)
-    publish.single(topic, payload=f"Hello GUI am sending {n_files} files", qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
+    publish.single(topic, payload=f"Hello GUI am sending {n_files} files", qos=QOS, retain=False, hostname=host, port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
     for name in output_files:
         print(name)
         file_name_path = output_files_path+name

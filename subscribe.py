@@ -5,11 +5,11 @@ import math
 
 SERVER = 0
 topic = "speaker_recognition_server"
-clientID = "clientId-vqrRlEJH031456J-speaker-recognition"
+clientID = "clientId-vqrRlEJH03145618J-speaker-recognition"
 
 if(SERVER == 0):
     host ="broker.mqttdashboard.com"
-    port=1883
+    port=1991
 
 
 

@@ -61,7 +61,7 @@ if __name__ == '__main__':
         sleep(0.2)
         f.close()
         print(f"{name} closed")
-        #os.remove(file_name_path, dir_fd = None)
+        os.remove(file_name_path, dir_fd = None)
     
     client.on_disconnect = on_disconnect
     client.disconnect()

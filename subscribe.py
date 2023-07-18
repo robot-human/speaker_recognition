@@ -9,7 +9,7 @@ clientID = "clientId-vqrRlEJH03145618J-speaker-recognition"
 
 if(SERVER == 0):
     host ="broker.mqttdashboard.com"
-    port=1883
+    port=11883
 
 
 

@@ -15,7 +15,7 @@ KEEPALIVE=60
 
 if(SERVER == 0):
     host ="broker.mqttdashboard.com"
-    port=1883
+    port=11883
 
 
 output_files_path = f'./log_files/'

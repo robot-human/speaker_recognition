@@ -55,7 +55,6 @@ for pre_emph in preemph_list:
             if("MFB" in FEATURES_LIST):
                 feature_name = "MFB"
                 start_time = time.time()
-                print("MFB")
                 features, scaled_train, classes, scaler = feats.prepared_scaled_mfb_feats(speaker_ids, pow_frames, results_dict["MFCC"])
                 end_time = time.time()
                 results_dict["Execution times"]['MFB'] = round(end_time - start_time,2)

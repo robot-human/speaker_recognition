@@ -137,7 +137,7 @@ for pre_emph in preemph_list:
                             feature_name = "MFCC"
                             start_time = time.time()
                             print(f"MFCC con {n_ceps} coeficientes")
-                            mfcc = feats.prepared_scaled_mfcc_feats(speaker_ids, pow_frames, int(n_ceps), results_dict["MFCC"], MFCC_TYPE)
+                            mfcc = feats.prepared_scaled_mfcc_feats(speaker_ids, pow_frames, int(n_ceps), n_filt, results_dict["MFCC"], MFCC_TYPE)
                             end_time = time.time()
                             results_dict["Execution times"]['MFCC'] = round(end_time - start_time,2)
 

@@ -265,8 +265,8 @@ def features_classes_and_scalers(feats, speaker_ids):
     scaled_train = scaler.transform(train_set)
     return [feats, scaled_train, classes, scaler]
 
-def prepared_scaled_mfcc_feats(speaker_ids, pow_frames, n_ceps, MFCC_ATTR, type="MFCC"):
-    mfcc, deltas, ddeltas = get_mfcc_feats(speaker_ids, pow_frames, n_ceps, MFCC_ATTR)
+def prepared_scaled_mfcc_feats(speaker_ids, pow_frames, n_ceps, n_filt, MFCC_ATTR, type="MFCC"):
+    mfcc, deltas, ddeltas = get_mfcc_feats(speaker_ids, pow_frames, n_ceps, n_filt, MFCC_ATTR)
     if((type=="MFCC") or (type=="ALL")):
         mfcc_list = features_classes_and_scalers(mfcc, speaker_ids)
     elif((type=="DELTAS") or (type=="ALL")):

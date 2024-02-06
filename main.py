@@ -55,6 +55,7 @@ for pre_emph in preemph_list:
 ## MFB
             if("MFB" in FEATURES_LIST):
                 for n_filt in n_filt_list:
+                    n_filt = int(n_filt)
                     results_dict["MFB"]['N_FILT'] = n_filt
                     feature_name = "MFB"
                     start_time = time.time()
@@ -130,6 +131,7 @@ for pre_emph in preemph_list:
                 for MFCC_TYPE in MFCC_TYPES:
                     for n_filt in n_filt_list:
                         for n_ceps in n_ceps_list:
+                            n_filt = int(n_filt)
                             results_dict["MFCC"]['N_FILT'] = n_filt
                             results_dict["MFCC"]["N_CEPS"] = int(n_ceps)
                             feature_name = "MFCC"

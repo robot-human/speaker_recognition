@@ -158,8 +158,8 @@ def mel_filter_bank_spectrum(pow_frames, fbank):
     filter_banks = 20 * np.log10(filter_banks)                                     # dB
     return filter_banks
 
-def MFB(pow_frames, attr):
-    mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["SAMPLE_RATE"]/2), attr["N_FILT"] + 2)
+def MFB(pow_frames, n_filt, attr):
+    mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["SAMPLE_RATE"]/2), n_filt + 2)
     freqs = [mel_to_freq(mel) for mel in mels]
     bin_freqs = [freq_to_bin(f, attr["NFFT"], attr["SAMPLE_RATE"]) for f in freqs]
     fbank = filter_banks(bin_freqs,  attr["NFFT"])
@@ -167,24 +167,24 @@ def MFB(pow_frames, attr):
     mfb_spectrum -= (np.mean(mfb_spectrum, axis=0) + 1e-8)
     return mfb_spectrum
 
-def get_mfb_feats(speaker_ids, pow_frames_dict, attr):
+def get_mfb_feats(speaker_ids, pow_frames_dict, n_filt, attr):
     mfb_dict = {}
     for id in speaker_ids:
         speaker_dict = {}
-        speaker_dict['train'] = MFB(pow_frames_dict[id]['train'], attr)
+        speaker_dict['train'] = MFB(pow_frames_dict[id]['train'], n_filt, attr)
         valid_vectors = []
         test_vectors = []
         for vector in pow_frames_dict[id]['valid']:
-            valid_vectors.append(MFB(vector, attr))
+            valid_vectors.append(MFB(vector, n_filt, attr))
         for vector in pow_frames_dict[id]['test']:
-            test_vectors.append(MFB(vector, attr))
+            test_vectors.append(MFB(vector, n_filt, attr))
         speaker_dict['valid'] = valid_vectors
         speaker_dict['test'] = test_vectors
         mfb_dict[id] = speaker_dict
     return mfb_dict
 
-def prepared_scaled_mfb_feats(speaker_ids,pow_frames, MFB_ATTR):
-    features = get_mfb_feats(speaker_ids, pow_frames, MFB_ATTR)
+def prepared_scaled_mfb_feats(speaker_ids,pow_frames, n_filt, MFB_ATTR):
+    features = get_mfb_feats(speaker_ids, pow_frames, n_filt, MFB_ATTR)
     classes = []
     train_set = []
     for enum, id in enumerate(speaker_ids):
@@ -198,8 +198,8 @@ def prepared_scaled_mfb_feats(speaker_ids,pow_frames, MFB_ATTR):
     scaled_train = scaler.transform(train_set)
     return features, scaled_train, classes, scaler
 
-def MFCC(pow_frames, n_ceps, attr):
-    mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["SAMPLE_RATE"]/2), attr["N_FILT"] + 2)
+def MFCC(pow_frames, n_ceps, n_filt, attr):
+    mels = np.linspace(freq_to_mel(0), freq_to_mel(attr["SAMPLE_RATE"]/2), n_filt + 2)
     freqs = [mel_to_freq(mel) for mel in mels]
     bin_freqs = [freq_to_bin(f, attr["NFFT"], attr["SAMPLE_RATE"]) for f in freqs]
     fbank = filter_banks(bin_freqs,  attr["NFFT"])
@@ -216,7 +216,7 @@ def MFCC(pow_frames, n_ceps, attr):
     mfcc_ddelta = d_delta(mfcc)
     return mfcc, mfcc_delta, mfcc_ddelta
 
-def get_mfcc_feats(speaker_ids, pow_frames_dict, n_ceps, attr):
+def get_mfcc_feats(speaker_ids, pow_frames_dict, n_ceps, n_filt, attr):
     mfcc_dict = {}
     mfcc_delta_dict = {}
     mfcc_ddelta_dict = {}
@@ -224,7 +224,7 @@ def get_mfcc_feats(speaker_ids, pow_frames_dict, n_ceps, attr):
         speaker_mfcc_dict = {}
         speaker_mfcc_delta_dict = {}
         speaker_mfcc_ddelta_dict = {}
-        speaker_mfcc_dict['train'],speaker_mfcc_delta_dict['train'], speaker_mfcc_ddelta_dict['train'] = MFCC(pow_frames_dict[id]['train'], n_ceps, attr)
+        speaker_mfcc_dict['train'],speaker_mfcc_delta_dict['train'], speaker_mfcc_ddelta_dict['train'] = MFCC(pow_frames_dict[id]['train'], n_ceps, n_filt, attr)
         mfcc_valid_vectors = []
         mfcc_delta_valid_vectors = []
         mfcc_ddelta_valid_vectors = []
@@ -232,12 +232,12 @@ def get_mfcc_feats(speaker_ids, pow_frames_dict, n_ceps, attr):
         mfcc_delta_test_vectors = []
         mfcc_ddelta_test_vectors = []
         for vector in pow_frames_dict[id]['valid']:
-            mfcc_vector, delta_vector, ddelta_vector = MFCC(vector, n_ceps, attr)
+            mfcc_vector, delta_vector, ddelta_vector = MFCC(vector, n_ceps, n_filt, attr)
             mfcc_valid_vectors.append(mfcc_vector)
             mfcc_delta_valid_vectors.append(delta_vector)
             mfcc_ddelta_valid_vectors.append(ddelta_vector)
         for vector in pow_frames_dict[id]['test']:
-            mfcc_vector, delta_vector, ddelta_vector = MFCC(vector, n_ceps, attr)
+            mfcc_vector, delta_vector, ddelta_vector = MFCC(vector, n_ceps, n_filt, attr)
             mfcc_test_vectors.append(mfcc_vector)
             mfcc_delta_test_vectors.append(delta_vector)
             mfcc_ddelta_test_vectors.append(ddelta_vector)

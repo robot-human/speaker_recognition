@@ -27,6 +27,7 @@ cfg["Execution times"]['File reading'] = round(end_time - start_time,2)
 preemph_list =cfg["Frames"]["PRE_EMPHASIS_COEF"]
 frames_size_list =cfg["Frames"]["FRAME_IN_SECS"]
 overlap_list =cfg["Frames"]["OVERLAP_PCT"]
+n_filt_list = cfg["MFCC"]["N_FILT"]
 n_ceps_list = cfg["MFCC"]["N_CEPS"]
 p_order_list = cfg["LPC"]["P"]
 
@@ -53,159 +54,163 @@ for pre_emph in preemph_list:
 # ########################################################################################################
 ## MFB
             if("MFB" in FEATURES_LIST):
-                feature_name = "MFB"
-                start_time = time.time()
-                features, scaled_train, classes, scaler = feats.prepared_scaled_mfb_feats(speaker_ids, pow_frames, results_dict["MFCC"])
-                end_time = time.time()
-                results_dict["Execution times"]['MFB'] = round(end_time - start_time,2)
-
-                if("VQ" in MODELS_LIST):
-                    model_name = "VQ"
+                for n_filt in n_filt_list:
+                    results_dict["MFB"]['N_FILT'] = n_filt
+                    feature_name = "MFB"
                     start_time = time.time()
-                    print("MFB with VQ")
-                    confusion_matrix = models.run_VQ_model(speaker_ids, features)
+                    features, scaled_train, classes, scaler = feats.prepared_scaled_mfb_feats(speaker_ids, pow_frames, n_filt, results_dict["MFB"])
                     end_time = time.time()
-                    results_dict["Execution times"]['VQ MFB'] = round(end_time - start_time,2)
-                    print("")
-            
-                    results_dict["Results"]["Model"] = "VQ"
-                    results_dict["Results"]["Features"] = "MFB"
-                    results_dict["Results"]["Confusion matrix"] = confusion_matrix
+                    results_dict["Execution times"]['MFB'] = round(end_time - start_time,2)
 
-                    if(PRINT_FILES):
-                        date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
-                        file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-                        with open(file_path, 'w') as json_file:
-                            json.dump(results_dict, json_file)
-                        print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
-                        print("MFB VQ file saved")
+                    if("VQ" in MODELS_LIST):
+                        model_name = "VQ"
+                        start_time = time.time()
+                        print("MFB with VQ")
+                        confusion_matrix = models.run_VQ_model(speaker_ids, features)
+                        end_time = time.time()
+                        results_dict["Execution times"]['VQ MFB'] = round(end_time - start_time,2)
+                        print("")
+            
+                        results_dict["Results"]["Model"] = "VQ"
+                        results_dict["Results"]["Features"] = "MFB"
+                        results_dict["Results"]["Confusion matrix"] = confusion_matrix
+
+                        if(PRINT_FILES):
+                            date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
+                            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                            with open(file_path, 'w') as json_file:
+                                json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print("MFB VQ file saved")
     
-                if("GMM" in MODELS_LIST):
-                    model_name = "GMM"
-                    start_time = time.time()
-                    print("MFB with GMM")
-                    confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler, results_dict["Model attr"]["GMM"])
-                    end_time = time.time()
-                    results_dict["Execution times"]['GMM MFB'] = round(end_time - start_time,2)
-                    print("")
+                    if("GMM" in MODELS_LIST):
+                        model_name = "GMM"
+                        start_time = time.time()
+                        print("MFB with GMM")
+                        confusion_matrix = models.run_GMM_model(speaker_ids, features, scaler, results_dict["Model attr"]["GMM"])
+                        end_time = time.time()
+                        results_dict["Execution times"]['GMM MFB'] = round(end_time - start_time,2)
+                        print("")
 
-                    results_dict["Results"]["Model"] = "GMM"
-                    results_dict["Results"]["Features"] = "MFB"
-                    results_dict["Results"]["Confusion matrix"] = confusion_matrix
+                        results_dict["Results"]["Model"] = "GMM"
+                        results_dict["Results"]["Features"] = "MFB"
+                        results_dict["Results"]["Confusion matrix"] = confusion_matrix
             
-                    if(PRINT_FILES):
-                        date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
-                        file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-                        with open(file_path, 'w') as json_file:
-                            json.dump(results_dict, json_file)
-                        print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
-                        print("MFB GMM file saved")
+                        if(PRINT_FILES):
+                            date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
+                            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                            with open(file_path, 'w') as json_file:
+                                json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print("MFB GMM file saved")
 
-                if("SVM" in MODELS_LIST):
-                    model_name = "SVM"
-                    start_time = time.time()
-                    print("MFB with SVM")
-                    confusion_matrix = models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
-                    end_time = time.time()
-                    results_dict["Execution times"]['SVM MFB'] = round(end_time - start_time,2)
-                    print("")
+                    if("SVM" in MODELS_LIST):
+                        model_name = "SVM"
+                        start_time = time.time()
+                        print("MFB with SVM")
+                        confusion_matrix = models.run_SVM_model(speaker_ids, features, scaled_train, classes, scaler)
+                        end_time = time.time()
+                        results_dict["Execution times"]['SVM MFB'] = round(end_time - start_time,2)
+                        print("")
 
-                    results_dict["Results"]["Model"] = "SVM"
-                    results_dict["Results"]["Features"] = "MFB"
-                    results_dict["Results"]["Confusion matrix"] = confusion_matrix
+                        results_dict["Results"]["Model"] = "SVM"
+                        results_dict["Results"]["Features"] = "MFB"
+                        results_dict["Results"]["Confusion matrix"] = confusion_matrix
             
-                    if(PRINT_FILES):
-                        date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
-                        file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-                        with open(file_path, 'w') as json_file:
-                            json.dump(results_dict, json_file)
-                        print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
-                        print("MFB SVM file saved")
+                        if(PRINT_FILES):
+                            date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
+                            file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                            with open(file_path, 'w') as json_file:
+                                json.dump(results_dict, json_file)
+                            print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                            print("MFB SVM file saved")
 # ########################################################################################################
 ## MFCC     
             if("MFCC" in FEATURES_LIST):
                 for MFCC_TYPE in MFCC_TYPES:
-                    for n_ceps in n_ceps_list:
-                        results_dict["MFCC"]["N_CEPS"] = int(n_ceps)
-                        feature_name = "MFCC"
-                        start_time = time.time()
-                        print(f"MFCC con {n_ceps} coeficientes")
-                        mfcc = feats.prepared_scaled_mfcc_feats(speaker_ids, pow_frames, int(n_ceps), results_dict["MFCC"], MFCC_TYPE)
-                        end_time = time.time()
-                        results_dict["Execution times"]['MFCC'] = round(end_time - start_time,2)
-
-                        if(MFCC_TYPE == "MFCC"):
-                            results_dict["MFCC"]["DELTAS"] = False
-                            results_dict["MFCC"]["DOBLE_DELTAS"] = False
-                        elif(MFCC_TYPE =="DELTAS"):
-                            results_dict["MFCC"]["DELTAS"] = True
-                            results_dict["MFCC"]["DOBLE_DELTAS"] = False
-                        elif(MFCC_TYPE =="DOUBLE DELTAS"):
-                            results_dict["MFCC"]["DELTAS"] = False
-                            results_dict["MFCC"]["DOBLE_DELTAS"] = True
-
-                        if("VQ" in MODELS_LIST):
-                            model_name = "VQ"
+                    for n_filt in n_filt_list:
+                        for n_ceps in n_ceps_list:
+                            results_dict["MFCC"]['N_FILT'] = n_filt
+                            results_dict["MFCC"]["N_CEPS"] = int(n_ceps)
+                            feature_name = "MFCC"
                             start_time = time.time()
-                            print("MFFC with VQ")
-                            confusion_matrix = models.run_VQ_model(speaker_ids, mfcc[0])
+                            print(f"MFCC con {n_ceps} coeficientes")
+                            mfcc = feats.prepared_scaled_mfcc_feats(speaker_ids, pow_frames, int(n_ceps), results_dict["MFCC"], MFCC_TYPE)
                             end_time = time.time()
-                            results_dict["Execution times"]['VQ MFCC'] = round(end_time - start_time,2)
-                            print("")
+                            results_dict["Execution times"]['MFCC'] = round(end_time - start_time,2)
+
+                            if(MFCC_TYPE == "MFCC"):
+                                results_dict["MFCC"]["DELTAS"] = False
+                                results_dict["MFCC"]["DOBLE_DELTAS"] = False
+                            elif(MFCC_TYPE =="DELTAS"):
+                                results_dict["MFCC"]["DELTAS"] = True
+                                results_dict["MFCC"]["DOBLE_DELTAS"] = False
+                            elif(MFCC_TYPE =="DOUBLE DELTAS"):
+                                results_dict["MFCC"]["DELTAS"] = False
+                                results_dict["MFCC"]["DOBLE_DELTAS"] = True
+
+                            if("VQ" in MODELS_LIST):
+                                model_name = "VQ"
+                                start_time = time.time()
+                                print("MFFC with VQ")
+                                confusion_matrix = models.run_VQ_model(speaker_ids, mfcc[0])
+                                end_time = time.time()
+                                results_dict["Execution times"]['VQ MFCC'] = round(end_time - start_time,2)
+                                print("")
             
-                            results_dict["Results"]["Model"] = "VQ"
-                            results_dict["Results"]["Features"] = "MFCC"
-                            results_dict["Results"]["Confusion matrix"] = confusion_matrix
+                                results_dict["Results"]["Model"] = "VQ"
+                                results_dict["Results"]["Features"] = "MFCC"
+                                results_dict["Results"]["Confusion matrix"] = confusion_matrix
             
-                            if(PRINT_FILES):
-                                date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
-                                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-                                with open(file_path, 'w') as json_file:
-                                    json.dump(results_dict, json_file)
-                                print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
-                                print(f"MFCC {n_ceps} VQ file saved")
+                                if(PRINT_FILES):
+                                    date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
+                                    file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                                    with open(file_path, 'w') as json_file:
+                                        json.dump(results_dict, json_file)
+                                    print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                                    print(f"MFCC {n_ceps} VQ file saved")
     
-                        if("GMM" in MODELS_LIST):
-                            model_name = "GMM"
-                            start_time = time.time()
-                            print("MFFC with GMM")
-                            confusion_matrix = models.run_GMM_model(speaker_ids, mfcc[0], mfcc[3], results_dict["Model attr"]["GMM"])
-                            end_time = time.time()
-                            results_dict["Execution times"]['GMM MFCC'] = round(end_time - start_time,2)
-                            print("")
+                            if("GMM" in MODELS_LIST):
+                                model_name = "GMM"
+                                start_time = time.time()
+                                print("MFFC with GMM")
+                                confusion_matrix = models.run_GMM_model(speaker_ids, mfcc[0], mfcc[3], results_dict["Model attr"]["GMM"])
+                                end_time = time.time()
+                                results_dict["Execution times"]['GMM MFCC'] = round(end_time - start_time,2)
+                                print("")
 
-                            results_dict["Results"]["Model"] = "GMM"
-                            results_dict["Results"]["Features"] = "MFCC"
-                            results_dict["Results"]["Confusion matrix"] = confusion_matrix
+                                results_dict["Results"]["Model"] = "GMM"
+                                results_dict["Results"]["Features"] = "MFCC"
+                                results_dict["Results"]["Confusion matrix"] = confusion_matrix
             
-                            if(PRINT_FILES):
-                                date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
-                                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-                                with open(file_path, 'w') as json_file:
-                                    json.dump(results_dict, json_file)
-                                print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
-                                print(f"MFCC {n_ceps} GMM file saved")
+                                if(PRINT_FILES):
+                                    date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
+                                    file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                                    with open(file_path, 'w') as json_file:
+                                       json.dump(results_dict, json_file)
+                                    print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                                    print(f"MFCC {n_ceps} GMM file saved")
 
-                        if("SVM" in MODELS_LIST):
-                            model_name = "SVM"
-                            start_time = time.time()
-                            print("MFFC with SVM")
-                            confusion_matrix = models.run_SVM_model(speaker_ids, mfcc[0], mfcc[1], mfcc[2], mfcc[3])
-                            end_time = time.time()
-                            results_dict["Execution times"]['SVM MFCC'] = round(end_time - start_time,2)
-                            print("")
+                            if("SVM" in MODELS_LIST):
+                                model_name = "SVM"
+                                start_time = time.time()
+                                print("MFFC with SVM")
+                                confusion_matrix = models.run_SVM_model(speaker_ids, mfcc[0], mfcc[1], mfcc[2], mfcc[3])
+                                end_time = time.time()
+                                results_dict["Execution times"]['SVM MFCC'] = round(end_time - start_time,2)
+                                print("")
 
-                            results_dict["Results"]["Model"] = "SVM"
-                            results_dict["Results"]["Features"] = "MFCC"
-                            results_dict["Results"]["Confusion matrix"] = confusion_matrix
+                                results_dict["Results"]["Model"] = "SVM"
+                                results_dict["Results"]["Features"] = "MFCC"
+                                results_dict["Results"]["Confusion matrix"] = confusion_matrix
             
-                            if(PRINT_FILES):
-                                date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
-                                file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
-                                with open(file_path, 'w') as json_file:
-                                    json.dump(results_dict, json_file)
-                                print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
-                                print(f"MFCC {n_ceps} SVM file saved")
+                                if(PRINT_FILES):
+                                    date = datetime.datetime.now().strftime("%m/%d/%H/%M/%S").replace("/","_")
+                                    file_path = LOG_FILE_PATH + f"{feature_name}_{model_name}_speakers_{n_speakers}_session_{date}.json"
+                                    with open(file_path, 'w') as json_file:
+                                        json.dump(results_dict, json_file)
+                                    print(f"Pre-emph: {pre_emph}, Frame size: {frame_size}, Frame overlap {frame_overlap}")
+                                    print(f"MFCC {n_ceps} SVM file saved")
 # ########################################################################################################
 # ## LPC
             if("LPC" in FEATURES_LIST):

@@ -21,7 +21,7 @@ else:
     FRAME_IN_SECS = cfgParser.get('config', 'FRAME_IN_SECS').split(",")
     OVERLAP_PCT = cfgParser.get('config', 'OVERLAP_PCT').split(",")
     WINDOW = cfgParser.get('config', 'WINDOW')
-    N_FILT = int(cfgParser.get('config', 'N_FILT'))
+    N_FILT = cfgParser.get('config', 'N_FILT').split(",")
     N_CEPS = cfgParser.get('config', 'N_CEPS').split(",")
     CEP_LIFTER = int(cfgParser.get('config', 'CEP_LIFTER'))
 
@@ -46,6 +46,11 @@ else:
         "FRAME_IN_SECS": FRAME_IN_SECS,
         "OVERLAP_PCT": OVERLAP_PCT,
         "WINDOW": WINDOW
+    }
+    MFB_ATTR = {
+        "NFFT": NFFT,
+        "SAMPLE_RATE": SAMPLE_RATE,
+        "N_FILT": N_FILT,
     }
     MFCC_ATTR = {
         "NFFT": NFFT,
@@ -97,7 +102,7 @@ else:
     cfg = {
         "General" : GENERAL,
         "Frames" : FRAMES_ATTR,
-        "MFB" : MFCC_ATTR,
+        "MFB" : MFB_ATTR,
         "MFCC" : MFCC_ATTR, 
         "LPC" : LPC_ATTR, 
         "PLP" : PLP_ATTR,

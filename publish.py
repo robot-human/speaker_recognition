@@ -19,6 +19,7 @@ if(SERVER == 0):
 
 
 output_files_path = f'./log_files/'
+#output_files_path = f'/home/robothuman/Documents/data_sets/railsem19/jpgs/rs19_val/'
 output_files = os.listdir(output_files_path)
 
 def on_connect(client, userdata, flags, rc, properties=None):
@@ -53,6 +54,8 @@ if __name__ == '__main__':
         #client.publish(topic, payload=f"{name}", qos=QOS)
         publish.single(topic, payload=f"{name}", qos=QOS, retain=False, hostname=host,port=port, client_id=clientID, keepalive=KEEPALIVE, will=None, auth=None, tls=None,protocol=paho.MQTTv5, transport="tcp")
         sleep(0.2)
+        
+        
         f = open(file_name_path, "r")
         content = f.read()
         print(getsizeof(content)/1000, " kbts")
